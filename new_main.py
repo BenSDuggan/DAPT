@@ -1,6 +1,6 @@
 '''
     Ben Duggan
-    1/24/19
+    2/1/19
     Main script to run distributed parameter testing
 '''
 
@@ -13,10 +13,12 @@ def main():
     sheet = dap.sheet.Sheet(conf.config['spreedsheetID'])
     ap = dap.param.Param(conf, sheet)
     boxy = dap.box.Box(conf)
+    boxy.connect()
 
-    boxy.startServer() # Start the Flask server to get box access token
+    #boxy.startServer() # Start the Flask server to get box access token
 
     print("Starting main script")
+    exit()
 
     while True:
         # Check the sheet for any trials that didn't run successfully

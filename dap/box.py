@@ -1,6 +1,6 @@
 '''
     Ben Duggan
-    10/30/18
+    2/1/19
     Script for getting box access token and uploading files
 '''
 
@@ -17,10 +17,30 @@ class Box:
         self.refresh_token = None
         self.client = None
         self.refreshTime = None
+        self.oauth = OAuth2(
+            client_id=self.conf['client_id'],
+            client_secret=self.conf['client_secret']
+        )
 
-        ''' START - Flask web server used for auth'''
         self.app = Flask(__name__)
 
+    def connect(self):
+        if self.config and len(self.conf['accessToken']) > 0 and len(self.conf['refressToken']) > 0: 
+            try:
+                print('Trying to get new access and refresh token from ' + self.config.path)
+                self.oauth._refresh_token = self.conf['refressToken']
+                self.access_token, self.refresh_token = self.oauth._refresh(self.conf['accessToken'])
+                self.client = Client(self.oauth)
+                self.refreshTime = time.time() + 60*60
+                print('Got new access and refresh token from existing')
+                return
+
+            except Exception as e:
+                print(e)
+
+        self.startServer()
+
+    ''' START - Flask web server used for auth'''
     # The method called to start the server
     def startServer(self):
         print("Starting server.  Go to 127.0.0.1:5000 to authenticate box.  It can only be ended by completing authentification or going to 127.0.0.1:5000/end")
@@ -33,11 +53,6 @@ class Box:
 
     # This is the index of the web server and serves as the start point for authentication
     def index(self):
-        self.oauth = OAuth2(
-            client_id=self.conf['client_id'],
-            client_secret=self.conf['client_secret']
-        )
-
         self.auth_url, self.csrf_token = self.oauth.get_authorization_url("http://127.0.0.1:5000/return")
 
         return '<h1>Welcome to box auth</h1> This web server is used to interface with the box API.  Click the link below to securely login on box.' + '<a href="'+self.auth_url+'">Click here to authenticate your box account </a>'
@@ -61,10 +76,15 @@ class Box:
             raise RuntimeError('Not running with the Werkzeug Server')
         func()
 
-        if self.config:
-            self.config.change_config('userName',self.client.user(user_id='me').get()['login'])
 
-        return 'You are now logged in as: ' + self.client.user(user_id='me').get()['login'] + '<br><strong>The server has been shutdown and the normal script is resuming.</strong><a href="http://127.0.0.1:5000">Click to go to index (assuming server restarted)</a>'
+        print(str(self.client.user(user_id='me').get()['login']))
+        if self.config:
+            self.config.change_config('userName',self.client.user(user_id='me').get()['login']) #Save username to config
+            self.config.change_config('accessToken',self.access_token) #Save access token to config
+            self.config.change_config('refressToken',self.refresh_token) #Save refresn token to config
+
+
+        return 'You are now logged in as: ' + self.client.user(user_id='me').get()['login'] + '<br><strong>The server has been shutdown and the normal script is resuming.</strong><br>access token: '+self.access_token+'<br>refresh token: '+self.refresh_token+'<br><a href="http://127.0.0.1:5000">Click to go to index (assuming server restarted)</a>'
 
     # When the user goes to /end the server shuts down
     def end(self):

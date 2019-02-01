@@ -1,23 +1,22 @@
 '''
     Ben Duggan
-    1/18/19
+    2/1/19
     Main script to run distributed parameter testing
 '''
 
 class Config:
 	def __init__(self, path):
 		self.path = path
-		self.config = self.read_config(self.path)
+		self.config = self.readConfig(self.path)
 
 	def read_config(self):
-		self.config = Config.read_config(self.path)
-		print('hi')
+		self.config = Config.readConfig(self.path)
 
 	def change_config(self, key, value):
-		self.config = Config.change_config(self.path, key, value)
+		self.config = Config.changeConfig(self.path, key, value)
 
 	@staticmethod
-	def read_config(path):
+	def readConfig(path):
 	    f = open(path, 'r').readlines()
 	    config = {}
 	    for i in range(0, len(f)):
@@ -25,23 +24,24 @@ class Config:
 	        config[f[i].split(":")[0]] = f[i].split(":")[1]
 	    return config
 
+	'''
 	@staticmethod
 	def change_config(path, object):
 		pass
+	'''
 
 	@staticmethod
-	def change_config(path, key, value):
+	def changeConfig(path, key, value):
 	    f = open(path, 'r').readlines()
 	    data = ""
 	    for i in range(0, len(f)):
 	        if f[i].split(':')[0] == str(key):
 	            f[i] = f[i].split(':')[0] + ':' + str(value) + '\n'
-	            self.config[key] = value
 	        data += f[i]
 
 	    with open(path, 'w') as file:
 	        file.writelines(data)
-	    return Config.read_config(path)
+	    return Config.readConfig(path)
 
 class CommandLineArgs:
 	@staticmethod
@@ -49,7 +49,7 @@ class CommandLineArgs:
 		pass
 
 if __name__ == '__main__':
-	print(Config.read_config('config.txt'))
+	print(Config.readConfig('config.txt'))
 	config = Config('config.txt')
 	config.change_config('lastTest', 'k')
 	print(config.config)
