@@ -1,1 +1,2 @@
-# Distributed-Automated-Parameter-Testing
+# Distributed Automated Parameter (DAP) Testing
+

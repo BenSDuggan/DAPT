@@ -23,4 +23,20 @@ class Sheet:
         return self.sheet().get_all_records()
 
     def update_cell(self, i, j, text):
+        if type(j) == type('a'):
+            j = self.getKeyIndex(j)
         self.sheet().update_cell(i+2, j, text)
+
+    def getKeyIndex(self, key):
+        key_map = {}
+        key_row = self.sheet().row_values(1)
+        for i in range(len(key_row)):
+            if key_row[i] == key:
+                return i+1
+
+if __name__ == '__main__':
+    sheet = Sheet('1xZAbN6cs-89htm6EXkEYldQrSitzf5EnCGKwNl0a0Wo')
+    print('Sheet result:')
+    print(sheet.getRecords())
+    print('Get key index:')
+    print(sheet.getKeyIndex('id'))

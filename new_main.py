@@ -18,7 +18,6 @@ def main():
     #boxy.startServer() # Start the Flask server to get box access token
 
     print("Starting main script")
-    exit()
 
     while True:
         # Check the sheet for any trials that didn't run successfully
@@ -32,7 +31,20 @@ def main():
         print("Request parameters: ")
         print(parameters)
 
+        file_name = 'dap_test_' + str(parameters['id']) + '.txt'
+
+        f = open(file_name, 'w+')
+        f.write(str(parameters))
+        f.close()
+
+        boxy.uploadFile(conf.config['boxFolderID'], '/', file_name)
+
+        ap.parameterSuccessful(parameters["id"])
+
+        exit()
+
         try:
+            pass
             if 'clean' in parameters['tasks']:
                 # Reset from the previous run
                 print("Cleaning up folder")
