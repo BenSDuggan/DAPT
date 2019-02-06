@@ -32,12 +32,19 @@ class Box:
                 self.access_token, self.refresh_token = self.oauth._refresh(self.conf['accessToken'])
                 self.client = Client(self.oauth)
                 self.refreshTime = time.time() + 60*60
+
+                if self.config:
+                    self.config.change_config('userName',self.client.user(user_id='me').get()['login']) #Save username to config
+                    self.config.change_config('accessToken',self.access_token) #Save access token to config
+                    self.config.change_config('refressToken',self.refresh_token) #Save refresn token to config
+
                 print('Got new access and refresh token from existing')
                 return
 
             except Exception as e:
                 print(e)
 
+        print('Starting server.  Go to the URL below to activate box functionality.  If you are on a server you will need to run this code on your computer, get the access and refresh token and then add them to the config file.')
         self.startServer()
 
     ''' START - Flask web server used for auth'''
@@ -76,8 +83,6 @@ class Box:
             raise RuntimeError('Not running with the Werkzeug Server')
         func()
 
-
-        print(str(self.client.user(user_id='me').get()['login']))
         if self.config:
             self.config.change_config('userName',self.client.user(user_id='me').get()['login']) #Save username to config
             self.config.change_config('accessToken',self.access_token) #Save access token to config
