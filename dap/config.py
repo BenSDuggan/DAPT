@@ -43,10 +43,23 @@ class Config:
 	        file.writelines(data)
 	    return Config.readConfig(path)
 
-class CommandLineArgs:
+	# Create a config.txt file
 	@staticmethod
-	def read():
-		pass
+	def create(file_name='config.txt'):
+		default = "lastTest:None\nuserName:None\nspreedsheetID:None\nclient_id:None\nclient_secret:None\nboxFolderID:None\nresetTime:None\nnumOfRuns:None\ncomputerStrength:None\naccessToken:None\nrefressToken:None"
+		with open(file_name, 'w') as file:
+			file.writelines(default)
+
+	# Safe config file by removing accessToken and refressToken
+	@staticmethod
+	def safe(file_name="config.txt"):
+		data = Config.readConfig(file_name)
+		if data["accessToken"]:
+			data["accessToken"] = ""
+			Config.changeConfig(file_name, "accessToken", "")
+		if data["refressToken"]:
+			data["refressToken"] = ""
+			Config.changeConfig(file_name, "refressToken", "")
 
 if __name__ == '__main__':
 	print(Config.readConfig('config.txt'))
