@@ -8,5 +8,6 @@ removeZip:True
 resetTime:172800
 numOfRuns:3
 computerStrength:2
-accessToken:RP9tJ1Rpi42uoIjvONpwK0tsrzPxmwoE
-refressToken:ANmEbh9oczxnXmIykUNDDgIsWkXba6a08nmMTHpGW00vfc3iFEOXVqGP56rYaP64
+accessToken:DrkHUuKdDfY5SzmBh69LaEA5OZ5MTiAZ
+refressToken:tA0ACYv7OSf7wg1PXiQvjldBV6WencqcGTA3hXPKbKmtmXJbxbyvG9PNg6d5pYuU
+refressTokenExpires:
