@@ -104,7 +104,7 @@ class Param:
         if 'endTime' in records[index]:
             records[index]["endTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             self.sheet.update_cell(index, 'endTime', records[index]["endTime"])
-
+        
         return records[index]
 
     def parameterFailed(self, id):
