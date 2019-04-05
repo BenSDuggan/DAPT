@@ -1,4 +1,9 @@
+"""
+DAP
+===
 
+This is __init__.py
+"""
 
 import sys
 from . import config
@@ -23,7 +28,7 @@ if len(sys.argv) > 1:
         # Safe config file
         if sys.argv[2] == 'safe':
             config.Config.safe(file_name)
-    exit()
+    #exit()
 
 from . import sheet
 from . import param

@@ -1,10 +1,12 @@
-'''
-    Ben Duggan
-    1/18/19
+"""
+    CSV
+    ===
+
     Create a CSV instance which can be used by param to get and run param sets
-'''
+"""
 
 import csv, os
+
 class CSV:
     def __init__(self, csv_file, delimiter=','):
         self.csv_file = csv_file

@@ -1,22 +1,62 @@
-'''
-    Ben Duggan
-    2/1/19
-    Main script to run distributed parameter testing
-'''
+"""
+Config
+====== 
+
+Class that allows for reading and modification of a config file.
+"""
 
 class Config:
+    """
+        Class which loads and allows for editing of a config file
+
+        Args:
+            path (string): path to config file
+
+        Returns:
+            Dictionary of config file
+    """
     def __init__(self, path):
         self.path = path
         self.config = self.readConfig(self.path)
+        return self.config
 
     def read_config(self):
+        """ Reads the file with path set to self.path
+
+        Returns:
+            Dictionary of config file
+        """
+
         self.config = Config.readConfig(self.path)
+        return self.config
 
     def change_config(self, key, value):
+        """
+            Change value for a given key in the config file
+
+            Args:
+                key (string): key to be changed
+                value (string): value to inserted at key
+
+            Returns:
+                Dictionary of config file
+        """
+
         self.config = Config.changeConfig(self.path, key, value)
+        return self.config
 
     @staticmethod
     def readConfig(path):
+        """
+            Reads in the config file and interprets it as a dictionary
+
+            Args:
+                path (string): path to config file
+
+            Returns:
+                Dictionary of config file
+        """
+
         f = open(path, 'r').readlines()
         config = {}
         for i in range(0, len(f)):
@@ -24,14 +64,21 @@ class Config:
             config[f[i].split(":")[0]] = f[i].split(":")[1]
         return config
 
-    '''
-    @staticmethod
-    def change_config(path, object):
-        pass
-    '''
 
     @staticmethod
     def changeConfig(path, key, value):
+        """ 
+            Change value for a given key in the given file path
+
+            Args:
+                path (string): the path to the config file
+                key (string): key to be changed
+                value (string): value to inserted at key
+
+            Returns:
+                Dictionary of config file
+        """
+
         f = open(path, 'r').readlines()
         data = ""
         for i in range(0, len(f)):
@@ -43,23 +90,33 @@ class Config:
             file.writelines(data)
         return Config.readConfig(path)
 
-    # Create a config.txt file
     @staticmethod
-    def create(file_name='config.txt'):
+    def create(path='config.txt'):
+        """
+            Creates a config file with the reserved keys inserted.
+
+            Args:
+                path (string): path where config file will be writen
+        """
         default = "lastTest:None\nuserName:None\nspreedsheetID:None\nclient_id:None\nclient_secret:None\nboxFolderID:None\nresetTime:None\nnumOfRuns:None\ncomputerStrength:None\naccessToken:None\nrefressToken:None"
-        with open(file_name, 'w') as file:
+        with open(path, 'w') as file:
             file.writelines(default)
 
-    # Safe config file by removing accessToken and refressToken
     @staticmethod
-    def safe(file_name="config.txt"):
-        data = Config.readConfig(file_name)
+    def safe(path="config.txt"):
+        """
+            Safe config file by removing accessToken and refressToken.
+
+            Args:
+                path (string): path where config file will be writen
+        """
+        data = Config.readConfig(path)
         if data["accessToken"]:
             data["accessToken"] = ""
-            Config.changeConfig(file_name, "accessToken", "")
+            Config.changeConfig(path, "accessToken", "")
         if data["refressToken"]:
             data["refressToken"] = ""
-            Config.changeConfig(file_name, "refressToken", "")
+            Config.changeConfig(path, "refressToken", "")
 
 if __name__ == '__main__':
     print(Config.readConfig('config.txt'))
