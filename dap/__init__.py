@@ -30,7 +30,7 @@ if len(sys.argv) > 1:
             config.Config.safe(file_name)
     #exit()
 
+from . import box
 from . import sheet
 from . import param
-from . import box
 from . import tools

@@ -3,6 +3,9 @@ Welcome to Distributed Automated Parameter Testing's documentation!
 .. automodule:: dap
 	:members:
 
+.. automodule:: dap.box
+	:members:
+
 .. automodule:: dap.config
 	:members:
 
