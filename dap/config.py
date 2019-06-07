@@ -11,14 +11,10 @@ class Config:
 
         Args:
             path (string): path to config file
-
-        Returns:
-            Dictionary of config file
     """
     def __init__(self, path):
         self.path = path
         self.config = self.readConfig(self.path)
-        return self.config
 
     def read_config(self):
         """ Reads the file with path set to self.path
@@ -42,7 +38,13 @@ class Config:
                 Dictionary of config file
         """
 
-        self.config = Config.changeConfig(self.path, key, value)
+        self.config[key] = value
+
+        try:
+            Config.changeConfig(self.path, key, value)
+        except ValueError:
+            print("Can not update file.")
+
         return self.config
 
     @staticmethod
@@ -58,10 +60,28 @@ class Config:
         """
 
         f = open(path, 'r').readlines()
+        types = [int, float, str]
         config = {}
         for i in range(0, len(f)):
             f[i] = f[i].replace("\n", "")
-            config[f[i].split(":")[0]] = f[i].split(":")[1]
+
+            if f[i].split(":")[1] == 'None':
+                config[f[i].split(":")[0]] = None
+                continue
+            elif f[i].split(":")[1] == 'True':
+                config[f[i].split(":")[0]] = True
+                continue
+            elif f[i].split(":")[1] == 'False':
+                config[f[i].split(":")[0]] = False
+                continue
+
+            for j in range(len(types)):
+                try:
+                    config[f[i].split(":")[0]] = types[j](f[i].split(":")[1])
+                    break
+                except:
+                    pass
+
         return config
 
 
@@ -81,14 +101,18 @@ class Config:
 
         f = open(path, 'r').readlines()
         data = ""
+        found = False
         for i in range(0, len(f)):
             if f[i].split(':')[0] == str(key):
                 f[i] = f[i].split(':')[0] + ':' + str(value) + '\n'
+                found = True
             data += f[i]
+
+        if not found:
+            data += key + ':' + value
 
         with open(path, 'w') as file:
             file.writelines(data)
-        return Config.readConfig(path)
 
     @staticmethod
     def create(path='config.txt'):

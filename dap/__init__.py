@@ -5,6 +5,8 @@ DAP
 This is __init__.py
 """
 
+__version__ = "0.8.1"
+
 import sys
 from . import config
 
@@ -34,3 +36,9 @@ from . import box
 from . import sheet
 from . import param
 from . import tools
+
+def test():
+    from . import tests
+    import pytest
+
+    pytest.main()
