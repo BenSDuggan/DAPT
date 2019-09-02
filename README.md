@@ -12,6 +12,7 @@ dap.__version__
 .
 ├── dap                 			# The folder where the DAP library is housed
 ├── docs             				# Documentation for project
+├── examples          				# Python scripts showing how to use the program
 └── tests                  			# Test cases
 ```
 

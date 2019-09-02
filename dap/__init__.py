@@ -33,7 +33,8 @@ if len(sys.argv) > 1:
     #exit()
 
 from . import box
-from . import sheet
+from . import database
+from . import sheets
 from . import param
 from . import tools
 

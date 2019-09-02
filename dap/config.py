@@ -15,12 +15,13 @@ class Config:
     def __init__(self, path):
         self.path = path
         self.config = self.readConfig(self.path)
-
+    
     def read_config(self):
-        """ Reads the file with path set to self.path
+        """
+            Reads the file with path set to self.path
 
-        Returns:
-            Dictionary of config file
+            Returns:
+                Dictionary of config file
         """
 
         self.config = Config.readConfig(self.path)
