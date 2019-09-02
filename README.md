@@ -25,4 +25,4 @@ Unit tests are ran using [Pytest](pytest.org).  You can install it by running `p
 import dap
 dap.test()
 ```
-For more information on the tests go to the [`tests` folder](dap/tests).
+For more information on the tests go to the [`tests`](dap/tests) folder.
