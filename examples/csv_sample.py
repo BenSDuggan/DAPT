@@ -8,7 +8,7 @@ ap = dap.param.Param(sheet)
 
 
 while True:
-    parameters = ap.requestParameters() #Get the next parameter
+    parameters = ap.next_parameters() #Get the next parameter
     if parameters == None:
         print("No more parameters to run!")
         break
@@ -16,23 +16,19 @@ while True:
     print("Request parameters: ")
     print(parameters)
 
-    ap.parameterSuccessful(parameters["id"])
+    ap.successful(parameters["id"])
 
 
     try:
-        if 'clean' in parameters['tasks']:
-            # Reset from the previous run
-            print("Cleaning up folder")
-            dap.tools.dataCleanup(conf.config)
-            ap.updateStatus(parameters['id'], 'clean')
+        ap.update_status(parameters['id'], 'clean')
 
         # Update sheets to mark the test is finished
-        ap.parameterSuccessful(parameters["id"]) #Test completed successfully so we need to mark it as such
+        ap.successful(parameters["id"]) #Test completed successfully so we mark it as such
 
         # End tests
     except ValueError:
         # Test failed
         print(ValueError)
         print("Test failed")
-        ap.parameterFailed(parameters["id"])
+        ap.failed(parameters["id"], str(ValueError))
 

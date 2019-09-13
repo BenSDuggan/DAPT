@@ -1,45 +1,66 @@
-'''
-    Ben Duggan
-    1/18/19
-    Main script to run distributed parameter testing
-'''
+"""
+    Param
+    =====
+
+    Interact with the database to get and manage paramater sets.
+"""
 
 import datetime
 #import config
 
 class Param:
-    def __init__(self, config, sheet):
-        self.path = "DistributedAutomaticParameterTesting/"
+    def __init__(self, database, config=None):
+        """
+            Create a Param instance with a database and optional config file.
 
-        self.sheet = sheet
+            Args:
+                database (Database): a Database instance (such as Sheets or Delimited_file)
+                config (Config): a config object which allows for more features.  This is optional.
+        """
 
-        self.config = config
-        self.conf = config.config
+        self.db = database
 
-        if self.conf['numOfRuns']:
-            self.count = 0
+        if self.config == None:
+            pass
+        else:
+            self.config = config
+            self.conf = config.config
 
-    def requestParameters(self):
-        if self.conf['numOfRuns']:
-            if int(self.conf['numOfRuns']) == -1 or self.count < int(self.conf['numOfRuns']):
-                    self.count += 1
-            else:
-                return None
+            if self.conf['numOfRuns']:
+                self.count = 0
 
-        records = self.sheet.getRecords()
+    def next_parameters(self):
+        """
+            Get the next paramater set if one exists
+            
+            Returns:
+                An OrderedDict containing the key-value pairs from that paramater set or None if there are no more to sets.
+        """
 
-        if "lastTest" in self.conf and self.conf["lastTest"] != "None":
-            print("Using lastTest from config.txt")
-            for i in range(0, len(records)):
-                if str(self.conf["lastTest"]) == str(records[i]["id"]):
-                    if "startTime" in records[i]:
-                        records[i]["startTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                        self.sheet.update_cell(i, 'startTime', records[i]["startTime"])
-                    if "performedBy" in records[i]:
-                        records[i]["performedBy"] = self.conf["userName"]
-                        self.sheet.update_cell(i, 'performedBy', self.conf["userName"])
+        # Do we have a config file
+        if self.config not None:
+            if self.config not None and self.conf['numOfRuns']:
+                if int(self.conf['numOfRuns']) == -1 or self.count < int(self.conf['numOfRuns']):
+                        self.count += 1
+                else:
+                    return None
 
-                    return records[i]
+            records = self.db.get_table()
+
+            if "lastTest" in self.conf and self.conf["lastTest"] != "None":
+                print("Using lastTest from config.txt")
+                for i in range(0, len(records)):
+                    if str(self.conf["lastTest"]) == str(records[i]["id"]):
+                        if "startTime" in records[i]:
+                            records[i]["startTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                            self.db.update_cell(i, 'startTime', records[i]["startTime"])
+                        if "performedBy" in records[i]:
+                            records[i]["performedBy"] = self.conf["userName"]
+                            self.db.update_cell(i, 'performedBy', self.conf["userName"])
+
+                        return records[i]
+
+        records = self.db.get_table()
 
         for i in range(0, len(records)):
             if len(records[i]["status"]) == 0:
@@ -51,13 +72,13 @@ class Param:
 
                 if "status" in records[i]:
                     records[i]["status"] = "in progress"
-                    self.sheet.update_cell(i, 'status', "in pogress")
+                    self.db.update_cell(i, 'status', "in pogress")
                 if "startTime" in records[i]:
                     records[i]["startTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                    self.sheet.update_cell(i, 'startTime', records[i]["startTime"])
+                    self.db.update_cell(i, 'startTime', records[i]["startTime"])
                 if "performedBy" in records[i]:
                     records[i]["performedBy"] = self.conf["userName"]
-                    self.sheet.update_cell(i, 'performedBy', self.conf["userName"])
+                    self.db.update_cell(i, 'performedBy', self.conf["userName"])
 
                 # Save id to local cache
                 self.config.change_config("lastTest", str(records[i]["id"]))
@@ -66,8 +87,18 @@ class Param:
 
         return None
 
-    def updateStatus(self, id, status):
-        records = self.sheet.getRecords()
+    def update_status(self, id, status):
+        """
+            Update the status of the selected paramater.  If status is not included in the paramater set keys then nothing will be updated.
+
+            Args:
+                id (str): the id of the paramater set to use
+            
+            Returns:
+                The new paramater set that has been updated or False if not able to update.
+        """
+
+        records = self.db.get_table()
         index = -1
 
         # Remove id from local cache
@@ -77,77 +108,80 @@ class Param:
                 index = i
 
         if index == -1:
-            return None
+            return False
 
-        records[index]["status"] = status
-        self.sheet.update_cell(index, 'status', status)
+        if 'status' in records[index]:
+            records[index]["status"] = status
+            self.db.update_cell(index, 'status', status)
 
-        return records[index]
+            return records[index]
+        else:
+            return False
 
-    def parameterSuccessful(self, id):
-        records = self.sheet.getRecords()
+    def successful(self, id):
+        """
+            Mark a paramater set as successfully completed.
+
+            Args:
+                id (str): the id of the paramater set to use
+            
+            Returns:
+                The new paramater set that has been updated or False if not able to update.
+        """
+
+        records = self.db.get_table()
         index = -1
 
         # Remove id from local cache
-        self.config.change_config("lastTest", "None")
+        if self.config not None:
+            self.config.change_config("lastTest", "None")
 
         for i in range(0, len(records)):
             if str(records[i]["id"]) == str(id):
                 index = i
 
         if index == -1:
-            return None
+            return False
 
         if 'status' in records[index]:
             records[index]["status"] = "finished"
-            self.sheet.update_cell(index, 'status', "finished")
+            self.db.update_cell(index, 'status', 'finished')
         if 'endTime' in records[index]:
             records[index]["endTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            self.sheet.update_cell(index, 'endTime', records[index]["endTime"])
+            self.db.update_cell(index, 'endTime', records[index]["endTime"])
         
         return records[index]
 
-    def parameterFailed(self, id):
-        records = self.sheet.getRecords()
+    def failed(self, id, err=''):
+        """
+            Mark a paramater set as failed to completed.
+            
+            Args:
+                id (str): the id of the paramater set to use
+                err (str): the error message.  Empty by default.
+            
+            Returns:
+                The new paramater set that has been updated or False if not able to update.
+        """
+
+        records = self.db.get_table()
         index = -1
 
         for i in range(0, len(records)):
             if str(records[i]["id"]) == str(id):
                 index = i
-
+                
         if index == -1:
             return None
 
         if 'status' in records[index]:
             records[index]["status"] = ""
-            self.sheet.update_cell(index, 'status', '')
+            self.db.update_cell(index, 'status', '')
         if 'endTime' in records[index]:
             records[index]["endTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            self.sheet.update_cell(index, 'endTime', records[index]['endTime'])
+            self.db.update_cell(index, 'endTime', records[index]['endTime'])
         if 'comments' in records[index]:
-            records[index]["comments"] += " failed;"
-            self.sheet.update_cell(index, 'comments', records[index]["comments"])
+            records[index]["comments"] += " failed\{" + err + "\};"
+            self.db.update_cell(index, 'comments', records[index]["comments"])
 
         return records[index]
-
-    def checkForDBErrors(self):
-        records = self.sheet.getRecords()
-
-        if len(records) > 0:
-            if 'startTime' not in records[1] or 'resetTime' not in self.conf:
-                return None
-
-        for i in range(0, len(records)):
-            if len(records[i]["startTime"]) > 0 and ((datetime.datetime.now()-datetime.datetime.strptime(records[i]["startTime"], '%Y-%m-%d %H:%M:%S')).total_seconds() > int(self.conf["resetTime"])):
-                print("\"", records[i], "\" hasn't been marked as complete after running for: ", int((datetime.datetime.now()-datetime.datetime.strptime(records[i]["startTime"], '%Y-%m-%d %H:%M:%S')).total_seconds()), " seconds. It has been marked as still needing to be ran.")
-
-                if 'comments' in records[i]:
-                    records[i]["comments"] += "test possibly crashed"
-                    self.sheet.update_cell(i, 'comments', records[i]["comments"])
-                if 'status' in records[i]:
-                    self.sheet.update_cell(i, 'status', '')
-                if 'startTime' in records[i]:
-                    self.sheet.update_cell(i, 'startTime', '')
-                return records
-        return None    
-

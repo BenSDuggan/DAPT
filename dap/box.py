@@ -19,7 +19,7 @@ class Box:
     def __init__(self, config=None):
         self.config = config
         self.conf = config.config
-
+        
         self.access_token = None
         self.refresh_token = None
         self.client = None
@@ -28,7 +28,7 @@ class Box:
             client_id=self.conf['client_id'],
             client_secret=self.conf['client_secret']
         )
-
+        
         self.app = Flask(__name__)
 
 
