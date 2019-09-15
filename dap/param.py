@@ -20,10 +20,10 @@ class Param:
 
         self.db = database
 
-        if self.config == None:
+        self.config = config
+        if self.config is None:
             pass
         else:
-            self.config = config
             self.conf = config.config
 
             if self.conf['numOfRuns']:
@@ -38,8 +38,8 @@ class Param:
         """
 
         # Do we have a config file
-        if self.config not None:
-            if self.config not None and self.conf['numOfRuns']:
+        if self.config is not None:
+            if self.config is not None and self.conf['numOfRuns']:
                 if int(self.conf['numOfRuns']) == -1 or self.count < int(self.conf['numOfRuns']):
                         self.count += 1
                 else:
@@ -81,7 +81,8 @@ class Param:
                     self.db.update_cell(i, 'performedBy', self.conf["userName"])
 
                 # Save id to local cache
-                self.config.change_config("lastTest", str(records[i]["id"]))
+                if self.config is not None:
+                    self.config.change_config("lastTest", str(records[i]["id"]))
 
                 return records[i]
 
@@ -133,7 +134,7 @@ class Param:
         index = -1
 
         # Remove id from local cache
-        if self.config not None:
+        if self.config is not None:
             self.config.change_config("lastTest", "None")
 
         for i in range(0, len(records)):

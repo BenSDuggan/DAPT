@@ -34,6 +34,7 @@ if len(sys.argv) > 1:
 
 from . import box
 from . import database
+from . import delimited_file
 from . import sheets
 from . import param
 from . import tools

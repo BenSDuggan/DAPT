@@ -45,12 +45,12 @@ class Delimited_file(database.Database):
             reader = csv.reader(csvfile, delimiter=self.delimiter)
             return next(reader)
 
-    def update_row(self, row_id, values):
+    def update_row(self, row_index, values):
         """
             Get the keys of the paramater set
 
             Args:
-                row_id (int): the row id to replace
+                row_index (int): the row id to replace
                 values (OrderedDict): the key-value pairs that should be inserted
             
             Returns:
@@ -64,19 +64,19 @@ class Delimited_file(database.Database):
             writer = csv.DictWriter(csvfile, fieldnames=header)
             writer.writeheader()
 
-            table[row_id] = values
+            table[row_index] = values
 
             for row in table:
                 writer.writerow(row)
 
             return True
 
-    def update_cell(self, row_id, key, value):
+    def update_cell(self, row_index, key, value):
         """
             Get the keys of the paramater set
 
             Args:
-                row_id (int): the row id to replace
+                row_index (int): the row id to replace
                 key (str): the key of the value to replace
                 value (str): the value to insert into the cell
             
@@ -91,16 +91,45 @@ class Delimited_file(database.Database):
             writer = csv.DictWriter(csvfile, fieldnames=header)
             writer.writeheader()
 
-            table[row_id][key] = value
+            table[row_index][key] = value
 
             for row in table:
                 writer.writerow(row)
 
             return True 
 
+    def get_row_index(self, row_value, column_key):
+        """
+            Get the row index given the column to look through and row value to match to.
+
+            Args:
+                row_value (str): the row value to match with in the file and determin the row index.
+                column_key (str): the column to use.
+            
+            Returns:
+                The index or -1 if it could not be determined
+        """
+
+        table = self.get_table()
+
+        index = 0
+        for row in table:
+            if row[column_key] == row_value:
+                return index
+            index += 1
+
+        return -1
+
 if __name__ == '__main__':
     print('CSV sheet:')
-    c = Delimited_file('../examples/test.csv', ',')
+    # Reset csv.  This is just used update the csv and reset it so interesting things happen.
+    with open('test.csv', 'w') as f:
+        writer = csv.DictWriter(f, fieldnames=['id', 'startTime', 'endTime', 'status', 'a', 'b', 'c'])
+        writer.writeheader()
+        writer.writerow({'id':'t1', 'startTime':'2019-09-06 17:23', 'endTime':'2019-09-06 17:36', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'})
+        writer.writerow({'id':'t2', 'startTime':'', 'endTime':'', 'status':'', 'a':'10', 'b':'10', 'c':''})
+        writer.writerow({'id':'t3', 'startTime':'', 'endTime':'', 'status':'', 'a':'10', 'b':'-10', 'c':''})
+    c = Delimited_file('test.csv', ',')
     print("get_keys: " + str(c.get_keys()))
     print("get_table: " + str(c.get_table()))
     print("update_cell: " + str(c.update_cell(1, "endTime", "09/02/19 12:10:00")))
