@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Box &mdash; DAP  documentation</title>
+  <title>Box &mdash; DAPT  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="CSV" href="csv.html" />
-    <link rel="prev" title="Config" href="config.html" /> 
+    <link rel="next" title="Config" href="config.html" />
+    <link rel="prev" title="Delimited file" href="delimited_file.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> DAP
+            <a href="../index.html" class="icon icon-home"> DAPT
           
 
           
@@ -85,12 +85,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="documentation.html#dap">DAP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="csv.html">CSV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#distributed-automated-paramater-testing-dapt">Distributed Automated Paramater Testing (DAPT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="param.html">Param</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sheet.html">Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delimited_file.html">Delimited file</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
 </ul>
 </li>
 </ul>
@@ -107,7 +108,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">DAP</a>
+          <a href="../index.html">DAPT</a>
         
       </nav>
 
@@ -159,24 +160,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <span class="target" id="module-dap.box"><span id="box"></span></span><div class="section" id="id1">
+  <span class="target" id="module-dapt.box"><span id="box"></span></span><div class="section" id="id1">
 <h1>Box<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>Class that allows for access to the box API and methods to directly upload files</p>
 <dl class="class">
-<dt id="dap.box.Box">
-<em class="property">class </em><code class="descclassname">dap.box.</code><code class="descname">Box</code><span class="sig-paren">(</span><em>config=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.box.Box" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.box.Box">
+<em class="property">class </em><code class="descclassname">dapt.box.</code><code class="descname">Box</code><span class="sig-paren">(</span><em>config=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class which allows for connection to box API</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<a class="reference internal" href="config.html#dap.config.Config" title="dap.config.Config"><em>Config</em></a>) – Config object with config file</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<a class="reference internal" href="config.html#dapt.config.Config" title="dapt.config.Config"><em>Config</em></a>) – Config object with config file</td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="dap.box.Box.capture">
-<code class="descname">capture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dap.box.Box.capture" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.box.Box.capture">
+<code class="descname">capture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.capture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flask page: box redirect url which contains the code and state used to get access and refress token</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -189,8 +190,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.box.Box.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dap.box.Box.connect" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.box.Box.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to connect to box using arguments provided in Config and starts server for authorization if not.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -203,8 +204,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.box.Box.end">
-<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dap.box.Box.end" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.box.Box.end">
+<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flask page: shuts down flask server</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -217,8 +218,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.box.Box.index">
-<code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dap.box.Box.index" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.box.Box.index">
+<code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flask page: index of the web server and serves as the start point for authentication</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -231,8 +232,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.box.Box.startServer">
-<code class="descname">startServer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dap.box.Box.startServer" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.box.Box.startServer">
+<code class="descname">startServer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.startServer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method that starts flask to start authorization process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -245,8 +246,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.box.Box.updateTokens">
-<code class="descname">updateTokens</code><span class="sig-paren">(</span><em>access_token</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.box.Box.updateTokens" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.box.Box.updateTokens">
+<code class="descname">updateTokens</code><span class="sig-paren">(</span><em>access_token</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.updateTokens" title="Permalink to this definition">¶</a></dt>
 <dd><p>Refresh the access and refresh token given a valid access token</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -261,8 +262,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.box.Box.uploadFile">
-<code class="descname">uploadFile</code><span class="sig-paren">(</span><em>folderID</em>, <em>path</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.box.Box.uploadFile" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.box.Box.uploadFile">
+<code class="descname">uploadFile</code><span class="sig-paren">(</span><em>folderID</em>, <em>path</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.uploadFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upload a file to box using the current client</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -291,10 +292,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="csv.html" class="btn btn-neutral float-right" title="CSV" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="config.html" class="btn btn-neutral float-right" title="Config" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="config.html" class="btn btn-neutral float-left" title="Config" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="delimited_file.html" class="btn btn-neutral float-left" title="Delimited file" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

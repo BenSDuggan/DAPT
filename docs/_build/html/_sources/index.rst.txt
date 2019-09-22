@@ -1,23 +1,15 @@
-Welcome to Distributed Automated Parameter Testing's documentation!
-===================================================================
-.. automodule:: dap
-	:members:
+.. _index:
 
-.. automodule:: dap.box
-	:members:
+Distributed Automated Parameter Testing (DAPT)
+==============================================
 
-.. automodule:: dap.config
-	:members:
+
+
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   install
+   usage
+   documentation/documentation

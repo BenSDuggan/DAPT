@@ -1,4 +1,4 @@
 .. _config:
 
-.. automodule:: dap.config
+.. automodule:: dapt.config
 	:members:

@@ -3,7 +3,7 @@
 Usage
 =====
 
-Once you have `installed <install.html>`_ DAP and have verified that it's installed correctly you can start setting it up for usage.
+Once you have `installed <install.html>`_ DAPT and have verified that it's installed correctly you can start setting it up for usage.
 
 Fields
 ------

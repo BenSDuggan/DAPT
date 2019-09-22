@@ -1,4 +1,4 @@
 .. _param:
 
-.. automodule:: dap.param
+.. automodule:: dapt.param
 	:members:

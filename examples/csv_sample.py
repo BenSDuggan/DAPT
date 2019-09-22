@@ -2,7 +2,7 @@
     Example of how to use DAPT with a CSV file
 """
 
-import dap
+import dapt
 import os, sys, csv
 
 
@@ -16,8 +16,8 @@ with open('test.csv', 'w') as f:
 
 
 
-db = dap.delimited_file.Delimited_file('test.csv')
-ap = dap.param.Param(db)
+db = dapt.delimited_file.Delimited_file('test.csv')
+ap = dapt.param.Param(db)
     
 while True:
     parameters = ap.next_parameters() #Get the next parameter

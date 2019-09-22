@@ -2,7 +2,7 @@
     Example of how to use DAPT to upload results to Box.
 """
 
-import dap
+import dapt
 import os, sys, csv
 
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sheet &mdash; DAP  documentation</title>
+  <title>Sheet &mdash; DAPT  documentation</title>
   
 
   
@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Database" href="database.html" />
     <link rel="prev" title="Param" href="param.html" /> 
 </head>
 
@@ -49,7 +50,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> DAP
+            <a href="../index.html" class="icon icon-home"> DAPT
           
 
           
@@ -84,12 +85,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="documentation.html#dap">DAP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="box.html">Box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="csv.html">CSV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#distributed-automated-paramater-testing-dapt">Distributed Automated Paramater Testing (DAPT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="param.html">Param</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delimited_file.html">Delimited file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="box.html">Box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
 </ul>
 </li>
 </ul>
@@ -106,7 +108,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">DAP</a>
+          <a href="../index.html">DAPT</a>
         
       </nav>
 
@@ -158,12 +160,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <span class="target" id="module-dap.sheet"><span id="sheet"></span></span><div class="section" id="id1">
+  <span class="target" id="module-dapt.sheet"><span id="sheet"></span></span><div class="section" id="id1">
 <h1>Sheet<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>Connect with Google Sheets and use it as a central database for getting and updating paramater sets.</p>
 <dl class="class">
-<dt id="dap.sheet.Sheet">
-<em class="property">class </em><code class="descclassname">dap.sheet.</code><code class="descname">Sheet</code><span class="sig-paren">(</span><em>spreedsheetID</em>, <em>creds_path='credentials.json'</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.sheet.Sheet" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.sheet.Sheet">
+<em class="property">class </em><code class="descclassname">dapt.sheet.</code><code class="descname">Sheet</code><span class="sig-paren">(</span><em>spreedsheetID</em>, <em>creds_path='credentials.json'</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.sheet.Sheet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Setup the Google Sheet and authentication data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -178,8 +180,8 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="dap.sheet.Sheet.getKeyIndex">
-<code class="descname">getKeyIndex</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.sheet.Sheet.getKeyIndex" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.sheet.Sheet.getKeyIndex">
+<code class="descname">getKeyIndex</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.sheet.Sheet.getKeyIndex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the index of a column name (key) in the Google Sheet</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -194,8 +196,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.sheet.Sheet.getRecords">
-<code class="descname">getRecords</code><span class="sig-paren">(</span><em>sheet_id=0</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.sheet.Sheet.getRecords" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.sheet.Sheet.getRecords">
+<code class="descname">getRecords</code><span class="sig-paren">(</span><em>sheet_id=0</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.sheet.Sheet.getRecords" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the data in the desired sheet</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -210,8 +212,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.sheet.Sheet.sheet">
-<code class="descname">sheet</code><span class="sig-paren">(</span><em>sheet_id=0</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.sheet.Sheet.sheet" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.sheet.Sheet.sheet">
+<code class="descname">sheet</code><span class="sig-paren">(</span><em>sheet_id=0</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.sheet.Sheet.sheet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the credentials to create a client to interact with the Google Drive API</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -224,8 +226,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.sheet.Sheet.update_cell">
-<code class="descname">update_cell</code><span class="sig-paren">(</span><em>i</em>, <em>j</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.sheet.Sheet.update_cell" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.sheet.Sheet.update_cell">
+<code class="descname">update_cell</code><span class="sig-paren">(</span><em>i</em>, <em>j</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.sheet.Sheet.update_cell" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the text of a cell in the Google Sheet</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -253,6 +255,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="database.html" class="btn btn-neutral float-right" title="Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="param.html" class="btn btn-neutral float-left" title="Param" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

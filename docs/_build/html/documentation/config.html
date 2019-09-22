@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Config &mdash; DAP  documentation</title>
+  <title>Config &mdash; DAPT  documentation</title>
   
 
   
@@ -35,8 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Box" href="box.html" />
-    <link rel="prev" title="Documentation" href="documentation.html" /> 
+    <link rel="prev" title="Box" href="box.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +49,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> DAP
+            <a href="../index.html" class="icon icon-home"> DAPT
           
 
           
@@ -85,12 +84,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="documentation.html#dap">DAP</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="box.html">Box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="csv.html">CSV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html#distributed-automated-paramater-testing-dapt">Distributed Automated Paramater Testing (DAPT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="param.html">Param</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sheet.html">Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delimited_file.html">Delimited file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="box.html">Box</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Config</a></li>
 </ul>
 </li>
 </ul>
@@ -107,7 +107,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">DAP</a>
+          <a href="../index.html">DAPT</a>
         
       </nav>
 
@@ -159,12 +159,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <span class="target" id="module-dap.config"><span id="config"></span></span><div class="section" id="id1">
+  <span class="target" id="module-dapt.config"><span id="config"></span></span><div class="section" id="id1">
 <h1>Config<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>Class that allows for reading and modification of a config file.</p>
 <dl class="class">
-<dt id="dap.config.Config">
-<em class="property">class </em><code class="descclassname">dap.config.</code><code class="descname">Config</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.config.Config" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.config.Config">
+<em class="property">class </em><code class="descclassname">dapt.config.</code><code class="descname">Config</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class which loads and allows for editing of a config file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -175,8 +175,8 @@
 </tbody>
 </table>
 <dl class="staticmethod">
-<dt id="dap.config.Config.changeConfig">
-<em class="property">static </em><code class="descname">changeConfig</code><span class="sig-paren">(</span><em>path</em>, <em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.config.Config.changeConfig" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.config.Config.changeConfig">
+<em class="property">static </em><code class="descname">changeConfig</code><span class="sig-paren">(</span><em>path</em>, <em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.config.Config.changeConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change value for a given key in the given file path</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -197,8 +197,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.config.Config.change_config">
-<code class="descname">change_config</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.config.Config.change_config" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.config.Config.change_config">
+<code class="descname">change_config</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.config.Config.change_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change value for a given key in the config file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -218,8 +218,8 @@
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="dap.config.Config.create">
-<em class="property">static </em><code class="descname">create</code><span class="sig-paren">(</span><em>path='config.txt'</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.config.Config.create" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.config.Config.create">
+<em class="property">static </em><code class="descname">create</code><span class="sig-paren">(</span><em>path='config.txt'</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.config.Config.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a config file with the reserved keys inserted.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -232,8 +232,8 @@
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="dap.config.Config.readConfig">
-<em class="property">static </em><code class="descname">readConfig</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.config.Config.readConfig" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.config.Config.readConfig">
+<em class="property">static </em><code class="descname">readConfig</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.config.Config.readConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads in the config file and interprets it as a dictionary</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -248,8 +248,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="dap.config.Config.read_config">
-<code class="descname">read_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dap.config.Config.read_config" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.config.Config.read_config">
+<code class="descname">read_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.config.Config.read_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the file with path set to self.path</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -262,8 +262,8 @@
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="dap.config.Config.safe">
-<em class="property">static </em><code class="descname">safe</code><span class="sig-paren">(</span><em>path='config.txt'</em><span class="sig-paren">)</span><a class="headerlink" href="#dap.config.Config.safe" title="Permalink to this definition">¶</a></dt>
+<dt id="dapt.config.Config.safe">
+<em class="property">static </em><code class="descname">safe</code><span class="sig-paren">(</span><em>path='config.txt'</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.config.Config.safe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Safe config file by removing accessToken and refressToken.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -287,10 +287,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="box.html" class="btn btn-neutral float-right" title="Box" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="documentation.html" class="btn btn-neutral float-left" title="Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="box.html" class="btn btn-neutral float-left" title="Box" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

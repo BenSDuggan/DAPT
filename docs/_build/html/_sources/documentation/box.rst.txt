@@ -1,4 +1,4 @@
 .. _box:
 
-.. automodule:: dap.box
+.. automodule:: dapt.box
 	:members:

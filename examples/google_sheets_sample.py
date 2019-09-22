@@ -2,7 +2,7 @@
     Example of how to use DAPT with Google Sheets
 """
 
-import dap
+import dapt
 import os, sys, csv
 
 

@@ -3,17 +3,17 @@
 Install
 =======
 
-DAP
----
+DAPT
+----
 
-To install DAP you can either use a `release <https://github.com/BenSDuggan/DAPT/releases>`_ downloaded from GitHub (recomended) or download the most recent version of the code.  If you install using a release they can be found at `https://github.com/BenSDuggan/DAPT/releases <https://github.com/BenSDuggan/DAPT/releases>`_.  Once downloaded unzip the data.  You can also download from the GitHub page for run ``git clone https://github.com/BenSDuggan/DAPT``.
+To install DAPT you can either use a `release <https://github.com/BenSDuggan/DAPT/releases>`_ downloaded from GitHub (recomended) or download the most recent version of the code.  If you install using a release they can be found at `https://github.com/BenSDuggan/DAPT/releases <https://github.com/BenSDuggan/DAPT/releases>`_.  Once downloaded unzip the data.  You can also download from the GitHub page for run ``git clone https://github.com/BenSDuggan/DAPT``.
 
 Once you've downloaded the code, you can install the python libraries by running ``pip install -r requirements.txt`` in the terminal from inside the root folder. You can then open a python session and test to see if everything installed correctly:
 
 .. code-block:: python
 	
-	import dap
-	dap.__version__
+	import dapt
+	dapt.__version__
 
 
 Google Sheets
