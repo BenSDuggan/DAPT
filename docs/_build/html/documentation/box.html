@@ -82,12 +82,11 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="documentation.html#distributed-automated-paramater-testing-dapt">Distributed Automated Paramater Testing (DAPT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="param.html">Param</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sheet.html">Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sheet.html">Sheets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delimited_file.html">Delimited file</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Box</a></li>
@@ -165,81 +164,38 @@
 <p>Class that allows for access to the box API and methods to directly upload files</p>
 <dl class="class">
 <dt id="dapt.box.Box">
-<em class="property">class </em><code class="descclassname">dapt.box.</code><code class="descname">Box</code><span class="sig-paren">(</span><em>config=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class which allows for connection to box API</p>
+<em class="property">class </em><code class="descclassname">dapt.box.</code><code class="descname">Box</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class which allows for connection to box API.  You must either provide a Config object or client_id and client_secret.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<a class="reference internal" href="config.html#dapt.config.Config" title="dapt.config.Config"><em>Config</em></a>) – Config object with config file</td>
+<tr class="field-odd field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>config</strong> (<a class="reference internal" href="config.html#dapt.config.Config" title="dapt.config.Config"><em>Config</em></a>) – A Config object which contains the client_id and client_secret.</li>
+<li><strong>client_id</strong> (<em>str</em>) – The Box client ID.</li>
+<li><strong>client_secret</strong> (<em>str</em>) – The Box client secret.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="dapt.box.Box.capture">
-<code class="descname">capture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.capture" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flask page: box redirect url which contains the code and state used to get access and refress token</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String containing HTML to be displayed with box login credentials</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <dl class="method">
 <dt id="dapt.box.Box.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.connect" title="Permalink to this definition">¶</a></dt>
+<code class="descname">connect</code><span class="sig-paren">(</span><em>access_token=None</em>, <em>refresh_token=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to connect to box using arguments provided in Config and starts server for authorization if not.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Box client if successful</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>access_token</strong> (<em>str</em>) – Optional argument that allows DAPT to connect to box without going through web authentification (assuming refresh_token is given and not expired).</li>
+<li><strong>refresh_token</strong> (<em>str</em>) – Optional argument that allows DAPT to connect to box without going through web authentification (assuming access_token is given and not expired).</li>
+</ul>
+</td>
 </tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="dapt.box.Box.end">
-<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flask page: shuts down flask server</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String containing HTML to be displayed</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="dapt.box.Box.index">
-<code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flask page: index of the web server and serves as the start point for authentication</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String containing HTML to be displayed</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="dapt.box.Box.startServer">
-<code class="descname">startServer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.startServer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method that starts flask to start authorization process</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Box client which can be used to access authorized user data</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Box client if successful</p>
+</td>
 </tr>
 </tbody>
 </table>

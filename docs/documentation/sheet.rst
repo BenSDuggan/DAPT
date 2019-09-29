@@ -1,4 +1,5 @@
 .. _sheet:
 
-.. automodule:: dapt.sheet
+
+.. automodule:: dapt.sheets
 	:members:

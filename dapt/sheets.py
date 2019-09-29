@@ -11,15 +11,16 @@ from oauth2client.service_account import ServiceAccountCredentials
 from . import database
 
 class Sheet(database.Database):
-    def __init__(self, spreedsheetID, creds_file="credentials.json", sheet_id=0):
-        """
-            An interface for accessing and setting paramater set data.
+    """
+        An interface for accessing and setting paramater set data.
 
-            Args:
-                spreedsheetID (str): the Google Sheets ID
-                creds_file (str): the path to the file containing the Google API credentials
-                sheet_id (int): the the sheet id to use (0 by default)
-        """
+        Args:
+            spreedsheetID (str): the Google Sheets ID
+            creds_file (str): the path to the file containing the Google API credentials
+            sheet_id (int): the the sheet id to use (0 by default)
+    """
+
+    def __init__(self, spreedsheetID, creds_file="credentials.json", sheet_id=0):
         
         super().__init__()
 
