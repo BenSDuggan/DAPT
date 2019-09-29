@@ -32,10 +32,10 @@ while True:
 
 
     try:
-        ap.update_status(parameters['id'], 'addign')
+        ap.update_status(parameters['id'], 'Adding and inserting')
 
         c = int(parameters['a']) + int(parameters['b'])
-        db.update_cell(db.get_row_index(parameters['id'], 'id'), 'c', c)
+        db.update_cell(db.get_row_index('id', parameters['id']), 'c', c)
 
         # Update sheets to mark the test is finished
         ap.successful(parameters["id"]) #Test completed successfully so we mark it as such

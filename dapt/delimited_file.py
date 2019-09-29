@@ -99,14 +99,14 @@ class Delimited_file(database.Database):
                 writer.writerow(row)
 
             return True 
-
-    def get_row_index(self, row_value, column_key):
+            
+    def get_row_index(self, column_key, row_value):
         """
             Get the row index given the column to look through and row value to match to.
 
             Args:
-                row_value (str): the row value to match with in the file and determin the row index.
                 column_key (str): the column to use.
+                row_value (str): the row value to match with in the file and determin the row index.
             
             Returns:
                 The index or -1 if it could not be determined
