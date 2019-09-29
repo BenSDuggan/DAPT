@@ -12,8 +12,7 @@ dapt.__version__
 .
 ├── dapt                 			# The folder where the DAPT library is housed
 ├── docs             				# Documentation for project
-├── examples          				# Python scripts showing how to use the program
-└── tests                  			# Test cases
+└── examples          				# Python scripts showing how to use the program
 ```
 
 ## Documentation
