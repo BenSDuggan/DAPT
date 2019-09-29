@@ -37,7 +37,7 @@ class Param:
             Returns:
                 An OrderedDict containing the key-value pairs from that paramater set or None if there are no more to sets.
         """
-
+        
         # Do we have a config file
         if self.config is not None:
             if self.config is not None and self.conf['numOfRuns']:

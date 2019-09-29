@@ -10,7 +10,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from . import database
 
-class Sheets(database.Database):
+class Sheet(database.Database):
     def __init__(self, spreedsheetID, creds_file="credentials.json", sheet_id=0):
         """
             An interface for accessing and setting paramater set data.
@@ -59,41 +59,72 @@ class Sheets(database.Database):
         """
 
         return self.sheet().row_values(1)
-        
+
     def update_row(self, row_id, values):
         """
-            Get the keys of the paramater set
+            Get the row of the paramater set
 
             Args:
-                row_id (int): the row id to replace
+                row_id (str): the row id to replace
                 values (OrderedDict): the key-value pairs that should be inserted
             
             Returns:
                 A boolean that is True if successfully inserted and False otherwise.
         """
 
-        pass
+        for i in values:
+            self.sheet().update_cell(self.get_key_index(i), self.get_row_index(i, values[i]), str(values[i]))
 
-    def update_cell(self, row_id, key, value):
+    def update_cell(self, key, row_id, value):
         """
             Get the keys of the paramater set
-
+            
             Args:
-                row_id (int): the row id to replace
                 key (str): the key of the value to replace
+                row_id (str): the row id to replace
                 value (str): the value to insert into the cell
             
             Returns:
                 A boolean that is True if successfully inserted and False otherwise.
         """
 
-        pass
+        self.sheet().update_cell(self.get_key_index(key), self.get_row_index(key, value), str(value))
 
+    def get_key_index(self, column_key):
+        """
+            Get the column index given the key.
 
-    def update_cell(self, i, j, text):
-        if type(j) == type('a'):
-            j = self.getKeyIndex(j)
-        self.sheet().update_cell(i+2, j, text)
+            Args:
+                column_key (str): the key to find the index of
+            
+            Returns:
+                The index or -1 if it could not be determined.
+        """
+
+        key_map = {}
+        key_row = self.sheet().row_values(1)
+        for i in range(len(key_row)):
+            if key_row[i] == column_key:
+                return i+1
+        return -1
+
+    def get_row_index(self, column_key, value):
+        """
+            Get the row index given the column to look through and row value to match to.
+
+            Args:
+                column_key (str): the key to find the index of
+                value (str): the value of the cell to fine
+            
+            Returns:
+                The index or -1 if it could not be determined.
+        """
+
+        col = self.sheet().col_values(self.get_key_index(column_key))
+        for i in range(len(col)):
+            if col[i] == value:
+                return i+1
+        return -1
         
 
 if __name__ == '__main__':

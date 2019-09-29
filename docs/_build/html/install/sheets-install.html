@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Documentation &mdash; DAPT  documentation</title>
+  <title>Google Sheets Installation &mdash; DAPT  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Param" href="param.html" />
-    <link rel="prev" title="Usage" href="../usage.html" /> 
+    <link rel="next" title="Box Installation" href="box-install.html" />
+    <link rel="prev" title="Install" href="install.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -82,17 +82,16 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../install/install.html">Install</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="param.html">Param</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sheet.html">Sheet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="delimited_file.html">Delimited file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="box.html">Box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="install.html">Install</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Google Sheets Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api-credentials">API Credentials</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="box-install.html">Box Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/documentation.html">Documentation</a></li>
 </ul>
 
             
@@ -138,13 +137,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Documentation</li>
+          <li><a href="install.html">Install</a> &raquo;</li>
+        
+      <li>Google Sheets Installation</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/documentation/documentation.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/install/sheets-install.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -157,18 +158,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="documentation">
-<span id="id1"></span><h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="param.html">Param</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sheet.html">Sheet</a></li>
-<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="delimited_file.html">Delimited file</a></li>
-<li class="toctree-l1"><a class="reference internal" href="box.html">Box</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
-</ul>
+  <div class="section" id="google-sheets-installation">
+<span id="sheets-install"></span><h1>Google Sheets Installation<a class="headerlink" href="#google-sheets-installation" title="Permalink to this headline">¶</a></h1>
+<p>Google Sheets can be used as a database to store your paramater sets.  The advantage to using this “database” over a file containing the paramaters is that a team can work on the set more collabortively and update the paramater list on the fly.  The bigger advantage is that the paramater list can be run dynamically.  By this I mean that people, running the library simultaneously, can connect to Google Sheets and get the next paramater set in the list.</p>
+<div class="section" id="api-credentials">
+<h2>API Credentials<a class="headerlink" href="#api-credentials" title="Permalink to this headline">¶</a></h2>
+<p>To use Google Sheets you will need to use the Google Sheets API and generate the proper credentials.</p>
+<ol class="arabic simple">
+<li>Start by going to the <a class="reference external" href="https://console.developers.google.com">Google Developer Console</a> and login using a Google account.</li>
+<li>Create a new project and name it whatever you’d like.  You can do this by selecting the down arrow next in the top left corner of the page next to the “Google API” logo and clicking “New Project”.</li>
+<li>Click “ENABLE APIS AND SERVICES”, search for “Google Sheets API” and click it.  Then click “Enable”.</li>
+<li>Click the “Credentials” tab from the menu on the left side of the page.</li>
+<li>Click the dropdown at the top of the page that says “CREATE CREDENTIALS” and select “Service account”.</li>
+<li>Give the service a name and click “Create”.</li>
+<li>In the next section asking about service account permissions, create a role with by selecting “Project” then “Editor”.  Then select “Continue”.</li>
+<li>Select “CREATE KEY”, ensure the key type of “JSON” is selected and click “CREATE”.  You will give DAPT the path to this JSON file when using Google Sheets.  Then click “DONE”.</li>
+<li>You should now be on the Credentials page of the Google Sheets API.  Record the email address in the Service Account table.  It should look something like <code class="docutils literal notranslate"><span class="pre">*.iam.gserviceaccount.com</span></code>.</li>
+</ol>
 </div>
 </div>
 
@@ -180,10 +186,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="param.html" class="btn btn-neutral float-right" title="Param" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="box-install.html" class="btn btn-neutral float-right" title="Box Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="install.html" class="btn btn-neutral float-left" title="Install" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

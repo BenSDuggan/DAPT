@@ -5,11 +5,10 @@ Distributed Automated Parameter Testing (DAPT)
 
 
 
-
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
-   install
+   install/install
    usage
    documentation/documentation
