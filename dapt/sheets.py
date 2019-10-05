@@ -66,7 +66,7 @@ class Sheet(database.Database):
             Get the row of the paramater set
 
             Args:
-                row_id (str): the row id to replace
+                row_id (int): the row id to replace
                 values (OrderedDict): the key-value pairs that should be inserted
             
             Returns:
@@ -75,6 +75,8 @@ class Sheet(database.Database):
 
         for i in values:
             self.sheet().update_cell(row_id+2, self.get_key_index(i), str(values[i]))
+            return True
+        return False
 
     def update_cell(self, row_id, key, value):
         """

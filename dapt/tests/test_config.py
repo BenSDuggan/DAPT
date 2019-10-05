@@ -1,4 +1,6 @@
-# Test that config is working properly
+"""
+    Test if config.py is working correctly
+"""
 
 import dapt
 import os

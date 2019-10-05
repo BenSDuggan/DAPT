@@ -16,7 +16,7 @@ class Delimited_file(database.Database):
     def __init__(self, csv_file, delimiter=','):
         
         super().__init__()
-
+        
         self.csv_file = csv_file
         self.delimiter = delimiter
 

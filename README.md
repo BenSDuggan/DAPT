@@ -24,4 +24,7 @@ Unit tests are ran using [Pytest](pytest.org).  You can install it by running `p
 import dapt
 dapt.test()
 ```
+
+or by running `pytest` in the main project directory.
+
 For more information on the tests go to the [`tests`](dapt/tests) folder.

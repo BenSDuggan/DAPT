@@ -1,0 +1,2 @@
+import dapt
+dapt.test()

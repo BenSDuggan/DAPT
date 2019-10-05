@@ -1,12 +1,43 @@
 """
-Param
-=====
+    Param
+    =====
 
-Interact with the database to get and manage paramater sets.
+    Interact with the database to get and manage parameter sets.
+
+
+    Database
+    --------
+
+    In order to get the paramaters, the ``Param`` class needs to be given a ``Database`` instance (e.g. ``Sheets`` or ``Delimited_file``).  Regardless of the which database option is used, it must be set up in a particular way as shown below.
+
+    Fields
+    ^^^^^^
+    
+    A field is the key (or identifier) used to get the value when a parameter set is returned.  Each database is required to have and ``id`` and ``status`` field.  There are many optional fields which can be used to give additionally information about the run such as start time and who performed the run.  Below are the fields that are used with parsing parameter sets.  Required parameters are marked with an astrict(*).
+
+    +---------------------------+-----------------------------------------------------------------------------------------+
+    | Fields                    | Description                                                                             |
+    +===========================+=========================================================================================+
+    | **\*id (string)**         | Unique parameter set installed                                                          |
+    +---------------------------+-----------------------------------------------------------------------------------------+
+    | **\*status (string)**     | The current status of the parameter set. Blank values are unran (default),              |
+    |                           | ``finished`` have finished and ``failed`` have failed.                                   |
+    +---------------------------+-----------------------------------------------------------------------------------------+
+    | **startTime (string)**    | The time that the parameter set began.  Times are in UTC time format.                   |
+    +---------------------------+-----------------------------------------------------------------------------------------+
+    | **endTime (string)**      | The time that the parameter set finished.  Times are in UTC time format.                |
+    +---------------------------+-----------------------------------------------------------------------------------------+
+    | **performed-by (string)**  | The username of the person that ran the parameter set.                                  |
+    +---------------------------+-----------------------------------------------------------------------------------------+
+    | **comments (string)**     | Any comments such as error messages relating to the parameter set.                      |
+    +---------------------------+-----------------------------------------------------------------------------------------+
+
+
+
+
 """
 
 import datetime
-#import config
 
 class Param:
     """
@@ -20,29 +51,31 @@ class Param:
     def __init__(self, database, config=None):
 
         self.db = database
+        self.performed_by = ''
+        self.number_of_runs = -1
+        self.runs_performed = 0
 
         self.config = config
         if self.config is None:
             pass
         else:
             self.conf = config.config
-
-            if self.conf['numOfRuns']:
-                self.count = 0
+            if self.conf['num-of-runs']:
+                self.number_of_runs = self.conf['num-of-runs']
 
     def next_parameters(self):
         """
-            Get the next paramater set if one exists
+            Get the next parameter set if one exists
             
             Returns:
-                An OrderedDict containing the key-value pairs from that paramater set or None if there are no more to sets.
+                An OrderedDict containing the key-value pairs from that parameter set or None if there are no more to sets.
         """
         
         # Do we have a config file
-        if self.config is not None:
-            if self.config is not None and self.conf['numOfRuns']:
-                if int(self.conf['numOfRuns']) == -1 or self.count < int(self.conf['numOfRuns']):
-                        self.count += 1
+        if self.config:
+            if self.conf['numOfRuns']:
+                if int(self.conf['numOfRuns']) == -1 or self.runs_performed < int(self.conf['numOfRuns']):
+                        self.runs_performed += 1
                 else:
                     return None
 
@@ -54,13 +87,13 @@ class Param:
                     if str(self.conf["lastTest"]) == str(records[i]["id"]):
                         if "startTime" in records[i]:
                             records[i]["startTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                            self.db.update_cell(i, 'startTime', records[i]["startTime"])
-                        if "performedBy" in records[i]:
-                            records[i]["performedBy"] = self.conf["userName"]
-                            self.db.update_cell(i, 'performedBy', self.conf["userName"])
+                        if "performed-by" in records[i]:
+                            records[i]["performed-by"] = self.conf["userName"]
+
+                        self.db.update_row(i, records[i])
 
                         return records[i]
-
+        
         records = self.db.get_table()
 
         for i in range(0, len(records)):
@@ -71,18 +104,15 @@ class Param:
                 except:
                     pass
 
-                if "status" in records[i]:
-                    records[i]["status"] = "in progress"
-                    self.db.update_cell(i, 'status', "in pogress")
+                records[i]["status"] = "in progress"
                 if "startTime" in records[i]:
                     records[i]["startTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                    self.db.update_cell(i, 'startTime', records[i]["startTime"])
-                if "performedBy" in records[i]:
-                    records[i]["performedBy"] = self.conf["userName"]
-                    self.db.update_cell(i, 'performedBy', self.conf["userName"])
+                if "performed-by" in records[i]:
+                    records[i]["performed-by"] = self.conf["userName"]
+                self.db.update_row(i, records[i])
 
                 # Save id to local cache
-                if self.config is not None:
+                if self.config:
                     self.config.change_config("lastTest", str(records[i]["id"]))
 
                 return records[i]
@@ -91,13 +121,13 @@ class Param:
 
     def update_status(self, id, status):
         """
-            Update the status of the selected paramater.  If status is not included in the paramater set keys then nothing will be updated.
+            Update the status of the selected parameter.  If status is not included in the parameter set keys then nothing will be updated.
 
             Args:
-                id (str): the id of the paramater set to use
+                id (str): the id of the parameter set to use
             
             Returns:
-                The new paramater set that has been updated or False if not able to update.
+                The new parameter set that has been updated or False if not able to update.
         """
 
         records = self.db.get_table()
@@ -122,13 +152,13 @@ class Param:
 
     def successful(self, id):
         """
-            Mark a paramater set as successfully completed.
+            Mark a parameter set as successfully completed.
 
             Args:
-                id (str): the id of the paramater set to use
+                id (str): the id of the parameter set to use
             
             Returns:
-                The new paramater set that has been updated or False if not able to update.
+                The new parameter set that has been updated or False if not able to update.
         """
 
         records = self.db.get_table()
@@ -156,14 +186,14 @@ class Param:
 
     def failed(self, id, err=''):
         """
-            Mark a paramater set as failed to completed.
+            Mark a parameter set as failed to completed.
             
             Args:
-                id (str): the id of the paramater set to use
+                id (str): the id of the parameter set to use
                 err (str): the error message.  Empty by default.
             
             Returns:
-                The new paramater set that has been updated or False if not able to update.
+                The new parameter set that has been updated or False if not able to update.
         """
 
         records = self.db.get_table()
@@ -176,14 +206,12 @@ class Param:
         if index == -1:
             return None
 
-        if 'status' in records[index]:
-            records[index]["status"] = ""
-            self.db.update_cell(index, 'status', '')
+        records[index]["status"] = "failed"
         if 'endTime' in records[index]:
             records[index]["endTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            self.db.update_cell(index, 'endTime', records[index]['endTime'])
         if 'comments' in records[index]:
-            records[index]["comments"] += " failed\{" + err + "\};"
-            self.db.update_cell(index, 'comments', records[index]["comments"])
+            records[index]["comments"] += " failed{ " + err + " };"
 
+        self.db.update_row(index, records[index])
+        
         return records[index]

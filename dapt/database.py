@@ -2,12 +2,14 @@
 Database
 ========
 
-This is the database class which is the basic interface for adding paramater set hosting services.  The idea is that the core methods (``get_table``, ``get_keys``, ``update_row`` and ``update_cell``) stay the same so that the inner workings can use multiple sources to access the paramater sets.  In general, there shouldn't be any more arguments added.  The exception to this is ``__init__``.  It may be necessary or desirable to add additional, optional, arguments.  This should be done by overloading the method or providing a default option to the argument.
+The ``Database`` class is the basic interface for adding parameter set hosting services.  The idea is that the core methods (``get_table``, ``get_keys``, ``update_row`` and ``update_cell``) stay the same so that the inner workings can use multiple sources to access the parameter sets.  In general, there shouldn't be any more arguments added.  The exception to this is ``__init__``.  It may be necessary or desirable to add additional, optional, arguments.  This should be done by overloading the method or providing a default option to the argument.  
+
+When prepareing for a parameter sweep the collection of parameter sets can be thought of as a database where the name of each paramate is a column name, each row is a paramater set and the value at the i-th column and j-th row is the value.  This is the approach of DAPT.
 """
 
 class Database:
 	"""
-		An interface for accessing and setting paramater set data.  
+		An interface for accessing and setting parameter set data.  
 	"""
 		
 	def __init__(self):
@@ -26,7 +28,7 @@ class Database:
 
 	def get_keys(self):
 		"""
-	        Get the keys of the paramater set
+	        Get the keys of the parameter set
 			
 	        Returns:
 	            Array of strings with each element being a key (order is preserved if possible)
@@ -36,7 +38,7 @@ class Database:
 
 	def update_row(self, row_id, values):
 		"""
-            Get the keys of the paramater set
+            Get the keys of the parameter set
 
             Args:
                 row_id (int): the row id to replace
@@ -50,7 +52,7 @@ class Database:
 
 	def update_cell(self, row_id, key, value):
 		"""
-	        Get the keys of the paramater set
+	        Get the keys of the parameter set
 
 	        Args:
 	            row_id (int): the row id to replace
