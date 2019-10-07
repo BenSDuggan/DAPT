@@ -83,6 +83,6 @@ def test_Param_failed_fields():
     expected = actual
     actual = param.failed(actual['id'], 'This is an error')
 
-    expected = OrderedDict({'id':'t2', 'status':'failed', 'a':'10', 'b':'10', 'c':''})
+    expected = OrderedDict({'id':'t2', 'startTime':'', 'endTime':'', 'status':'failed', 'comment':'','performed-by':'', 'a':'10', 'b':'10', 'c':''})
     
     assert actual == expected, "Cannot update the status of the paramater set."

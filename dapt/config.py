@@ -1,9 +1,43 @@
 """
-Config
-====== 
+    Config
+    ====== 
 
-Class that allows for reading and modification of a config file.
+    Class that allows for reading and modification of a configuration (config) file.  A config file is not required but using one will make using DAPT much easier to use and greatly increase increase it's functionality.  A configuration file is simply a JSON file.  There are some reserved keys but you can add your own and refer to them throughout your program.
+
+
+    Fields
+    ^^^^^^
+
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | Fields                      | Description                                                                             |
+    +=============================+=========================================================================================+
+    | ``last-test`` (str)         | The last test id that was run.                                                          |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``user-name`` (str)         | The box username of the user.                                                           |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``spreedsheet-id`` (str)    | The Google spreedsheet ID being used.                                                   |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``client-id`` (str)         | Box API client ID.                                                                      |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``client-secret`` (str)     | Box API client secret.                                                                  |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``box-folder-id`` (str)     | The box folder id to use                                                                |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``reset-time`` (str)        | The time that the box access-token needs to be refreshed.                               |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``num-of-runs`` (int)       | The number of paramater sets to run.                                                    |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``computer-strength`` (int) | Any comments such as error messages relating to the parameter set.                      |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``access-token`` (str)      | The box access token for the particular session.                                        |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+    | ``refresh-token`` (str)     | The box refresh token for the particular session.                                       |
+    +-----------------------------+-----------------------------------------------------------------------------------------+
+
+
 """
+
+import json
 
 class Config:
     """
@@ -12,9 +46,9 @@ class Config:
         Args:
             path (string): path to config file
     """
-    def __init__(self, path):
+    def __init__(self, path='config.json'):
         self.path = path
-        self.config = self.readConfig(self.path)
+        self.config = self.read_config()
     
     def read_config(self):
         """
@@ -24,127 +58,50 @@ class Config:
                 Dictionary of config file
         """
 
-        self.config = Config.readConfig(self.path)
-        return self.config
+        with open(self.path) as f:
+            return json.load(f)
 
-    def change_config(self, key, value):
+    def update_config(self):
         """
             Change value for a given key in the config file
 
-            Args:
-                key (string): key to be changed
-                value (string): value to inserted at key
-
             Returns:
                 Dictionary of config file
         """
 
-        self.config[key] = value
-
-        try:
-            Config.changeConfig(self.path, key, value)
-        except ValueError:
-            print("Can not update file.")
+        with open(self.path, 'w') as f:
+            json.dump(self.config, f)
 
         return self.config
 
     @staticmethod
-    def readConfig(path):
-        """
-            Reads in the config file and interprets it as a dictionary
-
-            Args:
-                path (string): path to config file
-
-            Returns:
-                Dictionary of config file
-        """
-
-        f = open(path, 'r').readlines()
-        types = [int, float, str]
-        config = {}
-        for i in range(0, len(f)):
-            f[i] = f[i].replace("\n", "")
-
-            if f[i].split(":")[1] == 'None':
-                config[f[i].split(":")[0]] = None
-                continue
-            elif f[i].split(":")[1] == 'True':
-                config[f[i].split(":")[0]] = True
-                continue
-            elif f[i].split(":")[1] == 'False':
-                config[f[i].split(":")[0]] = False
-                continue
-
-            for j in range(len(types)):
-                try:
-                    config[f[i].split(":")[0]] = types[j](f[i].split(":")[1])
-                    break
-                except:
-                    pass
-
-        return config
-
-
-    @staticmethod
-    def changeConfig(path, key, value):
-        """ 
-            Change value for a given key in the given file path
-
-            Args:
-                path (string): the path to the config file
-                key (string): key to be changed
-                value (string): value to inserted at key
-
-            Returns:
-                Dictionary of config file
-        """
-
-        f = open(path, 'r').readlines()
-        data = ""
-        found = False
-        for i in range(0, len(f)):
-            if f[i].split(':')[0] == str(key):
-                f[i] = f[i].split(':')[0] + ':' + str(value) + '\n'
-                found = True
-            data += f[i]
-
-        if not found:
-            data += key + ':' + value
-
-        with open(path, 'w') as file:
-            file.writelines(data)
-
-    @staticmethod
-    def create(path='config.txt'):
+    def create(path='config.json'):
         """
             Creates a config file with the reserved keys inserted.
 
             Args:
-                path (string): path where config file will be writen
+                path (string): path where config file will be written
         """
-        default = "lastTest:None\nuserName:None\nspreedsheetID:None\nclient_id:None\nclient_secret:None\nboxFolderID:None\nresetTime:None\nnumOfRuns:None\ncomputerStrength:None\naccessToken:None\nrefressToken:None"
-        with open(path, 'w') as file:
-            file.writelines(default)
+
+        default = {"last-test":None, "user-name":None, "spreedsheet-id":None, "client-id":None, "client-secret":None, "box-folder-id":None, "reset-time":None, "num-of-runs":None, "computer-strength":None, "access-token":None, "refresh-token":None}
+        
+        with open(path, 'w') as f:
+            json.dump(default, f)
 
     @staticmethod
-    def safe(path="config.txt"):
+    def safe(path="config.json"):
         """
-            Safe config file by removing accessToken and refressToken.
+            Safe config file by removing accessToken and refreshToken.
 
             Args:
                 path (string): path where config file will be writen
         """
-        data = Config.readConfig(path)
-        if data["accessToken"]:
-            data["accessToken"] = ""
-            Config.changeConfig(path, "accessToken", "")
-        if data["refressToken"]:
-            data["refressToken"] = ""
-            Config.changeConfig(path, "refressToken", "")
+        conf = Config(path)
+        data = conf.config
+        if data["access-token"]:
+            data["access-token"] = ""
+        if data["refresh-token"]:
+            data["refresh-token"] = ""
+        conf.config = data
+        conf.update_config()
 
-if __name__ == '__main__':
-    print(Config.readConfig('config.txt'))
-    config = Config('config.txt')
-    config.change_config('lastTest', 'k')
-    print(config.config) 

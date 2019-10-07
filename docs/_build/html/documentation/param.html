@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="sheet.html" />
+    <link rel="next" title="Sheets" href="sheet.html" />
     <link rel="prev" title="Documentation" href="documentation.html" /> 
 </head>
 
@@ -85,7 +85,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../install/install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Param</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Param</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#database">Database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fields">Fields</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sheet.html">Sheets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delimited_file.html">Delimited file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="box.html">Box</a></li>
@@ -160,92 +167,117 @@
             
   <span class="target" id="module-dapt.param"><span id="param"></span></span><div class="section" id="id1">
 <h1>Param<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>Interact with the database to get and manage paramater sets.</p>
+<p>This is the main class which interact with the database to get and manage parameter sets.  The <code class="docutils literal notranslate"><span class="pre">Param</span></code> class links all the other classes together enabling a paramater set to be run</p>
+<div class="section" id="database">
+<h2>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<p>In order to get the paramaters, the <code class="docutils literal notranslate"><span class="pre">Param</span></code> class needs to be given a <code class="docutils literal notranslate"><span class="pre">Database</span></code> instance (e.g. <code class="docutils literal notranslate"><span class="pre">Sheets</span></code> or <code class="docutils literal notranslate"><span class="pre">Delimited_file</span></code>).  Regardless of the which database option is used, it must be set up in a particular way as shown below.</p>
+<div class="section" id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<p>A field is the key (or identifier) used to get the value when a parameter set is returned.  Each database is required to have and <code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">status</span></code> field.  There are many optional fields which can be used to give additionally information about the run such as start time and who performed the run.  Below are the fields that are used with parsing parameter sets.  Required parameters are marked with an astrict(*).</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Fields</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">id</span></code>* (str)</p></td>
+<td><p>Unique parameter set installed</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">status</span></code>* (str)</p></td>
+<td><p>The current status of the parameter set. Blank values are unran (default),
+<code class="docutils literal notranslate"><span class="pre">finished</span></code> have finished and <code class="docutils literal notranslate"><span class="pre">failed</span></code> have failed.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">start-time</span></code> (str)</p></td>
+<td><p>The time that the parameter set began.  Times are in UTC time format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">end-time</span></code> (str)</p></td>
+<td><p>The time that the parameter set finished.  Times are in UTC time format.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">performed-by</span></code> (str)</p></td>
+<td><p>The username of the person that ran the parameter set.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">comments</span></code> (str)</p></td>
+<td><p>Any comments such as error messages relating to the parameter set.</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="class">
 <dt id="dapt.param.Param">
-<em class="property">class </em><code class="descclassname">dapt.param.</code><code class="descname">Param</code><span class="sig-paren">(</span><em>database</em>, <em>config=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">dapt.param.</code><code class="sig-name descname">Param</code><span class="sig-paren">(</span><em class="sig-param">database</em>, <em class="sig-param">config=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a Param instance with a database and optional config file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>database</strong> (<a class="reference internal" href="database.html#dapt.database.Database" title="dapt.database.Database"><em>Database</em></a>) – a Database instance (such as Sheets or Delimited_file)</li>
-<li><strong>config</strong> (<a class="reference internal" href="config.html#dapt.config.Config" title="dapt.config.Config"><em>Config</em></a>) – a config object which allows for more features.  This is optional.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database</strong> (<a class="reference internal" href="database.html#dapt.database.Database" title="dapt.database.Database"><em>Database</em></a>) – a Database instance (such as Sheets or Delimited_file)</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="config.html#dapt.config.Config" title="dapt.config.Config"><em>Config</em></a>) – a config object which allows for more features.  This is optional.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="dapt.param.Param.failed">
-<code class="descname">failed</code><span class="sig-paren">(</span><em>id</em>, <em>err=''</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param.failed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Mark a paramater set as failed to completed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id</strong> (<em>str</em>) – the id of the paramater set to use</li>
-<li><strong>err</strong> (<em>str</em>) – the error message.  Empty by default.</li>
+<code class="sig-name descname">failed</code><span class="sig-paren">(</span><em class="sig-param">id</em>, <em class="sig-param">err=''</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param.failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark a parameter set as failed to completed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>) – the id of the parameter set to use</p></li>
+<li><p><strong>err</strong> (<em>str</em>) – the error message.  Empty by default.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The new paramater set that has been updated or False if not able to update.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new parameter set that has been updated or False if not able to update.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="dapt.param.Param.next_parameters">
-<code class="descname">next_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param.next_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the next paramater set if one exists</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An OrderedDict containing the key-value pairs from that paramater set or None if there are no more to sets.</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">next_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param.next_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the next parameter set if one exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An OrderedDict containing the key-value pairs from that parameter set or None if there are no more to sets.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="dapt.param.Param.successful">
-<code class="descname">successful</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param.successful" title="Permalink to this definition">¶</a></dt>
-<dd><p>Mark a paramater set as successfully completed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>str</em>) – the id of the paramater set to use</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The new paramater set that has been updated or False if not able to update.</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">successful</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param.successful" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark a parameter set as successfully completed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>str</em>) – the id of the parameter set to use</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new parameter set that has been updated or False if not able to update.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="dapt.param.Param.update_status">
-<code class="descname">update_status</code><span class="sig-paren">(</span><em>id</em>, <em>status</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param.update_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the status of the selected paramater.  If status is not included in the paramater set keys then nothing will be updated.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>str</em>) – the id of the paramater set to use</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The new paramater set that has been updated or False if not able to update.</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">update_status</code><span class="sig-paren">(</span><em class="sig-param">id</em>, <em class="sig-param">status</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.param.Param.update_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the status of the selected parameter.  If status is not included in the parameter set keys then nothing will be updated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>str</em>) – the id of the parameter set to use</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new parameter set that has been updated or False if not able to update.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
+</div>
+</div>
 </div>
 
 
@@ -256,7 +288,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="sheet.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="sheet.html" class="btn btn-neutral float-right" title="Sheets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="documentation.html" class="btn btn-neutral float-left" title="Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

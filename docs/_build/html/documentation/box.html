@@ -164,76 +164,61 @@
 <p>Class that allows for access to the box API and methods to directly upload files</p>
 <dl class="class">
 <dt id="dapt.box.Box">
-<em class="property">class </em><code class="descclassname">dapt.box.</code><code class="descname">Box</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">dapt.box.</code><code class="sig-name descname">Box</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class which allows for connection to box API.  You must either provide a Config object or client_id and client_secret.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
-<li><strong>config</strong> (<a class="reference internal" href="config.html#dapt.config.Config" title="dapt.config.Config"><em>Config</em></a>) – A Config object which contains the client_id and client_secret.</li>
-<li><strong>client_id</strong> (<em>str</em>) – The Box client ID.</li>
-<li><strong>client_secret</strong> (<em>str</em>) – The Box client secret.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<a class="reference internal" href="config.html#dapt.config.Config" title="dapt.config.Config"><em>Config</em></a>) – A Config object which contains the client_id and client_secret.</p></li>
+<li><p><strong>client_id</strong> (<em>str</em>) – The Box client ID.</p></li>
+<li><p><strong>client_secret</strong> (<em>str</em>) – The Box client secret.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="dapt.box.Box.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><em>access_token=None</em>, <em>refresh_token=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.connect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param">access_token=None</em>, <em class="sig-param">refresh_token=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to connect to box using arguments provided in Config and starts server for authorization if not.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>access_token</strong> (<em>str</em>) – Optional argument that allows DAPT to connect to box without going through web authentification (assuming refresh_token is given and not expired).</li>
-<li><strong>refresh_token</strong> (<em>str</em>) – Optional argument that allows DAPT to connect to box without going through web authentification (assuming access_token is given and not expired).</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>access_token</strong> (<em>str</em>) – Optional argument that allows DAPT to connect to box without going through web authentification (assuming refresh_token is given and not expired).</p></li>
+<li><p><strong>refresh_token</strong> (<em>str</em>) – Optional argument that allows DAPT to connect to box without going through web authentification (assuming access_token is given and not expired).</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Box client if successful</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Box client if successful</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="dapt.box.Box.updateTokens">
-<code class="descname">updateTokens</code><span class="sig-paren">(</span><em>access_token</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.updateTokens" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">updateTokens</code><span class="sig-paren">(</span><em class="sig-param">access_token</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.updateTokens" title="Permalink to this definition">¶</a></dt>
 <dd><p>Refresh the access and refresh token given a valid access token</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>access_token</strong> (<em>string</em>) – box access token to be refreshed</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Box client</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>access_token</strong> (<em>string</em>) – box access token to be refreshed</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Box client</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="dapt.box.Box.uploadFile">
-<code class="descname">uploadFile</code><span class="sig-paren">(</span><em>folderID</em>, <em>path</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.uploadFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">uploadFile</code><span class="sig-paren">(</span><em class="sig-param">folderID</em>, <em class="sig-param">path</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.box.Box.uploadFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upload a file to box using the current client</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>folderID</strong> (<em>string</em>) – the box folder ID that the file should be added to (found in URL)</li>
-<li><strong>path</strong> (<em>string</em>) – the path to the file on your local machine</li>
-<li><strong>file</strong> (<em>string</em>) – the name of the file you wish to upload</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folderID</strong> (<em>string</em>) – the box folder ID that the file should be added to (found in URL)</p></li>
+<li><p><strong>path</strong> (<em>string</em>) – the path to the file on your local machine</p></li>
+<li><p><strong>file</strong> (<em>string</em>) – the name of the file you wish to upload</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

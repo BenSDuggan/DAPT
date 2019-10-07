@@ -7,68 +7,60 @@ import os
 
 # Test creation of new config file
 def test_config_create():
-	dapt.config.Config.create('dapt/tests/config.txt')
+	dapt.config.Config.create('config.json')
 
-	conf = dapt.config.Config.readConfig('dapt/tests/config.txt')
-	expected = {"lastTest":None, "userName":None, "spreedsheetID":None, "client_id":None, "client_secret":None, "boxFolderID":None, "resetTime":None, "numOfRuns":None, "computerStrength":None, "accessToken":None, "refressToken":None}
+	conf = dapt.config.Config('config.json')
+	expected = {"last-test":None, "user-name":None, "spreedsheet-id":None, "client-id":None, "client-secret":None, "box-folder-id":None, "reset-time":None, "num-of-runs":None, "computer-strength":None, "access-token":None, "refresh-token":None}
 
-	os.remove('dapt/tests/config.txt')
+	os.remove('config.json')
 
-	assert conf == expected, "The Config.create() method that creates a new and empty config file returned wrong."
-
-# Test parsing of Config
-def test_config_file_parseing():
-
-	with open('dapt/tests/config.txt', 'w') as f:
-		f.writelines('test_int:123\ntest_float:300.1\ntest_None:None\ntest_char:a\ntest_bool:False\ntest_string:hi')
-
-	conf = dapt.config.Config.readConfig('dapt/tests/config.txt')
-	expected = {"test_int":123, "test_float":300.1, "test_None":None, "test_char":'a', "test_bool":False, "test_string":'hi'}
-
-	os.remove('dapt/tests/config.txt')
-
-	assert conf == expected, "The Config file parser did not work."
+	assert conf.config == expected, "The Config.create() method that creates a new and empty config file returned wrong."
 
 # Test changing a value in Config
 def test_config_file_change():
-	dapt.config.Config.create('dapt/tests/config.txt')
+	dapt.config.Config.create('config.json')
 
-	conf = dapt.config.Config('dapt/tests/config.txt')
+	conf = dapt.config.Config('config.json')
 
 	expected = conf.config
-	expected["userName"] = 'Clifford'
+	expected["user-name"] = 'Clifford'
 
-	conf.change_config('userName', 'Clifford')
+	conf.config["user-name"] = 'Clifford'
+	conf.update_config()
+	conf.read_config()
 
-	os.remove('dapt/tests/config.txt')
+	os.remove('config.json')
 
 	assert conf.config == expected, "Config did not change the value correctly."
 
 # Test adding a key,value pair in Config
 def test_config_file_add():
-	dapt.config.Config.create('dapt/tests/config.txt')
+	dapt.config.Config.create('config.json')
 
-	conf = dapt.config.Config('dapt/tests/config.txt')
+	conf = dapt.config.Config('config.json')
 
 	expected = conf.config
-	expected["dog_type"] = 'Bloodhound'
+	expected["abc"] = 123
 
-	conf.change_config('dog_type', 'Bloodhound')
+	conf.config["abc"] = 123
+	conf.update_config()
+	conf.read_config()
 
-	os.remove('dapt/tests/config.txt')
+	os.remove('config.json')
 
 	assert conf.config == expected, "Config did not add the key,value pair correctly."
 
 # Test making config file safe for uploading publicly
 def test_config_safe():
-	dapt.config.Config.create('dapt/tests/config.txt')
-	conf = dapt.config.Config('dapt/tests/config.txt')
+	dapt.config.Config.create('config.json')
+	conf = dapt.config.Config('config.json')
 
 	expected = conf.config
-	expected["accessToken"] = ''
+	expected["access-token"] = ''
+	expected["refresh-token"] = ''
 
-	conf.safe('dapt/tests/config.txt')
+	dapt.config.Config.safe('config.json')
 
-	os.remove('dapt/tests/config.txt')
+	os.remove('config.json')
 
 	assert conf.config == expected, "Conf did not make the config file safe."

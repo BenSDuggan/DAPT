@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Delimited file" href="delimited_file.html" />
-    <link rel="prev" title="Sheet" href="sheet.html" /> 
+    <link rel="prev" title="Sheets" href="sheet.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,7 +86,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="documentation.html">Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="param.html">Param</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sheet.html">Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sheet.html">Sheets</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="delimited_file.html">Delimited file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="box.html">Box</a></li>
@@ -161,80 +161,67 @@
             
   <span class="target" id="module-dapt.database"><span id="database"></span></span><div class="section" id="id1">
 <h1>Database<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>This is the database class which is the basic interface for adding paramater set hosting services.  The idea is that the core methods (<code class="docutils literal notranslate"><span class="pre">get_table</span></code>, <code class="docutils literal notranslate"><span class="pre">get_keys</span></code>, <code class="docutils literal notranslate"><span class="pre">update_row</span></code> and <code class="docutils literal notranslate"><span class="pre">update_cell</span></code>) stay the same so that the inner workings can use multiple sources to access the paramater sets.  In general, there shouldn’t be any more arguments added.  The exception to this is <code class="docutils literal notranslate"><span class="pre">__init__</span></code>.  It may be necessary or desirable to add additional, optional, arguments.  This should be done by overloading the method or providing a default option to the argument.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Database</span></code> class is the basic interface for adding parameter set hosting services.  The idea is that the core methods (<code class="docutils literal notranslate"><span class="pre">get_table</span></code>, <code class="docutils literal notranslate"><span class="pre">get_keys</span></code>, <code class="docutils literal notranslate"><span class="pre">update_row</span></code> and <code class="docutils literal notranslate"><span class="pre">update_cell</span></code>) stay the same so that the inner workings can use multiple sources to access the parameter sets.  In general, there shouldn’t be any more arguments added.  The exception to this is <code class="docutils literal notranslate"><span class="pre">__init__</span></code>.  It may be necessary or desirable to add additional, optional, arguments.  This should be done by overloading the method or providing a default option to the argument.</p>
+<p>When prepareing for a parameter sweep the collection of parameter sets can be thought of as a database where the name of each paramate is a column name, each row is a paramater set and the value at the i-th column and j-th row is the value.  This is the approach of DAPT.</p>
 <dl class="class">
 <dt id="dapt.database.Database">
-<em class="property">class </em><code class="descclassname">dapt.database.</code><code class="descname">Database</code><a class="headerlink" href="#dapt.database.Database" title="Permalink to this definition">¶</a></dt>
-<dd><p>An interface for accessing and setting paramater set data.</p>
+<em class="property">class </em><code class="sig-prename descclassname">dapt.database.</code><code class="sig-name descname">Database</code><a class="headerlink" href="#dapt.database.Database" title="Permalink to this definition">¶</a></dt>
+<dd><p>An interface for accessing and setting parameter set data.</p>
 <dl class="method">
 <dt id="dapt.database.Database.get_keys">
-<code class="descname">get_keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.database.Database.get_keys" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the keys of the paramater set</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of strings with each element being a key (order is preserved if possible)</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">get_keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.database.Database.get_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the keys of the parameter set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Array of strings with each element being a key (order is preserved if possible)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="dapt.database.Database.get_table">
-<code class="descname">get_table</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.database.Database.get_table" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_table</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dapt.database.Database.get_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the table from the database.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An array with each element being a dictionary of the key-value pairs for the row in the database.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An array with each element being a dictionary of the key-value pairs for the row in the database.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="dapt.database.Database.update_cell">
-<code class="descname">update_cell</code><span class="sig-paren">(</span><em>row_id</em>, <em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.database.Database.update_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the keys of the paramater set</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>row_id</strong> (<em>int</em>) – the row id to replace</li>
-<li><strong>key</strong> (<em>str</em>) – the key of the value to replace</li>
-<li><strong>value</strong> (<em>str</em>) – the value to insert into the cell</li>
+<code class="sig-name descname">update_cell</code><span class="sig-paren">(</span><em class="sig-param">row_id</em>, <em class="sig-param">key</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.database.Database.update_cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the keys of the parameter set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>row_id</strong> (<em>int</em>) – the row id to replace</p></li>
+<li><p><strong>key</strong> (<em>str</em>) – the key of the value to replace</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – the value to insert into the cell</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A boolean that is True if successfully inserted and False otherwise.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A boolean that is True if successfully inserted and False otherwise.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="dapt.database.Database.update_row">
-<code class="descname">update_row</code><span class="sig-paren">(</span><em>row_id</em>, <em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.database.Database.update_row" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the keys of the paramater set</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>row_id</strong> (<em>int</em>) – the row id to replace</li>
-<li><strong>values</strong> (<em>OrderedDict</em>) – the key-value pairs that should be inserted</li>
+<code class="sig-name descname">update_row</code><span class="sig-paren">(</span><em class="sig-param">row_id</em>, <em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#dapt.database.Database.update_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the keys of the parameter set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>row_id</strong> (<em>int</em>) – the row id to replace</p></li>
+<li><p><strong>values</strong> (<em>OrderedDict</em>) – the key-value pairs that should be inserted</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A boolean that is True if successfully inserted and False otherwise.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A boolean that is True if successfully inserted and False otherwise.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -252,7 +239,7 @@
         <a href="delimited_file.html" class="btn btn-neutral float-right" title="Delimited file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="sheet.html" class="btn btn-neutral float-left" title="Sheet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="sheet.html" class="btn btn-neutral float-left" title="Sheets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

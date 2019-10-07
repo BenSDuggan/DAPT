@@ -2,7 +2,7 @@
     Param
     =====
 
-    Interact with the database to get and manage parameter sets.
+    This is the main class which interact with the database to get and manage parameter sets.  The ``Param`` class links all the other classes together enabling a paramater set to be run
 
 
     Database
@@ -12,29 +12,26 @@
 
     Fields
     ^^^^^^
-    
+
     A field is the key (or identifier) used to get the value when a parameter set is returned.  Each database is required to have and ``id`` and ``status`` field.  There are many optional fields which can be used to give additionally information about the run such as start time and who performed the run.  Below are the fields that are used with parsing parameter sets.  Required parameters are marked with an astrict(*).
 
     +---------------------------+-----------------------------------------------------------------------------------------+
     | Fields                    | Description                                                                             |
     +===========================+=========================================================================================+
-    | **\*id (string)**         | Unique parameter set installed                                                          |
+    | ``id``\* (str)            | Unique parameter set installed                                                          |
     +---------------------------+-----------------------------------------------------------------------------------------+
-    | **\*status (string)**     | The current status of the parameter set. Blank values are unran (default),              |
-    |                           | ``finished`` have finished and ``failed`` have failed.                                   |
+    | ``status``\* (str)        | The current status of the parameter set. Blank values are unran (default),              |
+    |                           | ``finished`` have finished and ``failed`` have failed.                                  |
     +---------------------------+-----------------------------------------------------------------------------------------+
-    | **startTime (string)**    | The time that the parameter set began.  Times are in UTC time format.                   |
+    | ``start-time`` (str)      | The time that the parameter set began.  Times are in UTC time format.                   |
     +---------------------------+-----------------------------------------------------------------------------------------+
-    | **endTime (string)**      | The time that the parameter set finished.  Times are in UTC time format.                |
+    | ``end-time`` (str)        | The time that the parameter set finished.  Times are in UTC time format.                |
     +---------------------------+-----------------------------------------------------------------------------------------+
-    | **performed-by (string)**  | The username of the person that ran the parameter set.                                  |
+    | ``performed-by`` (str)    | The username of the person that ran the parameter set.                                  |
     +---------------------------+-----------------------------------------------------------------------------------------+
-    | **comments (string)**     | Any comments such as error messages relating to the parameter set.                      |
+    | ``comments`` (str)        | Any comments such as error messages relating to the parameter set.                      |
     +---------------------------+-----------------------------------------------------------------------------------------+
-
-
-
-
+    
 """
 
 import datetime
@@ -54,14 +51,15 @@ class Param:
         self.performed_by = ''
         self.number_of_runs = -1
         self.runs_performed = 0
+        self.current_test = None
 
         self.config = config
-        if self.config is None:
-            pass
-        else:
+        if self.config:
             self.conf = config.config
             if self.conf['num-of-runs']:
                 self.number_of_runs = self.conf['num-of-runs']
+            if self.conf['performed-by']:
+                self.performed_by = self.conf['performed-by']
 
     def next_parameters(self):
         """
@@ -70,25 +68,24 @@ class Param:
             Returns:
                 An OrderedDict containing the key-value pairs from that parameter set or None if there are no more to sets.
         """
+
+        if self.number_of_runs == -1 or self.runs_performed < self.number_of_runs:
+            self.runs_performed += 1
+        else:
+            return None
         
         # Do we have a config file
         if self.config:
-            if self.conf['numOfRuns']:
-                if int(self.conf['numOfRuns']) == -1 or self.runs_performed < int(self.conf['numOfRuns']):
-                        self.runs_performed += 1
-                else:
-                    return None
-
             records = self.db.get_table()
 
             if "lastTest" in self.conf and self.conf["lastTest"] != "None":
                 print("Using lastTest from config.txt")
                 for i in range(0, len(records)):
                     if str(self.conf["lastTest"]) == str(records[i]["id"]):
-                        if "startTime" in records[i]:
-                            records[i]["startTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                        if "start-time" in records[i]:
+                            records[i]["start-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                         if "performed-by" in records[i]:
-                            records[i]["performed-by"] = self.conf["userName"]
+                            records[i]["performed-by"] = self.performed_by
 
                         self.db.update_row(i, records[i])
 
@@ -97,22 +94,20 @@ class Param:
         records = self.db.get_table()
 
         for i in range(0, len(records)):
-            if len(records[i]["status"]) == 0:
-                try:
-                    if int(self.conf['computerStrength']) < int(records[i]["computerStrength"]):
-                        continue
-                except:
-                    pass
-
+            if not len(records[i]["status"]):
+                if 'computer-strength' in records[i] and int(self.conf['computer-strength']) < int(records[i]["computer-strength"]):
+                    continue
+                
                 records[i]["status"] = "in progress"
-                if "startTime" in records[i]:
-                    records[i]["startTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                if "start-time" in records[i]:
+                    records[i]["start-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 if "performed-by" in records[i]:
-                    records[i]["performed-by"] = self.conf["userName"]
+                    records[i]["performed-by"] = self.performed_by
                 self.db.update_row(i, records[i])
 
                 # Save id to local cache
                 if self.config:
+                    pass
                     self.config.change_config("lastTest", str(records[i]["id"]))
 
                 return records[i]
@@ -178,9 +173,9 @@ class Param:
         if 'status' in records[index]:
             records[index]["status"] = "finished"
             self.db.update_cell(index, 'status', 'finished')
-        if 'endTime' in records[index]:
-            records[index]["endTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            self.db.update_cell(index, 'endTime', records[index]["endTime"])
+        if 'end-time' in records[index]:
+            records[index]["end-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            self.db.update_cell(index, 'end-time', records[index]["end-time"])
         
         return records[index]
 
@@ -207,8 +202,8 @@ class Param:
             return None
 
         records[index]["status"] = "failed"
-        if 'endTime' in records[index]:
-            records[index]["endTime"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        if 'end-time' in records[index]:
+            records[index]["end-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         if 'comments' in records[index]:
             records[index]["comments"] += " failed{ " + err + " };"
 
