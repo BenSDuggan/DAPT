@@ -31,7 +31,7 @@
     +---------------------------+-----------------------------------------------------------------------------------------+
     | ``comments`` (str)        | Any comments such as error messages relating to the parameter set.                      |
     +---------------------------+-----------------------------------------------------------------------------------------+
-    
+
 """
 
 import datetime
@@ -52,6 +52,7 @@ class Param:
         self.number_of_runs = -1
         self.runs_performed = 0
         self.current_test = None
+        self.computer_strength = None
 
         self.config = config
         if self.config:
@@ -60,6 +61,8 @@ class Param:
                 self.number_of_runs = self.conf['num-of-runs']
             if self.conf['performed-by']:
                 self.performed_by = self.conf['performed-by']
+            if self.conf['computer-strength']:
+                self.computer_strength = self.conf['computer-strength']
 
     def next_parameters(self):
         """
@@ -95,7 +98,7 @@ class Param:
 
         for i in range(0, len(records)):
             if not len(records[i]["status"]):
-                if 'computer-strength' in records[i] and int(self.conf['computer-strength']) < int(records[i]["computer-strength"]):
+                if 'computer-strength' in records[i] and self.computer_strength and self.computer_strength < int(records[i]["computer-strength"]):
                     continue
                 
                 records[i]["status"] = "in progress"
@@ -107,8 +110,9 @@ class Param:
 
                 # Save id to local cache
                 if self.config:
-                    pass
-                    self.config.change_config("lastTest", str(records[i]["id"]))
+                    self.conf['last-test'] = str(records[i]["id"])
+                    self.config.config = self.conf
+                    self.config.change_config()
 
                 return records[i]
 
@@ -137,13 +141,10 @@ class Param:
         if index == -1:
             return False
 
-        if 'status' in records[index]:
-            records[index]["status"] = status
-            self.db.update_cell(index, 'status', status)
+        records[index]["status"] = status
+        self.db.update_cell(index, 'status', status)
 
-            return records[index]
-        else:
-            return False
+        return records[index]
 
     def successful(self, id):
         """
@@ -170,12 +171,11 @@ class Param:
         if index == -1:
             return False
 
-        if 'status' in records[index]:
-            records[index]["status"] = "finished"
-            self.db.update_cell(index, 'status', 'finished')
+        records[index]["status"] = "finished"
         if 'end-time' in records[index]:
             records[index]["end-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            self.db.update_cell(index, 'end-time', records[index]["end-time"])
+
+        self.db.update_row(index, records[index])
         
         return records[index]
 
