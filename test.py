@@ -1,2 +1,0 @@
-import dapt
-dapt.test()
