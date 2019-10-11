@@ -59,6 +59,35 @@ def test_Param_update_status():
 
 
 # Test if failed works
+def test_Param_successful():
+    create_simple_test_file()
+
+    db = dapt.delimited_file.Delimited_file('test.csv', ',')
+
+    param = dapt.param.Param(db)
+    actual = param.next_parameters()
+    actual = param.successful(actual['id'])
+
+    expected = OrderedDict({'id':'t2', 'status':'finished', 'a':'10', 'b':'10', 'c':''})
+
+    assert actual == expected, "Cannot update the status of the paramater set."
+
+# Test if failed with optional fields
+def test_Param_successful_fields():
+    create_complex_test_file()
+
+    db = dapt.delimited_file.Delimited_file('test.csv', ',')
+
+    param = dapt.param.Param(db)
+    actual = param.next_parameters()
+    expected = actual
+    actual = param.successful(actual['id'])
+    
+    expected = OrderedDict({'id':'t2', 'startTime':'', 'endTime':'', 'status':'failed', 'comment':'','performed-by':'', 'a':'10', 'b':'10', 'c':''})
+    
+    assert actual == expected, "Cannot update the status of the paramater set."
+
+# Test if failed works
 def test_Param_failed():
     create_simple_test_file()
 

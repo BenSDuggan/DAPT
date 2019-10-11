@@ -51,7 +51,6 @@ class Param:
         self.performed_by = ''
         self.number_of_runs = -1
         self.runs_performed = 0
-        self.current_test = None
         self.computer_strength = None
 
         self.config = config
@@ -77,24 +76,22 @@ class Param:
         else:
             return None
         
-        # Do we have a config file
-        if self.config:
-            records = self.db.get_table()
-
-            if "lastTest" in self.conf and self.conf["lastTest"] != "None":
-                print("Using lastTest from config.txt")
-                for i in range(0, len(records)):
-                    if str(self.conf["lastTest"]) == str(records[i]["id"]):
-                        if "start-time" in records[i]:
-                            records[i]["start-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                        if "performed-by" in records[i]:
-                            records[i]["performed-by"] = self.performed_by
-
-                        self.db.update_row(i, records[i])
-
-                        return records[i]
-        
         records = self.db.get_table()
+
+        # Do we have a last-test in the config file
+        if self.config and "last-test" in self.conf and self.conf["last-test"]:
+            print("Using lastTest from config.txt")
+            for i in range(0, len(records)):
+                if str(self.conf["last-test"]) == str(records[i]["id"]) and records[i]["status"] != "finished":
+                    records[i]["status"] = "in progress"
+                    if "start-time" in records[i]:
+                        records[i]["start-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    if "performed-by" in records[i]:
+                        records[i]["performed-by"] = self.performed_by
+
+                    self.db.update_row(i, records[i])
+
+                    return records[i]
 
         for i in range(0, len(records)):
             if not len(records[i]["status"]):
@@ -161,8 +158,8 @@ class Param:
         index = -1
 
         # Remove id from local cache
-        if self.config is not None:
-            self.config.change_config("lastTest", "None")
+        if self.config:
+            self.config.change_config("last-test", None)
 
         for i in range(0, len(records)):
             if str(records[i]["id"]) == str(id):
