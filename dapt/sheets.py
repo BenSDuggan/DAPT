@@ -74,9 +74,11 @@ class Sheet(database.Database):
         """
 
         for i in values:
-            self.sheet().update_cell(row_id+2, self.get_key_index(i), str(values[i]))
-            return True
-        return False
+            try:
+                self.sheet().update_cell(row_id+2, self.get_key_index(i), str(values[i]))
+            except:
+                return False
+        return True
 
     def update_cell(self, row_id, key, value):
         """
@@ -90,8 +92,11 @@ class Sheet(database.Database):
             Returns:
                 A boolean that is True if successfully inserted and False otherwise.
         """
-
-        self.sheet().update_cell(row_id+2, self.get_key_index(key), str(value))
+        try:
+            self.sheet().update_cell(row_id+2, self.get_key_index(key), str(value))
+        except:
+            return False
+        return True
 
     def get_key_index(self, column_key):
         """
@@ -106,7 +111,7 @@ class Sheet(database.Database):
 
         key_map = {}
         key_row = self.sheet().row_values(1)
-        for i in range(len(key_row)):   
+        for i in range(len(key_row)):
             if key_row[i] == column_key:
                 return i+1
         return -1

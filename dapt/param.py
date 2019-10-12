@@ -55,13 +55,12 @@ class Param:
 
         self.config = config
         if self.config:
-            self.conf = config.config
-            if self.conf['num-of-runs']:
-                self.number_of_runs = self.conf['num-of-runs']
-            if self.conf['performed-by']:
-                self.performed_by = self.conf['performed-by']
-            if self.conf['computer-strength']:
-                self.computer_strength = self.conf['computer-strength']
+            if self.config.config['num-of-runs']:
+                self.number_of_runs = self.config.config['num-of-runs']
+            if self.config.config['performed-by']:
+                self.performed_by = self.config.config['performed-by']
+            if self.config.config['computer-strength']:
+                self.computer_strength = self.config.config['computer-strength']
 
     def next_parameters(self):
         """
@@ -79,10 +78,10 @@ class Param:
         records = self.db.get_table()
 
         # Do we have a last-test in the config file
-        if self.config and "last-test" in self.conf and self.conf["last-test"]:
+        if self.config and "last-test" in self.config.config and self.config.config["last-test"]:
             print("Using lastTest from config.txt")
             for i in range(0, len(records)):
-                if str(self.conf["last-test"]) == str(records[i]["id"]) and records[i]["status"] != "finished":
+                if str(self.config.config["last-test"]) == str(records[i]["id"]) and records[i]["status"] != "finished":
                     records[i]["status"] = "in progress"
                     if "start-time" in records[i]:
                         records[i]["start-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -107,9 +106,8 @@ class Param:
 
                 # Save id to local cache
                 if self.config:
-                    self.conf['last-test'] = str(records[i]["id"])
-                    self.config.config = self.conf
-                    self.config.change_config()
+                    self.config.config['last-test'] = str(records[i]["id"])
+                    self.config.update_config()
 
                 return records[i]
 
@@ -159,7 +157,8 @@ class Param:
 
         # Remove id from local cache
         if self.config:
-            self.config.change_config("last-test", None)
+            self.config.config["last-test"] = None
+            self.config.update_config()
 
         for i in range(0, len(records)):
             if str(records[i]["id"]) == str(id):

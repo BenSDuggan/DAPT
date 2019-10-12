@@ -34,11 +34,10 @@ class Box:
             raise ValueError("You must provide a Config object or client_id and client_secret.")
         elif len(kwargs) == 1:
             self.config=kwargs['config']
-            self.conf = self.config.config
 
             self.oauth = OAuth2(
-                client_id=self.conf['client_id'],
-                client_secret=self.conf['client_secret']
+                client_id=self.config.config['client_id'],
+                client_secret=self.config.config['client_secret']
             )
         elif len(kwargs) == 2:
             self.config = None
@@ -74,18 +73,19 @@ class Box:
             return
 
         # If not, then we check to see if the access and refresh token are in the config file.
-        if self.config and len(self.conf['accessToken']) > 0 and len(self.conf['refressToken']) > 0:
+        if self.config and len(self.config.config['access-token']) > 0 and len(self.config.config['refress-token']) > 0:
             try:
                 print('Trying to get new access and refresh token from ' + self.config.path)
-                self.oauth._refresh_token = self.conf['refressToken']
-                self.access_token, self.refresh_token = self.oauth._refresh(self.conf['accessToken'])
+                self.oauth._refresh_token = self.config.config['refress-token']
+                self.access_token, self.refresh_token = self.oauth._refresh(self.config.config['access-token'])
                 self.client = Client(self.oauth)
                 self.refreshTime = time.time() + 60*60
 
                 if self.config:
-                    self.config.change_config('userName',self.client.user(user_id='me').get()['login']) #Save username to config
-                    self.config.change_config('accessToken',self.access_token) #Save access token to config
-                    self.config.change_config('refressToken',self.refresh_token) #Save refresn token to config
+                    self.config.config['performed-by'] = self.client.user(user_id='me').get()['login'] #Save username to config
+                    self.config.config['access-token'] = self.access_token #Save access token to config
+                    self.config.config['refress-token'] = self.refresh_token #Save refresn token to config
+                    self.config.update_config()
 
                 print('Got new access and refresh token from existing')
                 return
@@ -150,9 +150,10 @@ class Box:
         func()
 
         if self.config:
-            self.config.change_config('userName',self.client.user(user_id='me').get()['login']) #Save username to config
-            self.config.change_config('accessToken',self.access_token) #Save access token to config
-            self.config.change_config('refressToken',self.refresh_token) #Save refresn token to config
+            self.config.config['performed-by'] = self.client.user(user_id='me').get()['login'] #Save username to config
+            self.config.config['access-token'] = self.access_token #Save access token to config
+            self.config.config['refress-token'] = self.refresh_token #Save refresn token to config
+            self.config.update_config()
 
 
         return 'You are now logged in as: ' + self.client.user(user_id='me').get()['login'] + '<br><strong>The server has been shutdown and the normal script is resuming.</strong><br>access token: '+self.access_token+'<br>refresh token: '+self.refresh_token+'<br><a href="http://127.0.0.1:5000">Click to go to index (assuming server restarted)</a>'
@@ -187,9 +188,10 @@ class Box:
         self.refreshTime = time.time() + 60*60
 
         if self.config:
-            self.config.change_config('userName',self.client.user(user_id='me').get()['login']) #Save username to config
-            self.config.change_config('accessToken',self.access_token) #Save access token to config
-            self.config.change_config('refressToken',self.refresh_token) #Save refresn token to config
+            self.config.config['performed-by'] = self.client.user(user_id='me').get()['login'] #Save username to config
+            self.config.config['access-token'] = self.access_token #Save access token to config
+            self.config.config['refress-token'] = self.refresh_token #Save refresn token to config
+            self.config.update_config()
 
         return self.client
 
@@ -206,7 +208,8 @@ class Box:
         # If the access token is expired (or about to be), then update it
         if self.refreshTime < time.time() + 5:
             self.updateTokens(self.access_token)
-        print(self.client.folder(folderID).upload(os.getcwd()+path, name))
+        print(os.getcwd()+path, name)
+        return self.client.folder(folderID).upload(os.getcwd()+path, name)
 
     
     
