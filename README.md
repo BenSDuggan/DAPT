@@ -1,5 +1,9 @@
 # Distributed Automated Parameter Testing (DAPT)
 
+![Travis-CI](https://travis-ci.com/BenSDuggan/DAPT.svg?token=aV2WxyvqLfShpTx4gD3a&branch=master)
+
+A library to assist with running parameter sets across multiple systems.
+
 ## Install
 To install dowload the [repo](https://github.com/BenSDuggan/DAPT) or clone it on your machine `git clone https://github.com/BenSDuggan/DAPT`.  Once downloaded navigate to the root of the project (DAPT) and run `pip install -r requirements.txt` to install all of the dependences.  You can then test to make sure everything installed by starting a python session and then running:
 ```
