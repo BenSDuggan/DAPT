@@ -12,7 +12,9 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/BenSDuggan/DAPT",
-    packages=setuptools.find_packages(),
+    download_url="https://github.com/BenSDuggan/DAPT/archive/",
+    keywords=['paramater', 'testing', 'distributed'],
+    install_requires=[''],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: BSD License",

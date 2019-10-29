@@ -4,6 +4,3 @@ test.csv
 *.pyc
 credentials.json
 .vscode
-BenSDuggan.egg-info
-build
-dist
