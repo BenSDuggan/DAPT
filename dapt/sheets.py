@@ -5,8 +5,7 @@ Sheets
 Class which allows for Google Sheets to be used as paramater set database.
 """
 
-
-import gspread, time
+import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from . import database
 
@@ -137,10 +136,3 @@ class Sheet(database.Database):
                 return i+1
         return -1
         
-
-if __name__ == '__main__':
-    sheet = Sheet('1xZAbN6cs-89htm6EXkEYldQrSitzf5EnCGKwNl0a0Wo')
-    print('Sheet result:')
-    print(sheet.getRecords())
-    print('Get key index:')
-    print(sheet.getKeyIndex('id'))
