@@ -1,3 +1,9 @@
 .pytest_cache
 __pycache__
 test.csv
+*.pyc
+credentials.json
+.vscode
+BenSDuggan.egg-info
+build
+dist
