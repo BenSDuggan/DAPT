@@ -5,7 +5,7 @@ Box
 Class that allows for access to the box API and methods to directly upload files
 """
 
-import os, time
+import os
 from boxsdk import *
 from flask import *
 
