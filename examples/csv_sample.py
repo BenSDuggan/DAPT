@@ -16,8 +16,8 @@ with open('test.csv', 'w') as f:
 
 
 
-db = dapt.delimited_file.Delimited_file('test.csv')
-ap = dapt.param.Param(db)
+db = dapt.Delimited_file('test.csv')
+ap = dapt.Param(db)
     
 while True:
     parameters = ap.next_parameters() #Get the next parameter

@@ -8,8 +8,8 @@ import dapt
 import os, sys, csv
 
 sheet_id = '12dhlBi3BYBDa2oghU22ei0tUIbvtk5GS6T_sVOfify4'
-db = dapt.sheets.Sheet(sheet_id, '../credentials.json')
-ap = dapt.param.Param(db)
+db = dapt.Sheet(sheet_id, '../credentials.json')
+ap = dapt.Param(db)
 
 def init_sheet():
     header = ['id', 'startTime', 'endTime', 'status', 'a', 'b', 'c']

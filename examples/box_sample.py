@@ -16,7 +16,7 @@ client_secret = 'PzwYQXLdtYYFIJNNTtR5TnuJItxOcveO'
 
 # Create a Box object.  
 # For this example we will directly pass the client ID and secret, however, these can be included in a config file and passed to Box via a Config object.
-box = dapt.box.Box(client_id=client_id, client_secret=client_secret)
+box = dapt.Box(client_id=client_id, client_secret=client_secret)
 
 # Let's create a test file to upload to box
 f = open('test.txt', 'w')
