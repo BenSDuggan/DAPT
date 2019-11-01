@@ -7,9 +7,9 @@ import os
 
 # Test creation of new config file
 def test_config_create():
-	dapt.config.Config.create('config.json')
+	dapt.Config.create('config.json')
 
-	conf = dapt.config.Config('config.json')
+	conf = dapt.Config('config.json')
 	expected = {"last-test":None, "user-name":None, "spreedsheet-id":None, "client-id":None, "client-secret":None, "box-folder-id":None, "reset-time":None, "num-of-runs":None, "computer-strength":None, "access-token":None, "refresh-token":None}
 
 	os.remove('config.json')
@@ -18,9 +18,9 @@ def test_config_create():
 
 # Test changing a value in Config
 def test_config_file_change():
-	dapt.config.Config.create('config.json')
+	dapt.Config.create('config.json')
 
-	conf = dapt.config.Config('config.json')
+	conf = dapt.Config('config.json')
 
 	expected = conf.config
 	expected["user-name"] = 'Clifford'
@@ -35,9 +35,9 @@ def test_config_file_change():
 
 # Test adding a key,value pair in Config
 def test_config_file_add():
-	dapt.config.Config.create('config.json')
+	dapt.Config.create('config.json')
 
-	conf = dapt.config.Config('config.json')
+	conf = dapt.Config('config.json')
 
 	expected = conf.config
 	expected["abc"] = 123
@@ -52,14 +52,14 @@ def test_config_file_add():
 
 # Test making config file safe for uploading publicly
 def test_config_safe():
-	dapt.config.Config.create('config.json')
-	conf = dapt.config.Config('config.json')
+	dapt.Config.create('config.json')
+	conf = dapt.Config('config.json')
 
 	expected = conf.config
 	expected["access-token"] = ''
 	expected["refresh-token"] = ''
 
-	dapt.config.Config.safe('config.json')
+	dapt.Config.safe('config.json')
 
 	os.remove('config.json')
 
