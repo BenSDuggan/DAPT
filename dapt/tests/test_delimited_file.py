@@ -19,7 +19,7 @@ def create_test_file():
 def test_DF_read():
 	create_test_file()
 
-	db = dapt.delimited_file.Delimited_file('test.csv', ',')
+	db = dapt.Delimited_file('test.csv', ',')
 	
 	actual = db.get_table()
 
@@ -34,7 +34,7 @@ def test_DF_read():
 def test_DF_get_keys():
 	create_test_file()
 
-	db = dapt.delimited_file.Delimited_file('test.csv', ',')
+	db = dapt.Delimited_file('test.csv', ',')
 	
 	actual = db.get_keys()
 
@@ -46,7 +46,7 @@ def test_DF_get_keys():
 def test_DF_update_row():
 	create_test_file()
 
-	db = dapt.delimited_file.Delimited_file('test.csv', ',')
+	db = dapt.Delimited_file('test.csv', ',')
 	
 	db.update_row(1, {'id':'t2', 'startTime':'2019-09-06 17:37', 'endTime':'2019-09-06 17:55', 'status':'finished', 'a':'10', 'b':'10', 'c':'20'})
 	
@@ -61,7 +61,7 @@ def test_DF_update_row():
 def test_DF_update_cell():
 	create_test_file()
 
-	db = dapt.delimited_file.Delimited_file('test.csv', ',')
+	db = dapt.Delimited_file('test.csv', ',')
 	
 	db.update_cell(1, 'status', 'adding')
 	
@@ -76,7 +76,7 @@ def test_DF_update_cell():
 def test_DF_get_row_index():
 	create_test_file()
 
-	db = dapt.delimited_file.Delimited_file('test.csv', ',')
+	db = dapt.Delimited_file('test.csv', ',')
 
 	assert db.get_row_index('status', 'finished') == 0, "Cannot get the row index."
 

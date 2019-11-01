@@ -3,14 +3,15 @@
 Distributed Automated Paramater Testing (DAPT)
 ==============================================
 
-This is __init__.py
+ToDo
+Basic over view of dapt and how to run it
 """
 
 name = "dapt"
 __version__ = "0.9.0"
 
 import sys, argparse
-from . import config
+from .config import Config
 
 parser = argparse.ArgumentParser(description='Distributed Automated Parameter Testing (DAPT)\nA library to assist with running parameter sets across multiple systems.', formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('--f', metavar='config.json', default='config.json', type=str, action='store', help="The path to the config file.")
@@ -21,7 +22,7 @@ parser.add_argument('--s', action='store_true', help="Remove keys from the confi
 args = parser.parse_args()
 if args.r:
     # Remove last-test from config file
-    conf = config.Config(args.f)
+    conf = Config(args.f)
     if conf.config['last-test']:
         conf.config['last-test'] = None
     #if conf.config['performed-by']:
@@ -30,19 +31,19 @@ if args.r:
     exit()
 if args.c:
     # Reset config file
-    config.Config.create(args.f)
+    Config.create(args.f)
     exit()
 if args.s:
     # Safe config file
-    config.Config.safe(args.f)
+    Config.safe(args.f)
     exit()
 
-from . import box
-from . import database
-from . import delimited_file
-from . import sheets
-from . import param
-from . import tools
+from .box import Box
+from .database import Database
+from .delimited_file import Delimited_file
+from .sheets import Sheet
+from .param import Param
+from .tools import *
 
 def test():
     from . import tests

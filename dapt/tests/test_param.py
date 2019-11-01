@@ -31,9 +31,9 @@ def create_complex_test_file():
 def test_Param_next_parameters():
 	create_simple_test_file()
 
-	db = dapt.delimited_file.Delimited_file('test.csv', ',')
+	db = dapt.Delimited_file('test.csv', ',')
 
-	param = dapt.param.Param(db)	
+	param = dapt.Param(db)	
 	actual = param.next_parameters()
 
 	expected = OrderedDict({'id':'t2', 'status':'in progress', 'a':'10', 'b':'10', 'c':''})
@@ -44,9 +44,9 @@ def test_Param_next_parameters():
 def test_Param_update_status():
     create_simple_test_file()
 
-    db = dapt.delimited_file.Delimited_file('test.csv', ',')
+    db = dapt.Delimited_file('test.csv', ',')
 
-    param = dapt.param.Param(db)
+    param = dapt.Param(db)
     actual = param.next_parameters()
     actual = param.update_status(actual['id'], 'adding')
 
@@ -58,9 +58,9 @@ def test_Param_update_status():
 def test_Param_successful():
     create_simple_test_file()
 
-    db = dapt.delimited_file.Delimited_file('test.csv', ',')
+    db = dapt.Delimited_file('test.csv', ',')
 
-    param = dapt.param.Param(db)
+    param = dapt.Param(db)
     actual = param.next_parameters()
     actual = param.successful(actual['id'])
 
@@ -72,9 +72,9 @@ def test_Param_successful():
 def test_Param_successful_fields():
     create_complex_test_file()
 
-    db = dapt.delimited_file.Delimited_file('test.csv', ',')
+    db = dapt.Delimited_file('test.csv', ',')
 
-    param = dapt.param.Param(db)
+    param = dapt.Param(db)
     actual = param.next_parameters()
     expected = actual
     actual = param.successful(actual['id'])
@@ -93,9 +93,9 @@ def test_Param_successful_fields():
 def test_Param_failed():
     create_simple_test_file()
 
-    db = dapt.delimited_file.Delimited_file('test.csv', ',')
+    db = dapt.Delimited_file('test.csv', ',')
 
-    param = dapt.param.Param(db)
+    param = dapt.Param(db)
     actual = param.next_parameters()
     actual = param.failed(actual['id'], 'This is an error')
 
@@ -107,9 +107,9 @@ def test_Param_failed():
 def test_Param_failed_fields():
     create_complex_test_file()
 
-    db = dapt.delimited_file.Delimited_file('test.csv', ',')
+    db = dapt.Delimited_file('test.csv', ',')
 
-    param = dapt.param.Param(db)
+    param = dapt.Param(db)
     actual = param.next_parameters()
     expected = actual
     actual = param.failed(actual['id'], 'This is an error')
