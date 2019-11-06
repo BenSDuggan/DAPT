@@ -24,6 +24,10 @@ You should now see all the tests run successfully.
 | --color | [yes, no] | Turn terminal coloring on or off |
 
 
+## Other notes
+
+* `env_to_config.py`: Finds variables from the environment and creates a config file to use.  This is useful when using Travis CI as it allows API keys to be passed.
+
 ## ToDo
 - `Delimited_file`
     - Add tests that make class fail like trying to write to invalid row
