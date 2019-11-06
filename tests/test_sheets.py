@@ -6,7 +6,7 @@ import dapt
 import os, csv
 from collections import OrderedDict 
 
-conf_path = 'test_conf.json'
+conf_path = 'test_config.json'
 
 def create_database_entries(config):
 	sheet = dapt.Sheet(config=config)

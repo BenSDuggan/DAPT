@@ -89,7 +89,7 @@ class Config:
                 path (string): path where config file will be written
         """
 
-        default = {"last-test":None, "user-name":None, "spreedsheet-id":None, "client-id":None, "client-secret":None, "box-folder-id":None, "reset-time":None, "num-of-runs":None, "computer-strength":None, "access-token":None, "refresh-token":None}
+        default = {"last-test":None, "user-name":None, "spreedsheet-id":None, "sheets-creds-path":None, "sheet-worksheet-id":None, "sheet-worksheet-title":None, "client-id":None, "client-secret":None, "box-folder-id":None, "reset-time":None, "num-of-runs":None, "computer-strength":None, "access-token":None, "refresh-token":None}
         
         with open(path, 'w') as f:
             json.dump(default, f)

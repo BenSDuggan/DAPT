@@ -1,6 +1,17 @@
+# Python stuff
 .pytest_cache
 __pycache__
-test.csv
 *.pyc
-credentials.json
+
+# Dev env stuff
 .vscode
+
+# Unwanted files
+test.csv
+docs/_build
+
+# Stuff you probably don't want for security reasons
+config.json
+credentials.json
+test_credentials.json
+test_config.json
