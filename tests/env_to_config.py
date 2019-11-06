@@ -19,3 +19,6 @@ google_creds = {
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_x509_cert_url":os.environ['GS_client_x509_cert_url']
 }
+
+with open('test_config.json', 'w') as f:
+    json.dump(google_creds, f)
