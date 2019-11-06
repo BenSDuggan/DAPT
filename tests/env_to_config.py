@@ -16,7 +16,7 @@ google_creds = {
     "type":"service_account",
     "project_id":os.environ['GS_project_id'],
     "private_key_id":os.environ['GS_private_key_id'],
-    "private_key":os.environ['GS_private_key'].split('\\n').join('\n'),
+    "private_key":'\n'.join(os.environ['GS_private_key'].split('\\n')),
     "client_email":os.environ['GS_client_email'],
     "client_id":os.environ['GS_client_id'],
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
