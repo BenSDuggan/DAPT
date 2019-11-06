@@ -74,9 +74,9 @@ class Sheet(database.Database):
         """
 
         if len(kwargs) == 0:
-            if 'sheet-worksheet-id' in self.config.config:
+            if 'sheet-worksheet-id' in self.config.config and self.config.config['sheet-worksheet-id']:
                 return self.sheet.get_worksheet(self.config.config['sheet-worksheet-id'])
-            elif 'sheet-worksheet-title' in self.config.config:
+            elif 'sheet-worksheet-title' in self.config.config and self.config.config['sheet-worksheet-title']:
                 return self.sheet.worksheet(self.config.config['sheet-worksheet-title'])
         elif 'id' in kwargs:
             return self.sheet.get_worksheet(kwargs['id'])
