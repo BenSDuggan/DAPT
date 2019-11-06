@@ -37,7 +37,8 @@ ToDo
 .
 ├── dapt                 			# The folder where the DAPT library is housed
 ├── docs             				# Documentation for project
-└── examples          				# Python scripts showing how to use the program
+├── examples          				# Python scripts showing how to use the program
+└── tests           				# Unit tests for DAPT
 ```
 
 ## Unit tests
