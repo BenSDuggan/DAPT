@@ -21,16 +21,16 @@ All dependences are located in [requirements.txt](requirements.txt).
 ****
 
 ## Documentation
-Documentation is done using [Sphinx](http://www.sphinx-doc.org/en/master/).  The [docs](/docs) folder holds all of the resources to document the code.  Here is a good tutorial on Sphinx if your not familiar <https://medium.com/@eikonomega/getting-started-with-sphinx-autodoc-part-1-2cebbbca5365>.  Google docstrings are used for inline commenting inside each file.
+You can view the most recent documentation on RTD [here]().  Documentation is done using [Sphinx](http://www.sphinx-doc.org/en/master/).  The [docs](/docs) folder holds all of the resources to document the code.  Here is a good tutorial on Sphinx if your not familiar <https://medium.com/@eikonomega/getting-started-with-sphinx-autodoc-part-1-2cebbbca5365>.  Google docstrings are used for inline commenting inside each file.
 
 To build docs only your local machine simply type `make html` inside the [docs](/docs) folder.
 
 
 ## Example usage
-ToDo
+Examples of some basic uses of DAPT are located in the [examples](/examples) folder.  Before running any of the tests, ensure that you have installed DAPT.  If you just downloaded the repo and did not install using `pip` then move the tests into the root of the directory (i.e. DAPT/).  This step is necessary to ensure that `dapt` can properly be imported.
 
 ## Contribute
-ToDo
+If you would like to contribute please fork the repo and make a pull request explaining what you added/fixed and why you added it.  If you are adding a new feature please write a unit test for it.  For more information on unit tests see the [test](/tests) folder.
 
 ## Project structure
 ```
@@ -50,5 +50,5 @@ dapt.test()
 
 or by running `pytest` in the main project directory.
 
-For more information on the tests go to the [`tests`](dapt/tests) folder.
+For more information on the tests go to the [tests](dapt/tests) folder.
 
