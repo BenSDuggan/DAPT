@@ -20,8 +20,8 @@ def create_database_entries(config):
 			break
 
 	# Table
-	header = ['id', 'a', 'c']
-	data = [{'id':'t1', 'a':'2', 'c':'4'}]
+	header = ['id', 'a']
+	data = [{'id':'t1', 'a':'2'}]
 	#data = [{'id':'t1', 'a':'2', 'c':'4'}, {'id':'t2', 'a':'10', 'c':''}]
 	
 	if test_worksheet:
@@ -29,7 +29,7 @@ def create_database_entries(config):
 		return sheet.get_table()
 	else:
 		# Create a new worksheet
-		sheet.sheet.add_worksheet(title="daptTest", rows="2", cols="3")
+		sheet.sheet.add_worksheet(title="daptTest", rows="2", cols="2")
 
 		for i in range(len(header)):
 			sheet.worksheet(title='daptTest').update_cell(1, i+1, header[i])
@@ -65,7 +65,6 @@ def test_Sheet_update_row():
 	db = dapt.Sheet(config=config)
 
 	expected[0]['a'] = 4
-	expected[0]['c'] = 40
 	
 	db.update_row(1, expected[0])
 
@@ -77,8 +76,8 @@ def test_Sheet_update_cell():
 	expected = create_database_entries(config)
 	db = dapt.Sheet(config=config)
 	
-	expected[0]['c'] = 40
-	db.update_cell(1, 'c', 40)
+	expected[0]['a'] = 40
+	db.update_cell(1, 'a', 40)
 
 	assert db.get_table() == expected, "Cannot update a cell in the Sheet."
 
@@ -88,14 +87,14 @@ def test_Sheet_get_key_index():
 	create_database_entries(config)
 	db = dapt.Sheet(config=config)
 
-	assert db.get_key_index('c') == 2, "Cannot get the key index."
+	assert db.get_key_index('a') == 1, "Cannot get the key index."
 
 # Test if the row index function for Sheets works
 def test_Sheet_get_row_index():
 	config = dapt.Config(path=conf_path)
-	create_database_entries(config)
+	expected = create_database_entries(config)
 	db = dapt.Sheet(config=config)
 
-	assert db.get_row_index('c', 4) == 1, "Cannot get the row index."
+	assert db.get_row_index('a', expected[0]['a']) == 1, "Cannot get the row index."
 
 
