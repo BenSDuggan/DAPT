@@ -21,7 +21,7 @@ def create_database_entries(config):
 
 	# Table
 	header = ['id', 'a']
-	data = [{'id':'t1', 'a':'2'}]
+	data = [{'id':'t1', 'a':2}]
 	#data = [{'id':'t1', 'a':'2', 'c':'4'}, {'id':'t2', 'a':'10', 'c':''}]
 	
 	if test_worksheet:
