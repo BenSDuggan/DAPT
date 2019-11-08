@@ -28,15 +28,15 @@ if args.r:
     #if conf.config['performed-by']:
     #    conf.config['performed-by'] = None
     conf.update_config()
-    exit()
+    #exit()
 if args.c:
     # Reset config file
     Config.create(args.f)
-    exit()
+    #exit()
 if args.s:
     # Safe config file
     Config.safe(args.f)
-    exit()
+    #exit()
 
 from .box import Box
 from .database import Database
