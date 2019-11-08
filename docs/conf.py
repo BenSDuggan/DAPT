@@ -15,6 +15,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('../dapt'))
 
 
 # -- Project information -----------------------------------------------------
@@ -105,7 +106,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'DAPdoc'
+htmlhelp_basename = 'DAPTdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
