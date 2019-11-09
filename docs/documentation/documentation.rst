@@ -1,7 +1,7 @@
 .. _documentation:
 
-Documentation
-=============
+.. automodule:: dapt
+	:members:
 
 .. toctree::
    :maxdepth: 2
