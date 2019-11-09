@@ -1,6 +1,7 @@
 # Distributed Automated Parameter Testing (DAPT)
 
 ![Travis-CI](https://travis-ci.com/BenSDuggan/DAPT.svg?token=aV2WxyvqLfShpTx4gD3a&branch=master)
+[![Documentation Status](https://readthedocs.org/projects/dapt/badge/?version=latest)](https://dapt.readthedocs.io/en/latest/?badge=latest)
 
 A library to assist with running parameter sets across multiple systems.  The goal of this library is to provide a tool set and pipeline that make organizing, running and analyzing a large amount of parameter easier.  Some of the highlights include: 
 
@@ -25,7 +26,7 @@ The easiest way to install DAPT is using pip.  To do so type:
 pip install dapt
 ```
 
-Alternatively, you can dowload the project.  It is recommended to download a release of the project from GitHub for improved stability.  If you would like to download the most up to date version, then download the [repo](https://github.com/BenSDuggan/DAPT) or clone it on your machine `git clone https://github.com/BenSDuggan/DAPT`.  Once downloaded navigate to the root of the project (DAPT) and run `pip install -r requirements.txt` to install all of the dependences.  If you use this method of installation, you will need to write all of your Python scripts using DAPT in the root directory of the project.  For these reasons, it's recommended to only use this method if would like to contribute to the project.
+Alternatively, you can dowload the project.  It is recommended to download a [release](https://github.com/BenSDuggan/DAPT/releases) of the project from GitHub for improved stability.  If you would like to download the most up to date version, then download the [repo](https://github.com/BenSDuggan/DAPT) or clone it on your machine `git clone https://github.com/BenSDuggan/DAPT`.  Once downloaded navigate to the root of the project (DAPT) and run `pip install -r requirements.txt` to install all of the dependences.  If you use this method of installation, you will need to write all of your Python scripts using DAPT in the root directory of the project.  For these reasons, it's recommended to only use this method if would like to contribute to the project.
 
 You can then test to make sure everything installed by starting a python session and then running:
 ```
