@@ -12,6 +12,12 @@ __version__ = "0.9.0"
 
 import sys, argparse
 from .config import Config
+from .database import Database
+from .delimited_file import Delimited_file
+from .sheets import Sheet
+from .box import Box
+from .param import Param
+from .tools import *
 
 parser = argparse.ArgumentParser(description='Distributed Automated Parameter Testing (DAPT)\nA library to assist with running parameter sets across multiple systems.', formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('--f', metavar='config.json', default='config.json', type=str, action='store', help="The path to the config file.")
@@ -28,25 +34,20 @@ if args.r:
     #if conf.config['performed-by']:
     #    conf.config['performed-by'] = None
     conf.update_config()
-    #exit()
+    exit()
 if args.c:
     # Reset config file
     Config.create(args.f)
-    #exit()
+    exit()
 if args.s:
     # Safe config file
     Config.safe(args.f)
-    #exit()
+    exit()
 
-from .box import Box
-from .database import Database
-from .delimited_file import Delimited_file
-from .sheets import Sheet
-from .param import Param
-from .tools import *
-
+'''
 def test():
-    from . import tests
+    from ..tests import *
     import pytest
 
     pytest.main()
+'''

@@ -215,12 +215,13 @@ class Box:
     
 
 if __name__ == '__main__':
-    os.chdir("../")
-    app.run()
+    #os.chdir("../")
+    #app.run()
 
-    items = client.folder(folder_id='0').get_items(limit=100, offset=0)
+    #items = client.folder(folder_id='0').get_items(limit=100, offset=0)
 
-    for i in items:
-        print(i)
+    #for i in items:
+    #    print(i)
 
     #uploadFile('\\DistributedAutomaticParameterTesting\\', "testPayload.zip")
+    pass
