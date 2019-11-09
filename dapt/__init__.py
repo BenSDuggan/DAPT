@@ -19,6 +19,7 @@ from .box import Box
 from .param import Param
 from .tools import *
 
+'''
 parser = argparse.ArgumentParser(description='Distributed Automated Parameter Testing (DAPT)\nA library to assist with running parameter sets across multiple systems.', formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('--f', metavar='config.json', default='config.json', type=str, action='store', help="The path to the config file.")
 parser.add_argument('--r', action='store_true', help="Reset the config file.  \'last-test\':None")
@@ -43,6 +44,7 @@ if args.s:
     # Safe config file
     Config.safe(args.f)
     exit()
+'''
 
 '''
 def test():
