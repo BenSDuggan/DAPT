@@ -1,7 +1,4 @@
-.. _box:
-
-Box
-===
+.. _box_docs:
 
 .. automodule:: dapt.box
 	:members:
