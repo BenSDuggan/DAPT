@@ -1,7 +1,4 @@
-.. _param:
-
-Parameter
-=========
+.. _param_docs:
 
 .. automodule:: dapt.param
 	:members:

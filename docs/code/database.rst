@@ -1,7 +1,4 @@
-.. _database:
-
-Database
-========
+.. _database_docs:
 
 .. automodule:: dapt.database
 	:members:

@@ -11,4 +11,5 @@ Distributed Automated Parameter Testing (DAPT)
 
    install/install
    usage
-   documentation/documentation
+   examples/examples
+   code/dapt

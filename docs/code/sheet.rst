@@ -1,7 +1,5 @@
-.. _sheet:
+.. _sheet_docs:
 
-Google Sheet
-============
 
 .. automodule:: dapt.sheets
 	:members:
