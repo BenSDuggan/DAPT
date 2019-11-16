@@ -14,9 +14,9 @@ A library to assist with running parameter sets across multiple systems.  The go
 
 When working on a project with or without access to high performance computing (HPC), there is often a need to perform large parameter sweeps.  Before developing DAPT, there were several problems the ECM team in Dr. Paul Macklin's research lab identified.  First, it was difficult to manage a large number of parameter sets with a large number of parameters.  Second, it would be nice to use Google Sheets to run the parameters for easier collaboration and management.  Third, only one person in the group would be running all the parameters, making their computer useless for the duration of the runs.  Finally, we needed to upload the data to Box for permanent storage and to allow the rest of the team to view the data.  
 
-Making the dream come true.
+DAPT was written to solve these problems.  A "database" (CSV or Google Sheet) is used to store a list of parameter sets.  This database is managed by the `Param` class and provides methods to interact with and manage parameter sets.  the `Box` class allows data to be uploaded to [Box.com](https://box.com).  Sensitive API credentials can be stored in a config file (via the `Config` class) which can also be accessed by users to get other variables.
 
-Next steps.
+Future versions of the project will work to improve documentation, add examples, cleanup current functionality and add more features.  While most of the `dapt` module is documented, the intended way of using each method is not clearly explained.  There are examples given for the main features, however, again there is not a satisfactory amount of documentation.  Some of the exciting new features to come will be notification and logging integration.  For example, we would like to add Slack notification so teams can be notified if there is an error with a test.
 
 
 ## Install
@@ -53,7 +53,7 @@ Examples of some basic uses of DAPT are located in the [examples](/examples) fol
 
 
 ## Contribute
-If you would like to contribute please fork the repo and make a pull request explaining what you added/fixed and why you added it.  If you are adding a new feature please write a unit test for it.  For more information on unit tests see the [test](/tests) folder.
+If you would like to contribute please fork the repo and make a pull request explaining what you added/fixed and why you added it.  If you are adding a new feature please write a unit test and example for it.
 
 ### Project structure
 ```
@@ -65,13 +65,5 @@ If you would like to contribute please fork the repo and make a pull request exp
 ```
 
 ### Unit tests
-Unit tests are ran using [Pytest](pytest.org).  You can install it by running `pip install -U pytest`.  The tests are located in the `tests` folder inside of the `DAPT` module.  The tests can be run by opening a python session and then running:
-```
-import dapt
-dapt.test()
-```
-
-or by running `pytest` in the main project directory.
-
-For more information on the tests go to the [tests](dapt/tests) folder.
+Unit tests are ran using [Pytest](pytest.org).  You can install Pytest by running `pip install -U pytest`.  The tests are located in the [tests](tests/) folder inside the root directory.  The tests can be run `pytest` in the terminal.  [Travis CI]() is used for continuous integration.  For more information on the tests go to the [tests](tests) folder.
 

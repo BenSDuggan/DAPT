@@ -11,7 +11,14 @@ name = "dapt"
 __version__ = "0.9.0"
 
 import sys, argparse
+
 from .config import Config
+from .database import Database
+from .delimited_file import Delimited_file
+from .sheets import Sheet
+from .box import Box
+from .param import Param
+from .tools import *
 
 def parse():
     parser = argparse.ArgumentParser(description='Distributed Automated Parameter Testing (DAPT)\nA library to assist with running parameter sets across multiple systems.', formatter_class=argparse.RawTextHelpFormatter)
@@ -38,22 +45,3 @@ def parse():
         # Safe config file
         Config.safe(args.f)
         exit()
-
-from .database import Database
-from .delimited_file import Delimited_file
-from .sheets import Sheet
-from .box import Box
-from .param import Param
-from .tools import *
-
-
-'''
-def test():
-    from ..tests import *
-    import pytest
-
-    pytest.main()
-'''
-
-if __name__ == 'main':
-    parse()
