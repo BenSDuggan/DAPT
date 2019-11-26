@@ -74,7 +74,7 @@ class Sheet(database.Database):
         """
 
         if len(kwargs) == 0:
-            if 'sheet-worksheet-id' in self.config.config and self.config.config['sheet-worksheet-id']:
+            if 'sheet-worksheet-id' in self.config.config and isinstance(self.config.config['sheet-worksheet-id'], int):
                 return self.sheet.get_worksheet(self.config.config['sheet-worksheet-id'])
             elif 'sheet-worksheet-title' in self.config.config and self.config.config['sheet-worksheet-title']:
                 return self.sheet.worksheet(self.config.config['sheet-worksheet-title'])
@@ -105,26 +105,33 @@ class Sheet(database.Database):
 
         return self.worksheet().row_values(1)
 
-    def update_row(self, row_id, values):
+    def update_row(self, row_index, values):
         """
             Get the row of the paramater set
 
             Args:
-                row_id (int): the row id to replace
-                values (OrderedDict): the key-value pairs that should be inserted
+                row_index (int): the index of the row to replace (starting from 1).  Indices less than 1 will return False.  Indices greater than the table length will be appended.
+                values (Dict): the key-value pairs that should be inserted.  If the dictionary contains more values then number of columns, the table will be extended.
             
             Returns:
-                A boolean that is True if successfully inserted and False otherwise.
+                A boolean that is Trues if successfully inserted and False otherwise.
         """
 
-        current_db = self.get_table()[row_id-1]
+        if row_index < 1:
+            return False
 
+        row = [[]]
         for i in values:
-            try:
-                if str(current_db[i]) != str(values[i]):
-                    self.worksheet().update_cell(row_id+1, self.get_key_index(i)+1, str(values[i]))
-            except:
-                return False
+            row[0].append(values[i])
+        
+        start = gspread.utils.rowcol_to_a1(row_index+1, 1)
+        end = gspread.utils.rowcol_to_a1(row_index+1, len(values))
+        range_label = '%s!%s:%s' % (self.worksheet().title, start, end)
+
+        try:
+            return self.sheet.values_update(range_label, params={'valueInputOption': 'RAW'}, body={'values': row})
+        except:
+            return False
         return True
 
     def update_cell(self, row_id, key, value):

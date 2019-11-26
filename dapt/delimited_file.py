@@ -52,8 +52,8 @@ class Delimited_file(database.Database):
             Get the keys of the paramater set
 
             Args:
-                row_index (int): the row id to replace
-                values (OrderedDict): the key-value pairs that should be inserted
+                row_index (int): the index of the row to replace
+                values (Dict): the key-value pairs that should be inserted
             
             Returns:
                 A boolean that is True if successfully inserted and False otherwise.
@@ -122,19 +122,3 @@ class Delimited_file(database.Database):
 
         return -1
 
-if __name__ == '__main__':
-    print('CSV sheet:')
-    # Reset csv.  This is just used update the csv and reset it so interesting things happen.
-    with open('test.csv', 'w') as f:
-        writer = csv.DictWriter(f, fieldnames=['id', 'startTime', 'endTime', 'status', 'a', 'b', 'c'])
-        writer.writeheader()
-        writer.writerow({'id':'t1', 'startTime':'2019-09-06 17:23', 'endTime':'2019-09-06 17:36', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'})
-        writer.writerow({'id':'t2', 'startTime':'', 'endTime':'', 'status':'', 'a':'10', 'b':'10', 'c':''})
-        writer.writerow({'id':'t3', 'startTime':'', 'endTime':'', 'status':'', 'a':'10', 'b':'-10', 'c':''})
-    c = Delimited_file('test.csv', ',')
-    print("get_keys: " + str(c.get_keys()))
-    print("get_table: " + str(c.get_table()))
-    print("update_cell: " + str(c.update_cell(1, "endTime", "09/02/19 12:10:00")))
-    print("get_table: " + str(c.get_table()))
-    print("update_row: " + str(c.update_row(1, {"id":"st-2", "startTime":"09/01/19 22:05:00", "endTime":""})))
-    print("get_table: " + str(c.get_table()))
