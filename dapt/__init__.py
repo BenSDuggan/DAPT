@@ -8,7 +8,7 @@ Basic over view of dapt and how to run it
 """
 
 name = "dapt"
-__version__ = "0.9.0"
+__version__ = "0.9.0.3"
 
 import sys, argparse
 

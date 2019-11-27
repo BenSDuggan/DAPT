@@ -34,10 +34,10 @@ import dapt
 dapt.__version__
 ```
 
-You should see ***0.9.0***.
+You should see ***0.9.0.3*** (or ***0.9.1.3*** if installed from pip).
 
 ### Dependencies
-**Python:** >=3.5
+**Python:** >=3.6
 
 All dependences are located in [requirements.txt](requirements.txt).
 
