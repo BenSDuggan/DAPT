@@ -10,7 +10,7 @@
 # .............................................................................
 
 input	:= paper.md
-output	:= paper.pdf
+output	:= paper.tex
 bib	:= paper.bib
 
 # Main code -- no more customization variables after this point
@@ -31,18 +31,17 @@ $(output): $(input) $(bib) Makefile
 	-V review_issue_url="http://joss.theoj.org/papers/" \
 	-V issue="0" \
 	-V volume="00" \
-	-V year="2018" \
-	-V submitted="00 January 0000" \
-	-V published="00 January 0000" \
+	-V year="2019" \
+	-V submitted="31 January 2019" \
+	-V published="01 March 2019" \
 	-V page="00" \
 	-V graphics="true" \
-	-V joss_logo_path="whedon/resources/joss-logo.png" \
+	-V joss_logo_path="joss-logo.png" \
 	-V geometry:margin=1in \
 	-o $(output) \
-	--pdf-engine=xelatex \
 	--filter pandoc-citeproc $(input) \
 	--from markdown+autolink_bare_uris \
-	--template "whedon/resources/latex.template"
+	--template "latex.template"
 
-autorefresh:;
-	((ls $(input) $(bib) | entr make $(output)) &)
+#autorefresh:;
+#	((ls $(input) $(bib) | entr make $(output)) &)
