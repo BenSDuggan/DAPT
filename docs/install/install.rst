@@ -3,16 +3,20 @@
 Install
 =======
 
-To install DAPT you can either use a `release <https://github.com/BenSDuggan/DAPT/releases>`_ downloaded from GitHub (recomended), or download the most recent "stable" version of the code by cloning or downloading from the master brantch.  If you install using a release they can be found at `https://github.com/BenSDuggan/DAPT/releases <https://github.com/BenSDuggan/DAPT/releases>`_.  You can also download from the GitHub page for run ``git clone https://github.com/BenSDuggan/DAPT``.
+The easiest way to install DAPT is using pip.  To do so type:
+```
+pip install dapt
+```
 
-Once you've downloaded the code, you can install the python libraries by running ``pip3 install -r requirements.txt`` in the terminal from inside the root folder. You can then open a python session and test to see if everything installed correctly:
+Alternatively, you can download a version the project.  It is recommended to download a `release <https://github.com/BenSDuggan/DAPT/releases>`_ of the project from GitHub for improved stability.  If you would like to download the most up to date version, then download the `repo <https://github.com/BenSDuggan/DAPT>`_ or clone it on your machine ``git clone https://github.com/BenSDuggan/DAPT``.  Once downloaded navigate to the root of the project (DAPT) and run ``pip install -r requirements.txt`` to install all of the dependencies.  If you use this method of installation, you will need to write all of your Python scripts using DAPT in the root directory of the project.  For these reasons, it's recommended to only use this method if would like to contribute to the project.
 
-.. code-block:: python
-	
-	import dapt
-	dapt.__version__
-
-You should then see some version number corresponding with the version you downloaded.
+You can then test to make sure everything installed by starting a python session and then running:
+```
+import dapt
+dapt.__version__
+```
+ 
+ You should see a version looking like ``0.9.*``.
 
 
 You can now use the library!  However, the functionality can be greatly increased by connecting some other services such as Google Sheets or Box.  See the below guides on how to include this functionality.

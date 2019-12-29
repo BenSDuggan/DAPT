@@ -1,11 +1,4 @@
-"""
 
-Distributed Automated Paramater Testing (DAPT)
-==============================================
-
-ToDo
-Basic over view of dapt and how to run it
-"""
 
 name = "dapt"
 __version__ = "0.9.0.3"
@@ -20,6 +13,7 @@ from .box import Box
 from .param import Param
 from .tools import *
 
+# Not used
 def parse():
     parser = argparse.ArgumentParser(description='Distributed Automated Parameter Testing (DAPT)\nA library to assist with running parameter sets across multiple systems.', formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--f', metavar='config.json', default='config.json', type=str, action='store', help="The path to the config file.")

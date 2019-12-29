@@ -27,7 +27,6 @@ def test_config_file_change():
 
 	conf.config["user-name"] = 'Clifford'
 	conf.update_config()
-	conf.read_config()
 
 	os.remove('config.json')
 
@@ -44,11 +43,47 @@ def test_config_file_add():
 
 	conf.config["abc"] = 123
 	conf.update_config()
-	conf.read_config()
 
 	os.remove('config.json')
 
 	assert conf.config == expected, "Config did not add the key,value pair correctly."
+
+# Test adding a key,value pair in Config
+def test_config_get_value_str():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	conf.config["abc"] = 123
+	conf.update_config()
+
+	os.remove('config.json')
+
+	assert conf.get_value("abc") == 123, "Config.get_value(\"abc\",recursive=False): Config did not find the correct value."
+
+def test_config_get_value_arr():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	conf.config["abc"] = {"a":1, "b":2, "c":{"aa":11, "bb":22}}
+	conf.update_config()
+
+	os.remove('config.json')
+
+	assert conf.get_value(["abc", "c", "aa"]) == 11, 'Config.get_value(["abc", "c", "aa"],recursive=False): Config did not find the correct value.'
+
+def test_config_get_value_recursive():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	conf.config["abc"] = {"a":1, "b":2, "c":{"aa":11, "bb":22}}
+	conf.update_config()
+
+	os.remove('config.json')
+
+	assert conf.get_value("aa", recursive=True) == 11, 'Config.get_value("aa",recursive=True): Config did not find the correct value.'
 
 # Test making config file safe for uploading publicly
 def test_config_safe():

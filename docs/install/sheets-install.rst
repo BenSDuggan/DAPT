@@ -3,7 +3,7 @@
 Google Sheets Installation
 ==========================
 
-Google Sheets can be used as a database to store your paramater sets.  The advantage to using this "database" over a file containing the paramaters is that a team can work on the set more collabortively and update the paramater list on the fly.  The bigger advantage is that the paramater list can be run dynamically.  By this I mean that people, running the library simultaneously, can connect to Google Sheets and get the next paramater set in the list.
+Google Sheets can be used as a database to store your parameter sets.  The advantage to using this "database" over a file containing the parameters is that a team can work on the set more collaboratively and update the parameter list on the fly.  The bigger advantage is that the parameter list can be run dynamically.  Meaning that people, running the library simultaneously, can connect to Google Sheets and get the next parameter set in the list.
 
 API Credentials
 ---------------

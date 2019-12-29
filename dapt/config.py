@@ -39,6 +39,10 @@ Fields
 +---------------------------------+-----------------------------------------------------------------------------------------+
 | ``refresh-token`` (str)         | The box refresh token for the particular session.                                       |
 +---------------------------------+-----------------------------------------------------------------------------------------+
+| ``remove-zip`` (bool)           | Have tools.data_cleanup() remove zip files if true.                                     |
++---------------------------------+-----------------------------------------------------------------------------------------+
+| ``remove-movie`` (bool)         | Have tools.data_cleanup() remove mp4 files if true.                                     |
++---------------------------------+-----------------------------------------------------------------------------------------+
 
 
 """
@@ -55,6 +59,62 @@ class Config:
     def __init__(self, path='config.json'):
         self.path = path
         self.config = self.read_config()
+
+    def get_value(self, key, recursive=False):
+        """
+            Get the first value of the given key or return ``None`` if one doesn't exist.
+
+            Args:
+                key (str or list): the key (given as a string) or List containing the path to the value
+                recursive (bool): recursively look through the config for the given key.  False by default.  If recursive is set to True then key must be a string.
+
+            Returns:
+                The value associated to the given key or None if the key is not in the dictionary.
+        """
+
+        # If we we want to do it recursively
+        if recursive:
+            return self._find_value(self.config, key)
+        
+        value = None
+
+        # Convert key to list if it is not already one
+        if not isinstance(key, list):
+            key = [key]
+
+        if key[0] in self.config:
+            value = self.config[key[0]]
+
+            for i in range(1, len(key)):
+                if key[i] in value:
+                    value = value[key[i]]
+                else:
+                    return None
+        
+        return value
+
+    def _find_value(self, dic, key):
+        """
+            Helper function to find value recursively
+
+            Args:
+                dic (dict): the dictionary
+                key (str): the key to search for
+
+            Returns:
+                The object associated to the given key or None if not found.
+        """
+
+        if key in dic:
+            return dic[key]
+        
+        for k, v in dic.items():
+            if isinstance(v, dict):
+                value = self._find_value(v, key)
+                if value:
+                    return value
+        return None
+
     
     def read_config(self):
         """
@@ -67,13 +127,20 @@ class Config:
         with open(self.path) as f:
             return json.load(f)
 
-    def update_config(self):
+    def update_config(self, key=None, value=None):
         """
-            Change value for a given key in the config file
+            Given a key and associated value, updated the config file.  Alternatively, you can give no arguments and the config dict will be saved.  You can also do both.
+
+            Args:
+                key (anything): the key to use.  If none is given then nothing will be updated in the dictionary.
+                value (anything): the value associated ot the key.
 
             Returns:
                 Dictionary of config file
         """
+
+        if key:
+            self.config[key] = value
 
         with open(self.path, 'w') as f:
             json.dump(self.config, f)
