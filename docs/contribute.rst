@@ -16,5 +16,5 @@ You can compile the docs by running ``sphinx-build -M html . _build``, assuming 
 Tests
 -----
 
-Tests are located in the `tests <https://github.com/BenSDuggan/DAPT/tests`_ folder and written using `pytest <https://docs.pytest.org/en/latest/`_.  You can run the tests locally by running ``python3 -m pytest`` in the root DAPT directory.  This assumes that you have a configuration file named ``test_config.json`` in the root directory.  The convention used is to name all files and functions in the test directory ``test_x``, where x is the name/description of the test.
+Tests are located in the `tests <https://github.com/BenSDuggan/DAPT/tests>`_ folder and written using `pytest <https://docs.pytest.org/en/latest/>`_.  You can run the tests locally by running ``python3 -m pytest`` in the root DAPT directory.  This assumes that you have a configuration file named ``test_config.json`` in the root directory.  The convention used is to name all files and functions in the test directory ``test_x``, where x is the name/description of the test.
 

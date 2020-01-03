@@ -11,13 +11,16 @@ from . import database
 class Delimited_file(database.Database):
     """
         An interface for accessing and setting paramater set data.  
+
+        Args:
+            path (string): path to config file
     """
         
-    def __init__(self, file, delimiter=','):
+    def __init__(self, path, delimiter=','):
         
         super().__init__()
         
-        self.csv_file = csv_file
+        self.path = path
         self.delimiter = delimiter
 
     def get_table(self):
@@ -29,7 +32,7 @@ class Delimited_file(database.Database):
         """
 
         sheet = []
-        with open(self.csv_file, 'r') as csvfile:
+        with open(self.path, 'r') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=self.delimiter)
             for row in reader:
                 sheet.append(row)
@@ -43,7 +46,7 @@ class Delimited_file(database.Database):
                 Array of strings with each element being a key (order is preserved if possible)
         """
 
-        with open(self.csv_file, 'r') as csvfile:
+        with open(self.path, 'r') as csvfile:
             reader = csv.reader(csvfile, delimiter=self.delimiter)
             return next(reader)
 
@@ -62,7 +65,7 @@ class Delimited_file(database.Database):
         header = self.get_keys()
         table = self.get_table()
 
-        with open(self.csv_file, 'w') as csvfile:
+        with open(self.path, 'w') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=header)
             writer.writeheader()
 
@@ -89,7 +92,7 @@ class Delimited_file(database.Database):
         header = self.get_keys()
         table = self.get_table()
 
-        with open(self.csv_file, 'w') as csvfile:
+        with open(self.path, 'w') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=header)
             writer.writeheader()
 

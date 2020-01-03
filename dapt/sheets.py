@@ -26,7 +26,7 @@ class Sheet(database.Database):
     
     def __init__(self, *args, **kwargs):
         super().__init__()
-
+        
         self.spreedsheetID = None
         self.scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         self.creds = None
@@ -38,7 +38,7 @@ class Sheet(database.Database):
         if 'config' in kwargs:
             self.config=kwargs['config']
 
-            self.spreedsheetID = self.config.config['sheet-worksheet-id']
+            self.spreedsheetID = self.config.config['sheet-spreedsheet-id']
 
             if 'sheets-creds-path' in self.config.config:
                 self.creds = ServiceAccountCredentials.from_json_keyfile_name(self.config.config['sheets-creds-path'], self.scope)

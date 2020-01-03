@@ -4,13 +4,15 @@ Install
 =======
 
 The easiest way to install DAPT is using pip.  To do so type:
-```
+
+``
 pip install dapt
-```
+``
 
 Alternatively, you can download a version the project.  It is recommended to download a `release <https://github.com/BenSDuggan/DAPT/releases>`_ of the project from GitHub for improved stability.  If you would like to download the most up to date version, then download the `repo <https://github.com/BenSDuggan/DAPT>`_ or clone it on your machine ``git clone https://github.com/BenSDuggan/DAPT``.  Once downloaded navigate to the root of the project (DAPT) and run ``pip install -r requirements.txt`` to install all of the dependencies.  If you use this method of installation, you will need to write all of your Python scripts using DAPT in the root directory of the project.  For these reasons, it's recommended to only use this method if would like to contribute to the project.
 
 You can then test to make sure everything installed by starting a python session and then running:
+
 ```
 import dapt
 dapt.__version__
