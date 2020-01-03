@@ -13,7 +13,7 @@ def create_database_entries(config):
 	creds = ServiceAccountCredentials.from_json_keyfile_name(config.config['sheets-creds-path'], scope)
 
 	client = gspread.authorize(creds)
-	sheet = client.open_by_key(config.config['spreedsheet-id'])
+	sheet = client.open_by_key(config.config['sheet-spreedsheet-id'])
 	worksheet = sheet.get_worksheet(0)
 
 	config = dapt.Config(path='test_config.json')
