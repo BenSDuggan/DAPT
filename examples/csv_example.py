@@ -1,15 +1,9 @@
-"""
-Example of how to use DAPT with a CSV file
-"""
-
 import dapt
 import os, sys, csv
 
 
 def create_file():
-    """
-    Reset csv.  This is just used update the csv and reset it so interesting things happen.
-    """
+    # Reset csv.  This is just used update the csv and reset it so interesting things happen.
     
     with open('test.csv', 'w') as f:
         writer = csv.DictWriter(f, fieldnames=['id', 'startTime', 'endTime', 'status', 'a', 'b', 'c'])

@@ -13,7 +13,7 @@ class Delimited_file(database.Database):
         An interface for accessing and setting paramater set data.  
     """
         
-    def __init__(self, csv_file, delimiter=','):
+    def __init__(self, file, delimiter=','):
         
         super().__init__()
         

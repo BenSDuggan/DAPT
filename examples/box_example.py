@@ -7,12 +7,11 @@
 import dapt
 import os, sys
 
-# The box folder ID found in the URL of the folder
-box_folder_id = '88499027100'
 
-# These should be kept a secret!
-client_id = 'ut798hvpbkj19pezrkgaptsk9dfxp6rf'
-client_secret = 'PzwYQXLdtYYFIJNNTtR5TnuJItxOcveO'
+# You must get these values from your own box configuration
+box_folder_id = '' # The box folder ID found in the URL of the folder
+client_id = '' # The box client id
+client_secret = '' # The box client secret
 
 # Create a Box object.  
 # For this example we will directly pass the client ID and secret, however, these can be included in a config file and passed to Box via a Config object.

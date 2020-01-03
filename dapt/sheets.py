@@ -19,8 +19,8 @@ class Sheet(database.Database):
 
         Keyword Args:
             config (Config): A Config object which contains the client_id and client_secret. 
-            spreedsheetID (str): the Google Sheets ID
-            creds_file (str): the path to the file containing the Google API credentials.  Default is ``credentials.json``.
+            spreedsheet_id (str): the Google Sheets ID
+            creds (str): the path to the file containing the Google API credentials.  Default is ``credentials.json``.
             sheet_id (int): the the sheet id to use (0 by default)
     """
     
@@ -38,7 +38,7 @@ class Sheet(database.Database):
         if 'config' in kwargs:
             self.config=kwargs['config']
 
-            self.spreedsheetID = self.config.config['spreedsheet-id']
+            self.spreedsheetID = self.config.config['sheet-worksheet-id']
 
             if 'sheets-creds-path' in self.config.config:
                 self.creds = ServiceAccountCredentials.from_json_keyfile_name(self.config.config['sheets-creds-path'], self.scope)
@@ -46,8 +46,8 @@ class Sheet(database.Database):
                 self.creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', self.scope)
             if 'sheet-page-id' in self.config.config:
                 self.sheet_id = self.config.config['sheet-page-id']
-        if 'spreedsheetID' in kwargs:
-            self.spreedsheetID = kwargs['spreedsheetID']
+        if 'spreedsheet_id' in kwargs:
+            self.spreedsheetID = kwargs['spreedsheet_id']
 
         if not self.creds:
             if 'creds' in kwargs:

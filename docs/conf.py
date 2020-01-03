@@ -21,11 +21,11 @@ sys.path.insert(0, os.path.abspath('..'))
 
 project = 'DAPT'
 copyright = '2019, Ben Duggan'
-author = 'Ben Duggan'
+author = 'Ben S. Duggan'
 
 # Version
-version = '0.9'
-release = '0.9.0'
+version = '0.9.1'
+release = '0.9.1'
 
 
 # -- General configuration ---------------------------------------------------

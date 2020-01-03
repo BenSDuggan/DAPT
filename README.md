@@ -43,7 +43,7 @@ All dependences are located in [requirements.txt](requirements.txt).
 
 
 ## Documentation
-You can view the most recent documentation on RTD [here](https://dapt.readthedocs.io).  Documentation is performed using [Sphinx](http://www.sphinx-doc.org/en/master/).  The [docs](/docs) folder holds all of the resources to document the code.  If you're not familiar with Sphinx you can read this [Medium tutorial](https://medium.com/@eikonomega/getting-started-with-sphinx-autodoc-part-1-2cebbbca5365) for an introduction.  Google docstrings are used for inline commenting inside each file.
+You can view the most recent documentation on RTD [here](https://dapt.readthedocs.io).  Documentation is performed using [Sphinx](http://www.sphinx-doc.org/en/master/).  The [docs](/docs) folder holds all of the resources to document the code.
 
 To build docs on your local machine simply type `make html` inside the [docs](/docs) folder.
 
