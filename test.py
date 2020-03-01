@@ -1,59 +1,56 @@
-# Test sheet many row update
+"""
+    Example of how to use DAPT with Google Sheets.
 
-import dapt, gspread
-from oauth2client.service_account import ServiceAccountCredentials
+    Before you can run this example, you need to create a new Google Sheet and add you Service Account Email as a collaborator with edit ability.  If you are still confused you can follow the documentation guide.
+"""
 
-config = dapt.Config(path='test_config.json')
+import dapt
+import os, sys, csv
 
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name(config.config['sheets-creds-path'], scope)
+# You'll need to provide the sheet id
+sheet_id = '1Nfm5oi0ovsETjk3gWATVbLaxI9XRSEwup64iHJoKdDE'
 
-client = gspread.authorize(creds)
-sheet = client.open_by_key(config.config['spreedsheet-id'])
-worksheet = sheet.get_worksheet(0)
 
-config = dapt.Config(path='test_config.json')
-sheet = dapt.Sheet(config=config)
+db = dapt.Sheet(spreedsheet_id=sheet_id, sheet_id=0, creds='../credentials.json')
+ap = dapt.Param(db)
 
-data = [['id','start-time','end-time','status','a','b','c'],
-        ['t1','2019-09-06 17:23','2019-09-06 17:36','finished','2','4','6'],
-        ['t2','','','','10','10',''],
-        ['t3','','','','10','-10','']]
+def init_sheet():
+    header = ['id', 'start-time', 'end-time', 'status', 'a', 'b', 'c']
+    for i in range(len(header)):
+        db.worksheet().update_cell(1, i+1, str(header[i]))
 
-start = gspread.utils.rowcol_to_a1(1, 1)
-end = gspread.utils.rowcol_to_a1(len(data)+1, len(data[0])+1)
+    data = [{'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'}, {'id':'t2', 'start-time':'', 'end-time':'', 'status':'', 'a':'10', 'b':'10', 'c':''}, {'id':'t3', 'start-time':'', 'end-time':'', 'status':'', 'a':'10', 'b':'-10', 'c':''}]
+    for i in range(3):
+        for j in range(len(header)):
+            db.worksheet().update_cell(i+2, j+1, data[i][header[j]])
 
-range_label = '%s!%s:%s' % (worksheet.title, start, end)
+#init_sheet()
 
-sheet.sheet.values_update(range_label, params={'valueInputOption': 'RAW'}, body={'values': data})
+input('If you go to the Google Sheet then you can see the sheet is now initialized.\nPress enter to run DAPT on the Google Sheet.')
 
-exit()
 
-title = 'tests'
+while True:
+    parameters = ap.next_parameters() #Get the next parameter
+    if parameters == None:
+        print("No more parameters to run!")
+        break
 
-# Data to upload
-data = [['hellow', 'world']]
+    print("Request parameters: ")
+    print(parameters)
 
-# Get coords
-coords = (1, 1, 2, 1) # start row, end row.  By col then row
-start = gspread.utils.rowcol_to_a1(coords[0], coords[1])
-end = gspread.utils.rowcol_to_a1(coords[2], coords[3])
+    try:
+        ap.update_status(parameters['id'], 'Adding and inserting')
 
-range_label = '%s!%s:%s' % (title, start, end)
+        c = int(parameters['a']) + int(parameters['b'])
+        db.update_cell(db.get_row_index('id', parameters['id']), 'c', c)
 
-# Update
+        # Update sheets to mark the test is finished
+        ap.successful(parameters["id"]) #Test completed successfully so we mark it as such
 
-data = sheet.sheet.values_update(
-            range_label,
-            params={
-                'valueInputOption': 'RAW'
-            },
-            body={
-                'values': data
-            }
-        )
-
-print(data)
-
-# Check
+        # End tests
+    except ValueError:
+        # Test failed
+        print(ValueError)
+        print("Test failed")
+        ap.failed(parameters["id"], str(ValueError))
 

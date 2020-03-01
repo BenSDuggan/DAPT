@@ -13,7 +13,7 @@ def create_database_entries(config):
 	creds = ServiceAccountCredentials.from_json_keyfile_name(config.config['sheets-creds-path'], scope)
 
 	client = gspread.authorize(creds)
-	sheet = client.open_by_key(config.config['sheet-spreedsheet-id'])
+	sheet = client.open_by_key(config.config['sheets-spreedsheet-id'])
 	worksheet = sheet.get_worksheet(0)
 
 	config = dapt.Config(path='test_config.json')
@@ -67,7 +67,7 @@ def test_Sheet_update_row():
 				{'id':'t2', 'start-time':'', 'end-time':'', 'status':'', 'a':100, 'b':100, 'c':200},
 				{'id':'t3', 'start-time':'', 'end-time':'', 'status':'', 'a':10, 'b':-10, 'c':''}]
 	
-	db.update_row(2, expected[1])
+	db.update_row(1, expected[1])
 
 	assert db.get_table() == expected, "Cannot update a row in the Sheet."
 
@@ -79,7 +79,7 @@ def test_Sheet_update_cell():
 	expected = [{'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'a':2, 'b':4, 'c':6},
 				{'id':'t2', 'start-time':'', 'end-time':'', 'status':'', 'a':100, 'b':100, 'c':200},
 				{'id':'t3', 'start-time':'', 'end-time':'', 'status':'', 'a':10, 'b':-10, 'c':0}]
-	db.update_cell(3, 'c', expected[2]['c'])
+	db.update_cell(2, 'c', expected[2]['c'])
 
 	assert db.get_table() == expected, "Cannot update a cell in the Sheet."
 
@@ -97,6 +97,6 @@ def test_Sheet_get_row_index():
 	create_database_entries(config)
 	db = dapt.Sheet(config=config)
 
-	assert db.get_row_index('id', 't2') == 2, "Cannot get the row index."
+	assert db.get_row_index('id', 't2') == 1, "Cannot get the row index."
 
 

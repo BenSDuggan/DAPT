@@ -11,7 +11,7 @@ import os, sys, csv
 sheet_id = ''
 
 
-db = dapt.Sheet(spreedsheetID=sheet_id, creds='../credentials.json')
+db = dapt.Sheet(spreedsheet_id=sheet_id, sheet_id=0, creds='../credentials.json')
 ap = dapt.Param(db)
 
 def init_sheet():
