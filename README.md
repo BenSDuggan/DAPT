@@ -61,6 +61,10 @@ If you would like to contribute please fork the repo and make a pull request exp
 ├── dapt                 			# The folder where the DAPT library is housed
 ├── docs             				# Documentation for project
 ├── examples          				# Python scripts showing examples of how to use the program
+├── misc              				# Folder containing miscellaneous code
+├── paper             				# Folder containing manuscript of DAPT
+├── requirements.txt   				# List of Python requirements for DAPT
+├── setup.py          				# Script to generate pyip package
 └── tests           				# Unit tests for DAPT
 ```
 
