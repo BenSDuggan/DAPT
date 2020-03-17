@@ -2,17 +2,18 @@
 Database
 ========
 
-The ``Database`` class is the basic interface for adding parameter set hosting services.  The idea is that the core methods (``get_table``, ``get_keys``, ``update_row`` and ``update_cell``) stay the same so that the inner workings can use multiple sources to access the parameter sets.  In general, there shouldn't be any more arguments added.  The exception to this is ``__init__``.  It may be necessary or desirable to add additional, optional, arguments.  This should be done by overloading the method or providing a default option to the argument.  
+The ``Database`` class is the basic interface for adding parameter set hosting services.  The idea is that the core methods (``get_table``, ``get_keys``, ``update_row`` and ``update_cell``) stay the same so that the inner workings can use multiple sources to access the parameter sets.  You should overide these methods when making a class that inherits ``Database``.  You shouldn't expect that any other method will be called by the ``Param`` class, the main class that uses databases.  It may be benifitial to add helper methods though (e.g. ``get_worksheet()`` in ``Sheets``).  
 
-When prepareing for a parameter sweep the collection of parameter sets can be thought of as a database where the name of each paramate is a column name, each row is a paramater set and the value at the i-th column and j-th row is the value.  This is the approach of DAPT.
+Databases should give key-value pairs, where the keys are the "ids" of the table and the values are the values in that given row.  When getting the table, the result should be an array of dictionaries that contain the contents of the row.
 
 Indexing
 --------
 
-All indexes should be from 0.
+The database should use indexing starting from 0.  
+
 """
 
-class Database:
+class Database (object):
 	"""
 		An interface for accessing and setting parameter set data.  
 	"""
@@ -62,7 +63,7 @@ class Database:
 	        Args:
 	            row_id (int): the row id to replace
 	            key (str): the key of the value to replace
-	            value (str): the value to insert into the cell
+	            value (object): the value to insert into the cell
 			
 	        Returns:
 	            A boolean that is True if successfully inserted and False otherwise.
