@@ -13,9 +13,12 @@
 - `brew install mactex`
 
 
-## Compile paper
-
-`make` then, `./gen_pdf.sh`
+## Make file rules
+```
+make			# Default behavior (generate latex)
+make pdf		# Make latex and compile it
+make clean		# Clean up generated files
+```
 
 ## Clean
 

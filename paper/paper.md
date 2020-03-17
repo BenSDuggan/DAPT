@@ -1,5 +1,5 @@
 ---
-title: 'DAPT: A system to '
+title: 'DAPT: A library enabling Distributed Automated Parameter Testing'
 tags:
   - Python
   - parameter
@@ -17,7 +17,7 @@ authors:
 affiliations:
  - name: Indiana University Luddy School of Informatics, Computing and Engineering
    index: 1
-date: Febuary 2020
+date: March 2020
 bibliography: paper.bib
 ---
 
@@ -29,7 +29,10 @@ DAPT allows parameters to be stored in a database (eg. Google Sheets or Firebase
 
 # Usage
 
-- Show flow chart
+DAPT was designed to be be flexible enough to apply to work with any pipeline.  The board workflow for how DAPT gets embedded with a pipeline is shown in ***Figure x***.
+
+![A general flow chart showing how DAPT can be used to help run parameter sweeps.](images/DAPT_flow-chart.png)
+
 - Param input
 - computation
 - off-load data
