@@ -54,11 +54,11 @@ class Param:
 
         self.config = config
         if self.config:
-            if self.config.config['num-of-runs']:
+            if self.config.has_value('num-of-runs'):
                 self.number_of_runs = self.config.config['num-of-runs']
-            if self.config.config['performed-by']:
+            if self.config.has_value('performed-by'):
                 self.performed_by = self.config.config['performed-by']
-            if self.config.config['computer-strength']:
+            if self.config.has_value('computer-strength'):
                 self.computer_strength = self.config.config['computer-strength']
 
     def next_parameters(self):
@@ -105,8 +105,7 @@ class Param:
 
                 # Save id to local cache
                 if self.config:
-                    self.config.config['last-test'] = str(records[i]["id"])
-                    self.config.update_config()
+                    self.config.update_config(key='last-test', value=str(records[i]["id"]))
 
                 return records[i]
 
@@ -154,8 +153,7 @@ class Param:
 
         # Remove id from local cache
         if self.config:
-            self.config.config["last-test"] = None
-            self.config.update_config()
+            self.config.update_config(key='last-test', value=None)
 
         for i in range(0, len(records)):
             if str(records[i]["id"]) == str(id):

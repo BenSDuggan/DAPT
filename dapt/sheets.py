@@ -40,13 +40,13 @@ class Sheet(database.Database):
         if 'config' in kwargs:
             self.config=kwargs['config']
 
-            if 'sheets-spreedsheet-id' in self.config.config:
+            if self.config.has_value('sheets-spreedsheet-id'):
                 self.spreedsheetID = self.config.config['sheets-spreedsheet-id']
-            if 'sheets-creds-path' in self.config.config:
+            if self.config.has_value('sheets-creds-path'):
                 self.creds = ServiceAccountCredentials.from_json_keyfile_name(self.config.config['sheets-creds-path'], self.scope)
-            if 'sheets-worksheet-id' in self.config.config:
+            if self.config.has_value('sheets-worksheet-id'):
                 self.sheet_id = self.config.config['sheets-worksheet-id']
-            if 'sheets-worksheet-title' in self.config.config:
+            if self.config.has_value('sheets-worksheet-title'):
                 self.sheet_title = self.config.config['sheets-worksheet-title']
         if not self.spreedsheetID:
             if 'spreedsheet_id' in kwargs:

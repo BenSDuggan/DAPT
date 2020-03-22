@@ -71,7 +71,7 @@ class Box:
             return
 
         # If not, then we check to see if the access and refresh token are in the config file.
-        if self.config and self.config.config['access-token'] and self.config.config['refresh-token']:
+        if self.config and self.config.has_value('access-token') and self.config.has_value('refresh-token'):
             try:
                 print('Trying to get new access and refresh token from ' + self.config.path)
                 self.oauth._refresh_token = self.config.config['refresh-token']
@@ -82,7 +82,7 @@ class Box:
                 if self.config:
                     self.config.config['performed-by'] = self.client.user(user_id='me').get()['login'] #Save username to config
                     self.config.config['access-token'] = self.access_token #Save access token to config
-                    self.config.config['refresh-token'] = self.refresh_token #Save refresn token to config
+                    self.config.config['refresh-token'] = self.refresh_token #Save refresh token to config
                     self.config.update_config()
 
                 print('Got new access and refresh token from existing')

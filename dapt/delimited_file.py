@@ -13,7 +13,7 @@ class Delimited_file(database.Database):
     An interface for accessing and setting paramater set data.  
 
     Args:
-        path (string): path to config file
+        path (string): path to delimited file file
     """
         
     def __init__(self, path, delimiter=','):
