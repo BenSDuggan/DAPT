@@ -2,7 +2,17 @@
 Box
 === 
 
-Class that allows for access to the box API and methods to directly upload files
+Class that allows for access to the box API and methods to directly upload files.  If you wish to use the Box API you should view the `install </install/box-install.html>`_.
+
+Authentication
+--------------
+
+In order for the Box API to work, it needs to get a user specific access and refresh token.  Box provides access tokens to users which are a session key.  They remain active for one hour at which time they must be refreshed using the refresh token.  Once a new access and refresh token has been given, the old one will no longer work.
+
+The tokens can be provided in three  ways.  First, you can run ``Box(...).connect()`` which will start a flask webserver.  You can then proceed to `<127.0.0.1:5000>`_ and log in with your Box username and password.  This is done securely through Box and you username and password cannot be extracted.  Second, you can insert the access and refresh token in the config file.  Then the Box class will use these tokens.  The final way to provide the tokens is by directly passign them to ``Box(...).connect(access_token=<your access token>, refresh_token=<your refresh token>)``.
+
+On a server, where you have no access to a web browser, you will need to get the tokens using a computer which has a web browser.  You can then place those tokens in the config file or directly pass them to the ``connect()`` method.
+
 """
 
 import os, time
@@ -54,8 +64,8 @@ class Box:
         Tries to connect to box using arguments provided in Config and starts server for authorization if not.
 
         Args:
-            access_token (str): Optional argument that allows DAPT to connect to box without going through web authentification (assuming refresh_token is given and not expired).
-            refresh_token (str): Optional argument that allows DAPT to connect to box without going through web authentification (assuming access_token is given and not expired).
+            access_token (str): Optional argument that allows DAPT to connect to box without going through web authentication (assuming refresh_token is given and not expired).
+            refresh_token (str): Optional argument that allows DAPT to connect to box without going through web authentication (assuming access_token is given and not expired).
         
         Returns:
             Box client if successful
@@ -102,7 +112,7 @@ class Box:
             Box client which can be used to access authorized user data
         """
 
-        print("Starting server.  Go to 127.0.0.1:5000 to authenticate box.  It can only be ended by completing authentification or going to 127.0.0.1:5000/end")
+        print("Starting server.  Go to 127.0.0.1:5000 to authenticate box.  It can only be ended by completing authentication or going to 127.0.0.1:5000/end")
         self.app.add_url_rule('/', 'index', self.__index)
         self.app.add_url_rule('/return', 'return', self.__capture)
         self.app.add_url_rule('/end', 'end', self.__end)

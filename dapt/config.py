@@ -8,6 +8,8 @@ Class that allows for reading and modification of a configuration (config) file.
 Fields
 ^^^^^^
 
+There are several standard fields (keys) that are used by DAPT for credentials and parameter settings.
+
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | Fields                           | Description                                                                             |
 +==================================+=========================================================================================+

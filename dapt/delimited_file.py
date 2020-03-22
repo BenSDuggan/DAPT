@@ -1,8 +1,8 @@
 """
-    Delimited file
-    ==============
+Delimited file
+==============
 
-    Create a CSV instance which can be used by param to get and run param sets
+Create a CSV database which can be used by param to get and run param sets.  
 """
 
 import csv, os

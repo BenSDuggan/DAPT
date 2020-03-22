@@ -5,7 +5,6 @@ Sheets
 Class which allows for Google Sheets to be used as paramater set database.
 
 
-
 Note: if you have data in the first row, you must have entries in some other row.
 """
 
