@@ -99,3 +99,34 @@ def test_config_safe():
 	os.remove('config.json')
 
 	assert conf.config == expected, "Conf did not make the config file safe."
+
+# Test the has_value method when the key is not in the config
+def test_config_has_value_null():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	os.remove('config.json')
+
+	assert conf.has_value('fried-chicken') == False, "Config.has_value() should return False when key is not in the config"
+
+# Test the has_value method when the key has a value of None
+def test_config_has_value_None():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	os.remove('config.json')
+
+	assert conf.has_value('last-test') == False, "Config.has_value() should return False when key has a value of None"
+
+# Test the has_value method when the key has a value
+def test_config_has_value_positive():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+	conf.update_config(key='last-test', value='3a')
+
+	os.remove('config.json')
+
+	assert conf.has_value('last-test') == True, "Config.has_value() should return True when key has a value"

@@ -1,5 +1,7 @@
 # Paper
 
+Directory containing the paper and the tools to build it.
+
 ## Install prereq
 
 ### Linux
@@ -20,6 +22,3 @@ make pdf		# Make latex and compile it
 make clean		# Clean up generated files
 ```
 
-## Clean
-
-`./clean.sh`

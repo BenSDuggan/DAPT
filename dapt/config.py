@@ -132,8 +132,8 @@ class Config:
         Given a key and associated value, updated the config file.  Alternatively, you can give no arguments and the config dict will be saved.  You can also do both.
 
         Args:
-            key (anything): the key to use.  If none is given then nothing will be updated in the dictionary.
-            value (anything): the value associated ot the key.
+            key (str): the key to use.  If none is given then nothing will be updated in the dictionary.
+            value (str): the value associated ot the key.
 
         Returns:
             Dictionary of config file
@@ -146,6 +146,21 @@ class Config:
             json.dump(self.config, f)
 
         return self.config
+
+    def has_value(self, key):
+        """
+        Checks to see if the config contains the key and a value other than None.
+
+        Args:
+            key (str): The key to determine if it has a value
+
+        Returns:
+            True if the key has a value, False otherwise.
+        """
+
+        if self.get_value(key, recursive=True) is None:
+            return False
+        return True
 
     @staticmethod
     def create(path='config.json'):
@@ -172,9 +187,9 @@ class Config:
         conf = Config(path)
         data = conf.config
         if data["access-token"]:
-            data["access-token"] = ""
+            data["access-token"] = None
         if data["refresh-token"]:
-            data["refresh-token"] = ""
+            data["refresh-token"] = None
         conf.config = data
         conf.update_config()
 
