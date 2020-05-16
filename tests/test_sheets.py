@@ -1,5 +1,5 @@
 """
-    Test if sheets.py is working correctly
+Test if dapt.db.sheets.py is working correctly
 """
 
 import dapt
@@ -17,7 +17,7 @@ def create_database_entries(config):
 	worksheet = sheet.get_worksheet(0)
 
 	config = dapt.Config(path='test_config.json')
-	sheet = dapt.Sheet(config=config)
+	sheet = dapt.db.Sheet(config=config)
 
 	data = [['id','start-time','end-time','status','a','b','c'],
 			['t1','2019-09-06 17:23','2019-09-06 17:36','finished','2','4','6'],
@@ -37,7 +37,7 @@ def create_database_entries(config):
 def test_Sheet_read():
 	config = dapt.Config(path=conf_path)
 	create_database_entries(config)
-	db = dapt.Sheet(config=config)
+	db = dapt.db.Sheet(config=config)
 
 	expected = [{'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'a':2, 'b':4, 'c':6},
 				{'id':'t2', 'start-time':'', 'end-time':'', 'status':'', 'a':10, 'b':10, 'c':''},
@@ -50,7 +50,7 @@ def test_Sheet_read():
 # Test if the keys from a Sheet can be retrieved
 def test_Sheet_get_keys():
 	config = dapt.Config(path=conf_path)
-	db = dapt.Sheet(config=config)
+	db = dapt.db.Sheet(config=config)
 	
 	expected = ['id','start-time','end-time','status','a','b','c']
 
@@ -61,7 +61,7 @@ def test_Sheet_get_keys():
 # Test if a row in the Sheet can be updated
 def test_Sheet_update_row():
 	config = dapt.Config(path=conf_path)
-	db = dapt.Sheet(config=config)
+	db = dapt.db.Sheet(config=config)
 
 	expected = [{'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'a':2, 'b':4, 'c':6},
 				{'id':'t2', 'start-time':'', 'end-time':'', 'status':'', 'a':100, 'b':100, 'c':200},
@@ -74,7 +74,7 @@ def test_Sheet_update_row():
 # Test if the row of a Sheet can be updated
 def test_Sheet_update_cell():
 	config = dapt.Config(path=conf_path)
-	db = dapt.Sheet(config=config)
+	db = dapt.db.Sheet(config=config)
 	
 	expected = [{'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'a':2, 'b':4, 'c':6},
 				{'id':'t2', 'start-time':'', 'end-time':'', 'status':'', 'a':100, 'b':100, 'c':200},
@@ -87,7 +87,7 @@ def test_Sheet_update_cell():
 def test_Sheet_get_key_index():
 	config = dapt.Config(path=conf_path)
 	create_database_entries(config)
-	db = dapt.Sheet(config=config)
+	db = dapt.db.Sheet(config=config)
 
 	assert db.get_key_index('a') == 4, "Cannot get the key index."
 
@@ -95,7 +95,7 @@ def test_Sheet_get_key_index():
 def test_Sheet_get_row_index():
 	config = dapt.Config(path=conf_path)
 	create_database_entries(config)
-	db = dapt.Sheet(config=config)
+	db = dapt.db.Sheet(config=config)
 
 	assert db.get_row_index('id', 't2') == 1, "Cannot get the row index."
 

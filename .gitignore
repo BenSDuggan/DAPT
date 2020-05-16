@@ -13,6 +13,7 @@ dist/*
 # Unwanted files
 test.csv
 docs/_build
+ignore.py
 
 # Stuff you probably don't want for security reasons
 config.json

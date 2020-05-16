@@ -1,6 +1,10 @@
-# Release Notes
+# Changes starting from 
 
 ## Next version
+
+### General updates
+
+* Moved database code to new `dapt.db` (database) module to better organize the code.
 
 ### Config
 
@@ -9,9 +13,14 @@
 * Added helper function `_find_value` for recursively finding values.
 * Made all Google Sheets variables be `sheets-*`.  Most of the Sheets variables were just `sheet-*`.
 
-### Sheets
+### db.Sheets
 
 * Made sure that Google Sheets is indexed from 0.
+* Move Sheets to db folder
+
+### db.Delimited_file
+
+* Moved `Delimited_file` to new `dapt.db` module
 
 ### Tools
 
@@ -28,3 +37,4 @@
 
 * Fixed Google Sheet names in Config file
 * Fixed Sheets tests so that they test for indexing at 0.
+* Changed Sheets and Delimited_file so that they work with the new module
