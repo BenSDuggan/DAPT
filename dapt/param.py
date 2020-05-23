@@ -50,7 +50,7 @@ class Param:
         self.performed_by = ''
         self.number_of_runs = -1
         self.runs_performed = 0
-        self.computer_strength = None
+        self.computer_strength = float('inf')
 
         self.config = config
         if self.config:
@@ -93,7 +93,7 @@ class Param:
 
         for i in range(0, len(records)):
             if not len(records[i]["status"]):
-                if 'computer-strength' in records[i] and self.computer_strength and self.computer_strength < int(records[i]["computer-strength"]):
+                if 'computer-strength' in records[i] and self.computer_strength < int(records[i]["computer-strength"]):
                     continue
                 
                 records[i]["status"] = "in progress"

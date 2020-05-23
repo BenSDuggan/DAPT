@@ -1,6 +1,6 @@
 # DAPT Testing
 
-Testing for DAPT is done using [pytest](pytest.org) and can be installed by entering `pip install -U pytest` in the terminal.  Travic CI is used for continuous integration and automatically runs the tests whenever code is pushed to the `master` branch or a pull request is made.  Tests should be written for all classes and functions included in the DAPT distribution.  DAPT leverages many APIs, including Google Sheets and Box.  This can make it challenging to test the classes that use the APIs as you don't want your credentials falling into the wrong hands.  Travic CI stores credentials as *Environment Variables* which keeps them secret.  When testing on a local computer, it is best to keep the credentials in a config file outside of ***any*** GitHub repo and pass that file to tests.  This will ensure that your credentials are kept safe and all features of DAPT are tested.
+Testing for DAPT is done using [pytest](pytest.org) and can be installed by entering `pip install -U pytest` in the terminal.  Travic CI is used for continuous integration and automatically runs the tests whenever code is pushed to the `master` or `dev` branch, or a pull request is made.  Tests should be written for all classes and functions included in the DAPT distribution.  DAPT leverages many APIs, including Google Sheets and Box.  This can make it challenging to test the classes that use the APIs as you don't want your credentials falling into the wrong hands.  Travic CI stores credentials as *Environment Variables* which keeps them secret.  When testing on a local computer, it is best to keep the credentials in a config file outside of ***any*** GitHub repo and pass that file to tests.  This will ensure that your credentials are kept safe and all features of DAPT are tested.
 
 ## Running the tests
 
@@ -32,3 +32,5 @@ You should now see all the tests run successfully.
 - `Delimited_file`
     - Add tests that make class fail like trying to write to invalid row
 - Make tests clean up better (remove files that are created)
+- Add test to check `Box`
+- Add test to check `tools`

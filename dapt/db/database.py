@@ -13,9 +13,9 @@ The database should use indexing starting from 0.
 
 """
 
-class Database (object):
+class Database(object):
 	"""
-		An interface for accessing and setting parameter set data.  
+	An interface for accessing and setting parameter set data.  
 	"""
 		
 	def __init__(self):
@@ -24,49 +24,49 @@ class Database (object):
 
 	def get_table(self):
 		"""
-	        Get the table from the database.
+		Get the table from the database.
 
-	        Returns:
-	            An array with each element being a dictionary of the key-value pairs for the row in the database.
+		Returns:
+			An array with each element being a dictionary of the key-value pairs for the row in the database.
 	    """
 
 		pass
 
 	def get_keys(self):
 		"""
-	        Get the keys of the parameter set
-			
-	        Returns:
-	            Array of strings with each element being a key (order is preserved if possible)
+		Get the keys of the parameter set
+		
+		Returns:
+			Array of strings with each element being a key (order is preserved if possible)
 	    """
 
 		pass
 
 	def update_row(self, row_index, values):
 		"""
-            Get the keys of the parameter set
+		Get the keys of the parameter set
 
-            Args:
-                row_index (int): the index of the row to replace
-                values (Dict): the key-value pairs that should be inserted
-            
-            Returns:
-                A boolean that is True if successfully inserted and False otherwise.
+		Args:
+			row_index (int): the index of the row to replace
+			values (Dict): the key-value pairs that should be inserted
+		
+		Returns:
+			A boolean that is True if successfully inserted and False otherwise.
         """
 
 		pass
 
 	def update_cell(self, row_id, key, value):
 		"""
-	        Get the keys of the parameter set
+		Get the keys of the parameter set
 
-	        Args:
-	            row_id (int): the row id to replace
-	            key (str): the key of the value to replace
-	            value (object): the value to insert into the cell
-			
-	        Returns:
-	            A boolean that is True if successfully inserted and False otherwise.
+		Args:
+			row_id (int): the row id to replace
+			key (str): the key of the value to replace
+			value (object): the value to insert into the cell
+		
+		Returns:
+			A boolean that is True if successfully inserted and False otherwise.
 	    """
 
 		pass

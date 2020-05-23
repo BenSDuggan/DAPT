@@ -6,8 +6,7 @@ A collection of tools that make DAPT easy to use with PhysiCell.
 """
 
 import xml.etree.ElementTree as ET
-import sys, os, platform, zipfile, datetime, time
-
+import sys, os, platform, zipfile, datetime, time, argparse
 
 def create_XML(parameters, default_settings="PhysiCell_settings_default.xml", save_settings="PhysiCell_settings.xml", off_limits=[]):
     """
@@ -110,3 +109,38 @@ def create_zip(pid):
     zip.close()
 
     return fileName
+
+'''
+def parse():
+    """
+
+
+    """
+
+    print('DEPRECATED: DO NOT USE!')
+
+    parser = argparse.ArgumentParser(description='Distributed Automated Parameter Testing (DAPT)\nA library to assist with running parameter sets across multiple systems.', formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('--f', metavar='config.json', default='config.json', type=str, action='store', help="The path to the config file.")
+    parser.add_argument('--r', action='store_true', help="Reset the config file.  \'last-test\':None")
+    parser.add_argument('--c', action='store_true', help="Create a blank config file.")
+    parser.add_argument('--s', action='store_true', help="Remove keys from the config file so it can be made public.")
+
+    args = parser.parse_args()
+    if args.r:
+        # Remove last-test from config file
+        conf = Config(args.f)
+        if conf.config['last-test']:
+            conf.config['last-test'] = None
+        #if conf.config['performed-by']:
+        #    conf.config['performed-by'] = None
+        conf.update_config()
+        exit()
+    if args.c:
+        # Reset config file
+        #Config.create(args.f)
+        exit()
+    if args.s:
+        # Safe config file
+        Config.safe(args.f)
+        exit()
+'''

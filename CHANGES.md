@@ -22,6 +22,12 @@
 
 * Moved `Delimited_file` to new `dapt.db` module
 
+### storage.Box
+
+* Box has been moved to the storage module.
+* Box now uses standard methods (defined in storage) and can upload, download, rename, and delete.
+* Improving Config integration so it is cleaner.  Attributes are now stored in a dictionary inside the "box" key.
+
 ### Tools
 
 * Added documentation to the `tools` module
@@ -30,7 +36,7 @@
 
 ### Examples
 
-* Added PhysiCell example
+* Moving PhysiCell example to its own repo
 * Fixed Google Sheets example so that it is indexed from 0
 
 ### Tests

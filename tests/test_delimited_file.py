@@ -30,6 +30,8 @@ def test_DF_read():
 
 	assert actual == expected, "Cannot read the delimited file.  Nothing else should work."
 
+	os.remove('test.csv')
+
 # Test if the keys from a delimited file can be retrieved
 def test_DF_get_keys():
 	create_test_file()
@@ -37,10 +39,11 @@ def test_DF_get_keys():
 	db = dapt.db.Delimited_file('test.csv', ',')
 	
 	actual = db.get_keys()
-
 	expected = ['id', 'startTime', 'endTime', 'status', 'a', 'b', 'c']
 
 	assert actual == expected, "Cannot get update a row in the delimited file."
+
+	os.remove('test.csv')
 
 # Test if a cell in the delimited file can be updated
 def test_DF_update_row():
@@ -57,6 +60,8 @@ def test_DF_update_row():
 
 	assert db.get_table() == expected, "Cannot update a row in the delimited file."
 
+	os.remove('test.csv')
+
 # Test if the row of a delimited file can be updated
 def test_DF_update_cell():
 	create_test_file()
@@ -72,6 +77,8 @@ def test_DF_update_cell():
 
 	assert db.get_table() == expected, "Cannot update a cell in the delimited file."
 
+	os.remove('test.csv')
+
 # Test if the row of a delimited file can be updated
 def test_DF_get_row_index():
 	create_test_file()
@@ -79,5 +86,7 @@ def test_DF_get_row_index():
 	db = dapt.db.Delimited_file('test.csv', ',')
 
 	assert db.get_row_index('status', 'finished') == 0, "Cannot get the row index."
+
+	os.remove('test.csv')
 
 
