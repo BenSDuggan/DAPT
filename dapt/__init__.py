@@ -5,7 +5,6 @@ __all__ = ['db', 'storage', 'config', 'param',]
 
 from .config import Config
 from .db import *
-from .storage import Box
-#from .box import Box
+from .storage import *
 from .param import Param
 from .tools import *

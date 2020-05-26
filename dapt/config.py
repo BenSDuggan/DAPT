@@ -55,6 +55,8 @@ The Config class can be used like a normal dictionary.
 
 import json
 
+DEFAULT_CONFIG = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
+
 class Config:
     """
     Class which loads and allows for editing of a config file
@@ -176,11 +178,9 @@ class Config:
         Args:
             path (string): path where config file will be written
         """
-
-        default = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "client-id":None, "client-secret":None, "box-folder-id":None, "reset-time":None, "num-of-runs":None, "computer-strength":None, "access-token":None, "refresh-token":None}
         
         with open(path, 'w') as f:
-            json.dump(default, f)
+            json.dump(DEFAULT_CONFIG, f)
 
     @staticmethod
     def safe(path="config.json"):
@@ -191,12 +191,12 @@ class Config:
             path (string): path where config file will be writen
         """
         conf = Config(path)
-        data = conf.config
-        if data["access-token"]:
-            data["access-token"] = None
-        if data["refresh-token"]:
-            data["refresh-token"] = None
-        conf.config = data
+
+        if conf.has_value(("box", "access-token")):
+            conf["box"]["access-token"] = None
+        if conf.has_value(("box", "refresh-token")):
+            conf["box"]["refresh-token"] = None
+        
         conf.update_config()
 
     def __len__(self):

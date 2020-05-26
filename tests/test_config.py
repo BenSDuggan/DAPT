@@ -10,7 +10,7 @@ def test_config_create():
 	dapt.Config.create('config.json')
 
 	conf = dapt.Config('config.json')
-	expected = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "client-id":None, "client-secret":None, "box-folder-id":None, "reset-time":None, "num-of-runs":None, "computer-strength":None, "access-token":None, "refresh-token":None}
+	expected = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
 
 	os.remove('config.json')
 
@@ -130,13 +130,3 @@ def test_config_has_value_positive():
 	os.remove('config.json')
 
 	assert conf.has_value('last-test') == True, "Config.has_value() should return True when key has a value"
-
-# Test the Config __dict__ method
-def test_config_dict():
-	dapt.Config.create('config.json')
-
-	config = dapt.Config('config.json')
-	
-	os.remove('config.json')
-
-	assert config.config == config.__dict__(), "The Config.__dict__() method doesn't return the internal config"

@@ -9,6 +9,7 @@ dist/*
 
 # Dev env stuff
 .vscode
+.DS_Store
 
 # Unwanted files
 test.csv
