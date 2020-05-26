@@ -12,6 +12,7 @@
 * Adding optional keys `remove-zip` and `remove-movie`.  This is used by `tools.data_cleanup()`.
 * Added helper function `_find_value` for recursively finding values.
 * Made all Google Sheets variables be `sheets-*`.  Most of the Sheets variables were just `sheet-*`.
+* Make config act like a dictionary so `config.config` doesn't need to be called.
 
 ### db.Sheets
 

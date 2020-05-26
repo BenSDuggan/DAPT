@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="dapt",
     packages=["dapt"],
-    version="0.9.1.3",
+    version="0.9.1.4",
     license='BSD 3-clause "New" or "Revised" license',
     author="Ben S. Duggan",
     author_email="dugganbens@gmail.com",

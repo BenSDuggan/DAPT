@@ -130,3 +130,13 @@ def test_config_has_value_positive():
 	os.remove('config.json')
 
 	assert conf.has_value('last-test') == True, "Config.has_value() should return True when key has a value"
+
+# Test the Config __dict__ method
+def test_config_dict():
+	dapt.Config.create('config.json')
+
+	config = dapt.Config('config.json')
+	
+	os.remove('config.json')
+
+	assert config.config == config.__dict__(), "The Config.__dict__() method doesn't return the internal config"

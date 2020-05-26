@@ -46,6 +46,10 @@ There are several standard fields (keys) that are used by DAPT for credentials a
 | ``remove-movie`` (bool)          | Have tools.data_cleanup() remove mp4 files if true.                                     |
 +----------------------------------+-----------------------------------------------------------------------------------------+
 
+Usage
+^^^^^
+
+The Config class can be used like a normal dictionary.
 
 """
 
@@ -195,3 +199,26 @@ class Config:
         conf.config = data
         conf.update_config()
 
+    def __len__(self):
+        return len(self.config)
+
+    def keys(self):
+        return self.config.keys()
+
+    def __getitem__(self, key):
+        return self.config[key]
+    
+    def __setitem__(self, key, value):
+        self.update_config(key, value)
+
+    def __delitem__(self, key):
+        del self.config[key]
+
+    def __repr__(self):
+        return repr(self.config)
+
+    def __iter__(self):
+        return iter(self.config)
+
+    def __contains(self, item):
+        return item in self.config
