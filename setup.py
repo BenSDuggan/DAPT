@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dapt",
-    packages=["dapt"],
+    packages=["dapt", "dapt.db", "dapt.storage"],
     version="0.9.1.4",
     license='BSD 3-clause "New" or "Revised" license',
     author="Ben S. Duggan",
