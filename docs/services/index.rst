@@ -6,7 +6,13 @@ Supported Online Services
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Database services:
+
+   sheets-setup
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Storage services:
 
    box-setup
-   sheets-setup
+   
