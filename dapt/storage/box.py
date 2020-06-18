@@ -52,9 +52,9 @@ class Box(storage.Storage):
         self.config = None
         self.client_id = None
         self.client_secret = None
-        self.__access_token = None
-        self.__refresh_token = None
-        self.__csrf_token = None
+        self._access_token = None
+        self._refresh_token = None
+        self._csrf_token = None
         self.refresh_time = None
         self.client = None
         self.app = None
@@ -92,11 +92,11 @@ class Box(storage.Storage):
         # Check to see if the user gave us the access and refresh token
         if access_token and refresh_token:
             self.oauth._refresh_token = refresh_token
-            self.__access_token, self.__refresh_token = self.oauth._refresh(access_token)
+            self._access_token, self._refresh_token = self.oauth._refresh(access_token)
             self.client = Client(self.oauth)
             self.refresh_time = time.time() + 60*60
 
-            self.__update_config()
+            self._update_config()
 
             return
 
@@ -105,7 +105,7 @@ class Box(storage.Storage):
             try:
                 print('Trying to get new access and refresh token from ' + self.config.path)
                 self.oauth._refresh_token = self.config.config['refresh-token']
-                self.__access_token, self.__refresh_token = self.oauth._refresh(self.config.config['access-token'])
+                self._access_token, self._refresh_token = self.oauth._refresh(self.config.config['access-token'])
                 self.client = Client(self.oauth)
                 self.refresh_time = time.time() + 60*60
 
@@ -117,9 +117,9 @@ class Box(storage.Storage):
 
         self.app = Flask(__name__)
         print('Starting server.  Go to the URL below to activate box functionality.  If you are on a server you will need to run this code on your computer, get the access and refresh token and then add them to the config file.')
-        return self.__start_server()
+        return self._start_server()
 
-    def __start_server(self):
+    def _start_server(self):
         """
         Method that starts flask to start authorization process
 
@@ -128,25 +128,25 @@ class Box(storage.Storage):
         """
 
         print("Starting server.  Go to 127.0.0.1:5000 to authenticate box.  It can only be ended by completing authentication or going to 127.0.0.1:5000/end")
-        self.app.add_url_rule('/', 'index', self.__index)
-        self.app.add_url_rule('/return', 'return', self.__capture)
-        self.app.add_url_rule('/end', 'end', self.__end)
+        self.app.add_url_rule('/', 'index', self._index)
+        self.app.add_url_rule('/return', 'return', self._capture)
+        self.app.add_url_rule('/end', 'end', self._end)
         self.app.run()
         print("Server stoped")
         return self.client
 
-    def __index(self):
+    def _index(self):
         """
         Flask page: index of the web server and serves as the start point for authentication
 
         Returns:
             String containing HTML to be displayed
         """
-        self.auth_url, self.__csrf_token = self.oauth.get_authorization_url("http://127.0.0.1:5000/return")
+        self.auth_url, self._csrf_token = self.oauth.get_authorization_url("http://127.0.0.1:5000/return")
 
         return '<h1>Welcome to box auth</h1> This web server is used to interface with the box API.  Click the link below to securely login on box.' + '<a href="'+self.auth_url+'">Click here to authenticate your box account </a>'
     
-    def __capture(self):
+    def _capture(self):
         """
         Flask page: box redirect url which contains the code and state used to get access and refresh token
 
@@ -159,8 +159,8 @@ class Box(storage.Storage):
         state = request.args.get('state')
 
         # If csrf token matches, fetch tokens
-        assert state == self.__csrf_token
-        self.__access_token, self.__refresh_token = self.oauth.authenticate(code)
+        assert state == self._csrf_token
+        self._access_token, self._refresh_token = self.oauth.authenticate(code)
 
         self.client = Client(self.oauth)
 
@@ -171,11 +171,11 @@ class Box(storage.Storage):
             raise RuntimeError('Not running with the Werkzeug Server')
         func()
 
-        self.__update_config()
+        self._update_config()
         
-        return 'You are now logged in as: ' + self.client.user(user_id='me').get()['login'] + '<br><strong>The server has been shutdown and the normal script is resuming.</strong><br>access token: '+self.__access_token+'<br>refresh token: '+self.__refresh_token+'<br><a href="http://127.0.0.1:5000">Click to go to index (assuming server restarted)</a>'
+        return 'You are now logged in as: ' + self.client.user(user_id='me').get()['login'] + '<br><strong>The server has been shutdown and the normal script is resuming.</strong><br>access token: '+self._access_token+'<br>refresh token: '+self._refresh_token+'<br><a href="http://127.0.0.1:5000">Click to go to index (assuming server restarted)</a>'
 
-    def __end(self):
+    def _end(self):
         """
         Flask page: shuts down flask server
 
@@ -189,7 +189,7 @@ class Box(storage.Storage):
         func()
         return 'Server shutting down...<br> Getting back to the main python script.'
 
-    def __update_config(self):
+    def _update_config(self):
         """
         Update the Config object to reflect the current state of the code.  If there is no config object, do nothing.
         """
@@ -207,9 +207,9 @@ class Box(storage.Storage):
                 if 'client-secret' in box_conf:
                     self.config.config['box']['client-secret'] = self.client_secret
                 if 'access-token' in box_conf:
-                    self.config.config['box']['access-token'] = self.__access_token
+                    self.config.config['box']['access-token'] = self._access_token
                 if 'refresh-token' in box_conf:
-                    self.config.config['box']['refresh-token'] = self.__refresh_token
+                    self.config.config['box']['refresh-token'] = self._refresh_token
                 if 'refresh_time' in box_conf:
                     self.config.config['box']['refresh_time'] = self.refresh_time
             
@@ -224,8 +224,8 @@ class Box(storage.Storage):
         """
 
         if self.refresh_time < time.time() + 5:
-            self.update_tokens(self.__access_token)
-            self.__update_config()
+            self.update_tokens(self._access_token)
+            self._update_config()
             return True
         return False
 
@@ -240,11 +240,11 @@ class Box(storage.Storage):
             Box client
         """
 
-        self.__access_token, self.__refresh_token = self.oauth.refresh(access_token)
+        self._access_token, self._refresh_token = self.oauth.refresh(access_token)
         self.client = Client(self.oauth)
         self.refresh_time = time.time() + 60*60
 
-        self.__update_config()
+        self._update_config()
 
         return self.client
 
