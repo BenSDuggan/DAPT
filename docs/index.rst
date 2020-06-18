@@ -28,8 +28,9 @@ Future versions of the project will work to improve documentation, add examples,
    :maxdepth: 2
    :caption: Contents:
 
-   install/install
+   install
    usage
+   references
+   services/index
    examples
-   code/dapt
-   dev/dev
+   dev/index

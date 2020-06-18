@@ -9,3 +9,4 @@ Development Guide
    :caption: Contents:
 
    contribute
+   updates

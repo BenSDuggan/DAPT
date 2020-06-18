@@ -8,19 +8,18 @@
 
 # -- Path setup --------------------------------------------------------------
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+
+sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../'))
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'DAPT'
-copyright = '2019, Ben Duggan'
+copyright = '2020, Ben Duggan'
 author = 'Ben S. Duggan'
 
 # Version
@@ -45,7 +44,7 @@ master_doc = 'index'
 
 language = None
 
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'modules/dapt.rst']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None

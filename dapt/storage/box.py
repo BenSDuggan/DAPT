@@ -19,8 +19,8 @@ Config
 The best way to use Box is with a configuration file.  Box attributes can be added to the config file as a JSON object which is the value for the key ``box``.  An sample config file for box is shown bellow.
 
 .. code-block:: json
+    
     {
-        ...
         "box" : {
             "client_id" : "xxx",
             "client_secret" : "xxx",
@@ -28,7 +28,6 @@ The best way to use Box is with a configuration file.  Box attributes can be add
             "refresh_token" : "xxx",
             "refresh_time" : "xxx"
         }
-        ...
     }
 
 """

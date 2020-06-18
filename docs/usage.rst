@@ -3,7 +3,7 @@
 Usage
 =====
 
-Once you have `installed <install.html>`_ DAPT and have verified that it's installed correctly you can start setting it up for actual parameter runs.  There are several ways to run DAPT but the basic philosophy is outlined below.  You can also look at specific `examples <https://github.com/BenSDuggan/DAPT/examples>`_.  To use DAPT, start by importing it.
+Once you have `installed <install.html>`_ DAPT and have verified that it's installed correctly you can start setting it up for actual parameter runs.  There are several ways to run DAPT but the basic philosophy is outlined below.  You can also look at specific `examples <https://github.com/BenSDuggan/DAPT/tree/master/examples>`_.  To use DAPT, start by importing it.
 
 .. code-block:: python
 

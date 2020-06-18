@@ -21,12 +21,5 @@ You should see a version looking like ``0.9.*``.
 
 DAPT is maintained for Python >= 3.6 and a full list of requirements is given in `requirements.txt <https://github.com/BenSDuggan/DAPT/blob/dev/requirements.txt>`_
 
-You can now use the library!  However, the functionality can be greatly increased by connecting some other services such as Google Sheets or Box.  See the below guides on how to include this functionality.
+You can now use the library!  However, the functionality can be greatly increased by connecting some other services such as Google Sheets or Box.  Checkout the full list of :ref:`services`.
 
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   sheets-install
-   box-install
