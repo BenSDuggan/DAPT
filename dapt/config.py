@@ -2,6 +2,9 @@
 Config
 ====== 
 
+The Config class allows user and API settings to be saved and updated using a configuration file.  A config class is not required by DAPT but using one provides several advantages.  First, it makes initializing a class much easier as each class can pull required attributes from a config.  Second, API credentials can be stored in a config, allowing credentials to be kept in one place.  Third, by allowing API tokens to be stored, there is no need to reauthenticate a service (assuming the tokens are still valid).  Finally, it provides a way for users to have their own settings file.
+
+
 Class that allows for reading and modification of a configuration (config) file.  A config file is not required but using one will make using DAPT much easier to use and greatly increase increase it's functionality.  A configuration file is simply a JSON file.  There are some reserved keys but you can add your own and refer to them throughout your program.
 
 
