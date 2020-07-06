@@ -21,3 +21,7 @@ config.json
 credentials.json
 test_credentials.json
 test_config.json
+
+# DAPT ingores
+dapt.log
+sample_db.csv

@@ -6,7 +6,8 @@ A collection of tools that make DAPT easy to use with PhysiCell.
 """
 
 import xml.etree.ElementTree as ET
-import sys, os, platform, zipfile, datetime, time, argparse
+import sys, os, platform, zipfile, datetime, time, argparse, logging, csv
+from .db import Delimited_file
 
 def create_XML(parameters, default_settings="PhysiCell_settings_default.xml", save_settings="PhysiCell_settings.xml", off_limits=[]):
     """
@@ -109,6 +110,27 @@ def create_zip(pid):
     zip.close()
 
     return fileName
+
+def sample_db(file_name='sample_db.csv', delimiter=','):
+    """
+    Create a sample `Delimited_file` database.  This method will create a file specified in the `file_name` attribute using the delimiter specified by `delimiter`.
+
+    Args:
+        file_name (str): the file name of the file to create and use for the database.  The default value is `sample_db.csv`.
+        delimiter (str): the delimiter to use for the file.  The default is a `,`.
+
+    Returns:
+        A `Delimited_file` object using the file_name specified.
+    """
+
+    with open(file_name, 'w') as f:
+        writer = csv.DictWriter(f, delimiter=delimiter, fieldnames=['id', 'startTime', 'endTime', 'status', 'a', 'b', 'c'])
+        writer.writeheader()
+        writer.writerow({'id':'t1', 'startTime':'2019-09-06 17:23', 'endTime':'2019-09-06 17:36', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'})
+        writer.writerow({'id':'t2', 'startTime':'', 'endTime':'', 'status':'', 'a':'10', 'b':'10', 'c':''})
+        writer.writerow({'id':'t3', 'startTime':'', 'endTime':'', 'status':'', 'a':'10', 'b':'-10', 'c':''})
+    
+    return Delimited_file(file_name, delimiter=delimiter)
 
 '''
 def parse():
