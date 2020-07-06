@@ -56,7 +56,7 @@ The Config class can be used like a normal dictionary.
 
 """
 
-import json
+import json, logging
 
 DEFAULT_CONFIG = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
 

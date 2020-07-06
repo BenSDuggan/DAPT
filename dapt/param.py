@@ -33,7 +33,9 @@ A field is the key (or identifier) used to get the value when a parameter set is
 +---------------------------+-----------------------------------------------------------------------------------------+
 """
 
-import datetime
+import datetime, logging
+
+_log = logging.getLogger(__name__)
 
 class Param:
     """
@@ -43,9 +45,9 @@ class Param:
         database (Database): a Database instance (such as Sheets or Delimited_file)
         config (Config): a config object which allows for more features.  This is optional.
     """
+    
 
     def __init__(self, database, config=None):
-
         self.db = database
         self.performed_by = ''
         self.number_of_runs = -1
@@ -71,14 +73,17 @@ class Param:
 
         if self.number_of_runs == -1 or self.runs_performed < self.number_of_runs:
             self.runs_performed += 1
+            _log.debug('%d runs performed (calls to `next_parameters()`)' % self.runs_performed)
         else:
+            _log.info('No more parameters to test in the database.')
             return None
         
         records = self.db.get_table()
+        _log.debug('Retrieved %d parameters' % len(records))
 
         # Do we have a last-test in the config file
-        if self.config and "last-test" in self.config.config and self.config.config["last-test"]:
-            print("Using lastTest from config.txt")
+        if self.config and "last-test" in self.config and self.config["last-test"]:
+            _log.info('Using `last-test` with id="%s" from config.txt' % str(self.config["last-test"]))
             for i in range(0, len(records)):
                 if str(self.config.config["last-test"]) == str(records[i]["id"]) and records[i]["status"] != "finished":
                     records[i]["status"] = "in progress"
@@ -167,6 +172,8 @@ class Param:
             records[index]["end-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         self.db.update_row(index, records[index])
+
+        _log.info('Test %s marked as successful' % str(id))
         
         return records[index]
 
@@ -199,5 +206,7 @@ class Param:
             records[index]["comments"] += " failed{ " + err + " };"
 
         self.db.update_row(index, records[index])
+
+        _log.info('Test %s marked as failed with message %s.' % (str(id), str(err)))
         
         return records[index]

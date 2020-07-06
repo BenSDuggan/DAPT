@@ -1,6 +1,6 @@
 
 __name__ = "dapt"
-__version__ = "0.9.1.4"
+__version__ = "0.9.2"
 __all__ = ['db', 'storage', 'config', 'param',]
 
 import logging
