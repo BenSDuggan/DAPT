@@ -14,6 +14,7 @@ dist/*
 # Unwanted files
 test.csv
 docs/_build
+docs/modules
 ignore.py
 
 # Stuff you probably don't want for security reasons

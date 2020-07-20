@@ -23,8 +23,8 @@ copyright = '2020, Ben Duggan'
 author = 'Ben S. Duggan'
 
 # Version
-version = '0.9.1'
-release = '0.9.1'
+version = '0.9.2'
+release = '0.9.2'
 
 
 # -- General configuration ---------------------------------------------------

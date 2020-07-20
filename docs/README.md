@@ -11,4 +11,6 @@ Assuming you have python installed, install sphinx by running `pip install -U sp
 1. Run `sphinx-apidoc -o modules/ ../dapt`
 2. Run `sphinx-build -b html . _build/`
 
+or Run `make build-html` to remove the contents of the `_build/html` directory, run `sphinx-api-doc` and `sphinx-build`.
+
 To make the PDF documentation you will need to have pdflatex installed.  You can then compile it by running `sphinx-build -M latexpdf . _build/`.

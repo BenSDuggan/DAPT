@@ -1,6 +1,13 @@
 # Changes starting from 
 
-## Next version
+## New version
+
+### General updates
+
+* Adding logging to DAPT using Python's [logging](https://docs.python.org/3.8/library/logging.html) module
+* Adding TravisCI testing for Python 3.9
+
+## 0.9.1.4
 
 ### General updates
 

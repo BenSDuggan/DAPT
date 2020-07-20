@@ -10,7 +10,7 @@ Documentation
 
 Documentation is performed using `Sphinx <http://www.sphinx-doc.org/en/master/>`_.  The docs folder holds all of the resources to document the code.  If you're not familiar with Sphinx you can read this `Medium tutorial <https://medium.com/@eikonomega/getting-started-with-sphinx-autodoc-part-1-2cebbbca5365>`_ for an introduction.  Google docstrings are used for inline commenting inside each file.
 
-You can compile the docs by running ``sphinx-build -M html . _build``, assuming you have sphinx installed.  This will create the html documentation in /docs/_build/html.
+You can compile the docs by running ``make build-html``, assuming you have sphinx installed.  This will remove the old documentation and create the new html documentation in ``docs/_build/html``.
 
 
 Tests
