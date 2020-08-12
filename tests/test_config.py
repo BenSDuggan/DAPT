@@ -5,6 +5,8 @@
 import dapt
 import os
 
+SAMPLE_CONFIG = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
+
 # Test creation of new config file
 def test_config_create():
 	dapt.Config.create('config.json')
@@ -26,7 +28,7 @@ def test_config_file_change():
 	expected["user-name"] = 'Clifford'
 
 	conf.config["user-name"] = 'Clifford'
-	conf.update_config()
+	conf.update()
 
 	os.remove('config.json')
 
@@ -42,7 +44,7 @@ def test_config_file_add():
 	expected["abc"] = 123
 
 	conf.config["abc"] = 123
-	conf.update_config()
+	conf.update()
 
 	os.remove('config.json')
 
@@ -55,7 +57,7 @@ def test_config_get_value_str():
 	conf = dapt.Config('config.json')
 
 	conf.config["abc"] = 123
-	conf.update_config()
+	conf.update()
 
 	os.remove('config.json')
 
@@ -67,7 +69,7 @@ def test_config_get_value_arr():
 	conf = dapt.Config('config.json')
 
 	conf.config["abc"] = {"a":1, "b":2, "c":{"aa":11, "bb":22}}
-	conf.update_config()
+	conf.update()
 
 	os.remove('config.json')
 
@@ -79,7 +81,7 @@ def test_config_get_value_recursive():
 	conf = dapt.Config('config.json')
 
 	conf.config["abc"] = {"a":1, "b":2, "c":{"aa":11, "bb":22}}
-	conf.update_config()
+	conf.update()
 
 	os.remove('config.json')
 
@@ -99,6 +101,88 @@ def test_config_safe():
 	os.remove('config.json')
 
 	assert conf.config == expected, "Conf did not make the config file safe."
+
+# Test the update_value method when no key is given
+def test_config_update_value_none():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	conf.config["abc"] = 123
+	conf.update()
+	actual = conf.read()
+
+	os.remove('config.json')
+
+	expected = dapt.config.DEFAULT_CONFIG.copy()
+	expected["abc"] = 123
+
+	assert actual == expected, "Config.update_value(): Config did not save the config properly when no arguments were provided to `update_value()`."
+
+# Test the update_value method when a str key is given
+def test_config_update_value_str():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	conf.update(key="abc", value=123, recursive=False)
+	actual = conf.read()
+
+	os.remove('config.json')
+
+	expected = dapt.config.DEFAULT_CONFIG.copy()
+	expected["abc"] = 123
+
+	assert actual == expected, "Config.update_value(key=\"abc\", value=123): Config did not save the config properly when str arguments were provided to `update_value()`."
+
+# Test the update_value method when an arr key is given
+def test_config_update_value_arr():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	conf.update(key=["a", "b"], value=123, recursive=False)
+	actual = conf.read()
+
+	os.remove('config.json')
+
+	expected = dapt.config.DEFAULT_CONFIG.copy()
+	expected["a"] = {"b": 123}
+
+	assert actual == expected, "Config.update_value(key=[\"a\", \"b\"], value=123): Config did not save the config properly when str arguments were provided to `update_value()`."
+
+# Test the update_value method when recursive and only one element in the array is given
+def test_config_update_value_recursive_parent():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	conf.update(key="big-swag", value=123, recursive=True)
+	actual = conf.read()
+
+	os.remove('config.json')
+
+	expected = dapt.config.DEFAULT_CONFIG.copy()
+	expected["big-swag"] = 123
+
+	assert actual == expected, "Config.update_value(key=\"big-swag\", value=123): Config did not save the config properly when str not in dict and recursive arguments were provided to `update_value()`."
+
+# Test the update_value method when recursive is given
+def test_config_update_value_recursive():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+
+	conf.update(key="access_token", value=123, recursive=True)
+	actual = conf.read()
+
+	os.remove('config.json')
+
+	expected = dapt.config.DEFAULT_CONFIG.copy()
+	expected["box"]["access_token"] = 123
+
+	assert actual == expected, "Config.update_value(key=\"access_token\", value=123): Config did not save the config properly when str and recursive arguments were provided to `update_value()`."
+
 
 # Test the has_value method when the key is not in the config
 def test_config_has_value_null():
@@ -120,13 +204,35 @@ def test_config_has_value_None():
 
 	assert conf.has_value('last-test') == False, "Config.has_value() should return False when key has a value of None"
 
-# Test the has_value method when the key has a value
-def test_config_has_value_positive():
+# Test the has_value method when the key is an str has a value
+def test_config_has_value_str():
 	dapt.Config.create('config.json')
 
 	conf = dapt.Config('config.json')
-	conf.update_config(key='last-test', value='3a')
+	conf.update(key='last-test', value='3a')
 
 	os.remove('config.json')
 
-	assert conf.has_value('last-test') == True, "Config.has_value() should return True when key has a value"
+	assert conf.has_value('last-test') == True, "Config.has_value() should return True when str key has a value"
+
+# Test the has_value method when the key is an arr has a value
+def test_config_has_value_arr():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+	conf.update(key=['big','swag'], value='sup', recursive=False)
+
+	os.remove('config.json')
+
+	assert conf.has_value(key=['big','swag']) == True, "Config.has_value() should return True when str key has a value"
+
+# Test the has_value method when the key is nested
+def test_config_has_value_recursive():
+	dapt.Config.create('config.json')
+
+	conf = dapt.Config('config.json')
+	conf.update(key=['big','swag'], value='sup', recursive=False)
+	
+	os.remove('config.json')
+
+	assert conf.has_value(key='swag', recursive=True) == True, "Config.has_value() should return True when key is nested and recursive is True"

@@ -32,7 +32,7 @@ The ``user-name`` and ``num-of-runs`` keys are reserved DAPT :ref:`fields <confi
 Fields
 ^^^^^^
 
-There are many fields used by modules in DAPT.  A complete list of fields in DAPT is provided below.  These keys are reserved and should not be used in your config file unless you expect DAPT to use them.
+There are many key-value pairs which can be used in the configuration to make DAPT behave in a particular way.  These keys are called fields.  A complete list of fields in DAPT is provided below.  These keys are reserved and should not be used in your config file unless you expect DAPT to use them.
 
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | Fields                           | Description                                                                             |
@@ -76,61 +76,49 @@ There are many fields used by modules in DAPT.  A complete list of fields in DAP
 Usage
 ^^^^^
 
-For these examples, the :ref:`example JSON <config-example-json>` shown above is used, stored in a file named ``example.json``.  To create a Config object the path to the JSON file must be provided.
+For these examples, the :ref:`example JSON <config-example-json>` shown above is used, stored in a file named ``example.json``.  To create a Config object the path to the JSON file must be provided.::
 
-.. code-block:: python
-   :caption: The Config object is created by providing the path to the JSON object.
-   :name: initialize-config
+    >>> config = dapt.Config(path="example.json")
 
-   config = dapt.Config(path="example.json")
+The configuration should be accessed using the ``get_value()`` method.  This method will returned the value of the associated key.  Keys can be provided as a string or a list where elements are the path to the value.  The ``num-or-runs`` attribute can be accessed as shown bellow.::
 
-The configuration should be accessed using the ``get_value()`` method.  This method will returned the value of the associated key.  Keys can be provided as a string or a list where elements are the path to the value.  The ``num-or-runs`` attribute can be accessed as shown bellow.  
+    >>> config.get_value("num-of-runs")
 
-.. code-block:: python
-   :caption: The ``num-of-runs`` key should be accessed as shown bellow.
-   :name: get-num-of-runs
+If you wanted to find the value of ``output-path`` then you specify the path to it.::
 
-   config.get_value("num-of-runs")
-
-If you wanted to find the value of ``output-path`` then you specify the path to it.
-
-.. code-block:: python
-   :caption: The ``output-path`` key should be accessed as shown bellow.
-   :name: get-output-path
-
-   config.get_value(["testing-variables", "output-path"])
+    >>> config.get_value(["testing-variables", "output-path"])
 
 Alternatively, the ``output-path`` key can be accessed by using the ``recursive`` flag.  This flag makes the ``get_value()`` method recursively search the JSON tree for the first occupance of the specified key.  This flag will increase the look-up time and may not return the value you expect if multiple keys with that name are present.
 
 The advantage of using the ``get_value()`` method is that ``None`` will be returned if the value is not found.
 
-The configuration dictionary can be accessed indirectly by treating the `Config` object as a dictionary.
+The configuration dictionary can be accessed indirectly by treating the `Config` object as a dictionary.::
 
-.. code-block:: python
-   :caption: Accessing ``num-of-runs`` and ``output-path`` from the internal configuration, using the ``Config`` object.
-   :name: access-config-indirectly
-
-   config["num-of-runs"]
-   config["testing-variables"]["output-path"]
+    >>> config["num-of-runs"]
+    >>> config["testing-variables"]["output-path"]
 
 Using this approach, the length of the dictionary can be accessed using Pythons internal `len()` function or any other `dict` method.  The keys of the dictionary can be accessed using the ``Config``s ``keys()`` method.
 
-Before accessing a value in the config, it is good to check that it exists.  This can be done using the `has_value()` method.  This method returns ``True`` if there is a non-none value in the config for the given key.  The key and recursive attributes behave the same as with the ``get_value()`` method.  For example, to check that the ``output-path`` key exists you could run the following and expect a return value of ``True``.
+Before accessing a value in the config, it is good to check that it exists.  This can be done using the `has_value()` method.  This method returns ``True`` if there is a non-none value in the config for the given key.  The key and recursive attributes behave the same as with the ``get_value()`` method.  For example, to check that the ``output-path`` key exists you could run the following and expect a return value of ``True``.::
 
-.. code-block:: python
-   :caption: Check to see if there is a value for the key ``output-path``.
-   :name: has-output-path
-
-   config.has_value(["testing-variables", "output-path"])
+    >>> config.has_value(["testing-variables", "output-path"])
 
 If you checked for the key ``foo``, then ``has_value()`` would return ``False``.
 
+To add key-value pairs to the configuration or update values, the ``update()`` method should be used.  This method will allow the configuration to change and save it to the JSON file.  The configuration can be changed in four different ways.  First, by providing the key as a string.  Second, by providing the key as an array representing a path to the value.  The third method uses a ``str`` for the string and recursively finds the first occurrence of the key in the config.  Lastly, the configuration can be updated by accessing the dictionary directly.  Then ``update()`` can be ran without parameters to save the config.  The second and last methods are required to access nested key-value pairs.  All of these methods work to add new data or change values in the configuration.
 
-Updateing values
+    >>> config.update(key="user-name", value="John", recursive=False)
+    >>> config.update(key=["testing-variables", "executable-path"], value="main.exe", recursive=False)
+    >>> config.update(key="output-path", value="save/", recursive=True)
 
-Creating default config
+    >>> config["num-of-runs"] = 3
+    >>> config.update()
 
-Safing config
+When creating a new configuration file, the ``create()`` method can be used.  This static method will create a default configuration file at the path provided.  This file contains all of the possible fields used by DAPT.
+
+    >>> dapt.config.Config.create(path="new-config.json")
+
+Configuration files can contain sensitive API credentials or passwords.  Storing these in plane text or publishing configuration files online is unsecure as people can then gain access to your online services.  To combate this you can "safe" the configuration file.  The ``safe()`` method will remove all API credentials from the configuration so the file cannot be used to access your APIs.  Currently, this this process is one-way and the credentials cannot be recovered.  However, in the future this will encrypt the file can be distributed online and unlocked by people with the correct password.
 
 
 """
@@ -143,9 +131,6 @@ class Config:
     """
     .. _config-docs:
 
-    Config Class Documentation
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^
-
     Class which loads and allows for editing of a config file.
 
     Args:
@@ -153,7 +138,7 @@ class Config:
     """
     def __init__(self, path='config.json'):
         self.path = path
-        self.config = self.read_config()
+        self.config = self.read()
 
     def get_value(self, key, recursive=False):
         """
@@ -210,8 +195,30 @@ class Config:
                     return value
         return None
 
+    def _find_path(self, dic, key):
+        """
+        Helper function to find the path to a nested key
+
+        Args:
+            dic (dict): the dictionary
+            key (str): the key to search for
+
+        Returns:
+            An `arr` containing the path to the key in the dic or None if the path could not be found
+        """
+
+        if key in dic:
+            return [key]
+        
+        for k, v in dic.items():
+            if isinstance(v, dict):
+                keys = self._find_path(v, key)
+                if keys:
+                    return [k] + keys
+        return None
+
     
-    def read_config(self):
+    def read(self):
         """
         Reads the file with path set to self.path
 
@@ -220,23 +227,45 @@ class Config:
         """
 
         with open(self.path) as f:
-            return json.load(f)
+            self.config = json.load(f)
+            return self.config
 
-    def update_config(self, key=None, value=None):
+    def update(self, key=None, value=None, recursive=False):
         """
         Given a key and associated value, updated the config file.  Alternatively, you can give no arguments and the config dict will be saved.  You can also do both.
 
         Args:
-            key (str): the key to use.  If none is given then nothing will be updated in the dictionary.
+            key (str or list): the key (given as a string) or List containing the path to the value.  If `None` is given then nothing will be updated in the dictionary.
             value (str): the value associated ot the key.
+            recursive (bool): recursively look through the config for the given key.  False by default.  If recursive is set to True then key must be a string.
 
         Returns:
             Dictionary of config file
         """
 
         if key:
-            self.config[key] = value
+            if recursive:
+                path = self._find_path(self.config, key)
 
+                # Check to see if a path has been found.  If not then the key is likely not in the dict yet
+                if path:
+                    key = path
+
+            # Convert key to list if it is not already one
+            if not isinstance(key, list):
+                key = [key]
+            
+            dic = self.config
+
+            for k in key:
+                if k == key[-1]:
+                    dic[k] = value
+                elif k in dic:
+                    dic = dic[k]
+                else:
+                    dic[k] = {}
+                    dic = dic[k]
+        
         with open(self.path, 'w') as f:
             json.dump(self.config, f)
 
@@ -275,10 +304,15 @@ class Config:
 
         Args:
             path (string): path where config file will be written
+
+        Returns:
+            A ``Config`` object with the newly created default configuration
         """
         
         with open(path, 'w') as f:
             json.dump(DEFAULT_CONFIG, f)
+
+        return Config(path)
 
     @staticmethod
     def safe(path="config.json"):
@@ -295,7 +329,7 @@ class Config:
         if conf.has_value(("box", "refresh-token")):
             conf["box"]["refresh-token"] = None
         
-        conf.update_config()
+        conf.update()
 
     def __len__(self):
         return len(self.config)
@@ -304,7 +338,7 @@ class Config:
         return self.config[key]
     
     def __setitem__(self, key, value):
-        self.update_config(key, value)
+        self.update(key, value)
 
     def __delitem__(self, key):
         del self.config[key]

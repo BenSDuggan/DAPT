@@ -7,7 +7,7 @@ A collection of tools that make DAPT easy to use with PhysiCell.
 
 import xml.etree.ElementTree as ET
 import sys, os, platform, zipfile, datetime, time, argparse, logging, csv
-from .db import Delimited_file
+from .db.delimited_file import Delimited_file
 
 def create_XML(parameters, default_settings="PhysiCell_settings_default.xml", save_settings="PhysiCell_settings.xml", off_limits=[]):
     """
@@ -155,7 +155,7 @@ def parse():
             conf.config['last-test'] = None
         #if conf.config['performed-by']:
         #    conf.config['performed-by'] = None
-        conf.update_config()
+        conf.update()
         exit()
     if args.c:
         # Reset config file

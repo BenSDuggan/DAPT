@@ -110,7 +110,7 @@ class Param:
 
                 # Save id to local cache
                 if self.config:
-                    self.config.update_config(key='last-test', value=str(records[i]["id"]))
+                    self.config.update(key='last-test', value=str(records[i]["id"]))
 
                 return records[i]
 
@@ -158,7 +158,7 @@ class Param:
 
         # Remove id from local cache
         if self.config:
-            self.config.update_config(key='last-test', value=None)
+            self.config.update(key='last-test', value=None)
 
         for i in range(0, len(records)):
             if str(records[i]["id"]) == str(id):

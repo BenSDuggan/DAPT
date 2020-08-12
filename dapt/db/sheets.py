@@ -10,9 +10,9 @@ Note: if you have data in the first row, you must have entries in some other row
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-from . import database
+from . import base
 
-class Sheet(database.Database):
+class Sheet(base.Database):
     """
     An interface for accessing and setting paramater set data.  You must either provide a Config object or client_id and client_secret.
 

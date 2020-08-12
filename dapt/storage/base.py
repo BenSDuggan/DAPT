@@ -1,6 +1,8 @@
 """
-Storage
-=======
+.. _base-storage:
+
+Storage base
+============
 
 The Storage class is designed to provide a standard interface for adding APIs that enable storage.  This class defines the basic required functions that must be implimented for two classes inheriting this class to work in the same workflow, assuming the correct API keys are used.  Switching storage objects should work seemlessly, if a Config object is used to initialize the Storage object.  If the API credentials are directly provided, this cannot be guarantied because different services had different methods of initialization.
 

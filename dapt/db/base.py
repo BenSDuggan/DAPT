@@ -1,4 +1,6 @@
 """
+.. _base-database:
+
 Database
 ========
 

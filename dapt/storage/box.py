@@ -36,9 +36,9 @@ import os, time, shutil
 from pathlib import Path
 from boxsdk import *
 from flask import *
-from . import storage
+from . import base
 
-class Box(storage.Storage):
+class Box(base.Storage):
     """
     Class which allows for connection to box API.  You must either provide a Config object or client_id and client_secret.
 
@@ -213,7 +213,7 @@ class Box(storage.Storage):
                 if 'refresh_time' in box_conf:
                     self.config.config['box']['refresh_time'] = self.refresh_time
             
-            self.config.update_config()
+            self.config.update()
 
     def _check_tokens(self):
         """

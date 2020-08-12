@@ -6,9 +6,9 @@ Create a CSV database which can be used by param to get and run param sets.
 """
 
 import csv, os
-from . import database
+from . import base
 
-class Delimited_file(database.Database):
+class Delimited_file(base.Database):
     """
     An interface for accessing and setting paramater set data.  
 
