@@ -1,6 +1,5 @@
 """
 .. _config:
-
 Config
 ====== 
 
@@ -28,11 +27,10 @@ The ``user-name`` and ``num-of-runs`` keys are reserved DAPT :ref:`fields <confi
 
 
 .. _config-fields:
-
 Fields
 ^^^^^^
 
-There are many key-value pairs which can be used in the configuration to make DAPT behave in a particular way.  These keys are called fields.  A complete list of fields in DAPT is provided below.  These keys are reserved and should not be used in your config file unless you expect DAPT to use them.
+There are many key-value pairs which can be used in the configuration to make DAPT behave in a particular way.  These keys are called fields.  These fields are reserved and should not be used in your config file unless you expect DAPT to use them.  A list of top level fields is provided below.  
 
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | Fields                           | Description                                                                             |
@@ -65,14 +63,10 @@ There are many key-value pairs which can be used in the configuration to make DA
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | ``refresh-token`` (str)          | The box refresh token for the particular session.                                       |
 +----------------------------------+-----------------------------------------------------------------------------------------+
-| ``remove-zip`` (bool)            | Have tools.data_cleanup() remove zip files if true.                                     |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``remove-movie`` (bool)          | Have tools.data_cleanup() remove mp4 files if true.                                     |
-+----------------------------------+-----------------------------------------------------------------------------------------+
 
+Some of these fields are used by other DAPT classes to store values.  For example, the ``google-sheets`` field has many sub-fields that set parameters in the class automatically.  The ``spreedsheet-id`` sub-field sets the spreedsheet ID that should be used as the database.  These sub-fields are not listed above.  They are notable, however, because you may accidentally find one of these sub-fields if you recursively search a config file.  If you are worried about accidentally using one of these fields, the ``FULL_CONFIG`` variable in the `config <https://github.com/BenSDuggan/DAPT/blob/master/dapt/config.py`_ module contains all of the config fields.
 
 .. _config-usage:
-
 Usage
 ^^^^^
 
@@ -125,6 +119,7 @@ Configuration files can contain sensitive API credentials or passwords.  Storing
 
 import json, logging
 
+FULL_CONFIG = {}
 DEFAULT_CONFIG = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
 
 class Config:

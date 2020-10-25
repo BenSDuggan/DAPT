@@ -1,15 +1,19 @@
 """
-Param
-=====
+.. _param:
+Parameters
+==========
 
-This is the main class which interact with the database to get and manage parameter sets.  The ``Param`` class links all the other classes together enabling a paramater set to be run
+This is the main class which interact with the database to get and manage parameter sets.  The ``Param`` class links all the other classes together enabling a paramater set to be run.
 
-
+.. _param-database:
 Database
 --------
 
-In order to get the paramaters, the ``Param`` class needs to be given a ``Database`` instance (e.g. ``Sheets`` or ``Delimited_file``).  Regardless of the which database option is used, it must be set up in a particular way as shown below.
+In order to get the paramaters, the ``Param`` class needs to be given a ``Database`` instance (e.g. ``Sheets``, ``Delimited_file``).  The database is where the parameters to be tested live.  The database has a couple required fields (attributes) and many optional fields.  The param-fields_ section provides more information on how the database should be configured.
 
+Each time a new parameter set is requested, the database will be downloaded again.  This means that the database can be changed as DAPT is running to add or remove the number of tests.  An important note regarding database is that they can be ran local or on the internet.  This means that multiple people can work on the parameter set at the same time, thus distributing the computational work load.
+
+.. _param-database-fields:
 Fields
 ^^^^^^
 
@@ -20,8 +24,8 @@ A field is the key (or identifier) used to get the value when a parameter set is
 +===========================+=========================================================================================+
 | ``id``\* (str)            | Unique parameter set installed                                                          |
 +---------------------------+-----------------------------------------------------------------------------------------+
-| ``status``\* (str)        | The current status of the parameter set. Blank values are unran (default),              |
-|                           | ``finished`` have finished and ``failed`` have failed.                                  |
+| ``status``\* (str)        | The current status of the parameter set. Blank values(default) have not been ran,       |
+|                           | ``successful`` have finished and ``failed`` have failed.                                |
 +---------------------------+-----------------------------------------------------------------------------------------+
 | ``start-time`` (str)      | The time that the parameter set began.  Times are in UTC time format.                   |
 +---------------------------+-----------------------------------------------------------------------------------------+
@@ -31,6 +35,13 @@ A field is the key (or identifier) used to get the value when a parameter set is
 +---------------------------+-----------------------------------------------------------------------------------------+
 | ``comments`` (str)        | Any comments such as error messages relating to the parameter set.                      |
 +---------------------------+-----------------------------------------------------------------------------------------+
+
+The ``id`` field is a unique identifier for that test.  This attribute is used to identify the parameter set and must be given to most of the methods in the ``Param`` class.  The ``status`` filed gives the current status of the test.  There are five main status values: empty, "successful", "failed", "in progress", and other text.  When a test has an empty status it indicates that the test has not been ran yet.  A status of "successful" indicates that the test has finished successfully, and a "failed" status shows that the test failed.  When you request another parameter set by running ``next_parameters()``, the status will automatically be set to "in progress".  If the status is not empty, then DAPT will not offer it when the ``next_parameters()`` method is called.  You can update the status to something you want by calling the ``update_status()`` method.
+
+.. _param-usage:
+Usage
+-----
+
 """
 
 import datetime, logging
@@ -85,7 +96,7 @@ class Param:
         if self.config and "last-test" in self.config and self.config["last-test"]:
             _log.info('Using `last-test` with id="%s" from config.txt' % str(self.config["last-test"]))
             for i in range(0, len(records)):
-                if str(self.config.config["last-test"]) == str(records[i]["id"]) and records[i]["status"] != "finished":
+                if str(self.config.config["last-test"]) == str(records[i]["id"]) and records[i]["status"] != "successful":
                     records[i]["status"] = "in progress"
                     if "start-time" in records[i]:
                         records[i]["start-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -167,7 +178,7 @@ class Param:
         if index == -1:
             return False
 
-        records[index]["status"] = "finished"
+        records[index]["status"] = "successful"
         if 'end-time' in records[index]:
             records[index]["end-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 

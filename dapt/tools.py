@@ -1,13 +1,69 @@
 """
+.. _tools:
 Tools
 =====
 
-A collection of tools that make DAPT easy to use with PhysiCell.
+A collection of tools that make DAPT easy to use, especially with `PhysiCell <http://physicell.org/>`_.  The ``sample_db`` and ``create_settings_file()`` methods are helpful with anyone using DAPT.  The rest of the methods are used specifically for PhysiCell pipelines.
 """
 
 import xml.etree.ElementTree as ET
 import sys, os, platform, zipfile, datetime, time, argparse, logging, csv
 from .db.delimited_file import Delimited_file
+
+# Start General tools
+
+def sample_db(file_name='sample_db.csv', delimiter=','):
+    """
+    Create a sample `Delimited_file` database.  The sample table is shown below.  This method will create a file specified in the `file_name` attribute using the delimiter specified by `delimiter`.
+
+    +----+------------------+------------------+----------+----+-----+---+
+    | id | start-time       | end-time         | status   | a  | b   | c |
+    +----+------------------+------------------+----------+----+-----+---+
+    | t1 | 2019-09-06 17:23 | 2019-09-06 17:36 | finished | 2  | 4   | 6 |
+    +----+------------------+------------------+----------+----+-----+---+
+    | t2 |                  |                  |          | 10 | 10  |   |
+    +----+------------------+------------------+----------+----+-----+---+
+    | t3 |                  |                  |          | 10 | -10 |   |
+    +----+------------------+------------------+----------+----+-----+---+
+
+    Args:
+        file_name (str): the file name of the file to create and use for the database.  The default value is `sample_db.csv`.
+        delimiter (str): the delimiter to use for the file.  The default is a `,`.
+
+    Returns:
+        A `Delimited_file` object using the file_name specified.
+    """
+
+    with open(file_name, 'w') as f:
+        writer = csv.DictWriter(f, delimiter=delimiter, fieldnames=['id', 'start-time', 'end-time', 'status', 'a', 'b', 'c'])
+        writer.writeheader()
+        writer.writerow({'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'})
+        writer.writerow({'id':'t2', 'start-time':'', 'end-time':'', 'status':'', 'a':'10', 'b':'10', 'c':''})
+        writer.writerow({'id':'t3', 'start-time':'', 'end-time':'', 'status':'', 'a':'10', 'b':'-10', 'c':''})
+    
+    return Delimited_file(file_name, delimiter=delimiter)
+
+def create_settings_file(parameters, pid=None):
+    """
+    Creates a file where each line contains a key from the parameters and its associated key, separated by a semicolon.
+
+    Args:
+        parameters (dict): the paramaters to be saved in the file
+        pid (str): the parameter id of the current parameter run.  If you don't give an id then the id in ``parameters`` will be used.
+    """
+
+    data = ""
+
+    if not pid:
+        pid = parameters["id"]
+
+    for key in parameters:
+        data += str(key) + ":" + str(parameters[key]) + "\n"
+
+    with open(str(parameters["id"]) + "_dapt_param_settings.txt", 'w') as file:
+        file.writelines(data)
+
+# Start PhysiCell tools
 
 def create_XML(parameters, default_settings="PhysiCell_settings_default.xml", save_settings="PhysiCell_settings.xml", off_limits=[]):
     """
@@ -57,26 +113,6 @@ def data_cleanup(config=None):
             if (config.get_value('remove-zip', recursive=True) and file.endswith('.zip')) or (config.get_value('remove-movie', recursive=True) and file.endswith('.mp4')):
                 os.remove("output/" + file)
 
-def create_settings_file(parameters, pid=None):
-    """
-    Creates a file where each line contains a key from the parameter file and the associated key, separated by a semicolon.
-
-    Args:
-        parameters (dict): the paramaters to be saved in the file
-        pid (str): the parameter id of the current parameter run.  If you don't give an id then the id in ``parameters`` will be used.
-    """
-
-    data = ""
-
-    if not pid:
-        pid = parameters["id"]
-
-    for key in parameters:
-        data += str(key) + ":" + str(parameters[key]) + "\n"
-
-    with open(str(parameters["id"]) + "_dapt_param_settings.txt", 'w') as file:
-        file.writelines(data)
-
 def create_zip(pid):
     """
     Zip all of the important PhysiCell items.
@@ -111,26 +147,7 @@ def create_zip(pid):
 
     return fileName
 
-def sample_db(file_name='sample_db.csv', delimiter=','):
-    """
-    Create a sample `Delimited_file` database.  This method will create a file specified in the `file_name` attribute using the delimiter specified by `delimiter`.
 
-    Args:
-        file_name (str): the file name of the file to create and use for the database.  The default value is `sample_db.csv`.
-        delimiter (str): the delimiter to use for the file.  The default is a `,`.
-
-    Returns:
-        A `Delimited_file` object using the file_name specified.
-    """
-
-    with open(file_name, 'w') as f:
-        writer = csv.DictWriter(f, delimiter=delimiter, fieldnames=['id', 'startTime', 'endTime', 'status', 'a', 'b', 'c'])
-        writer.writeheader()
-        writer.writerow({'id':'t1', 'startTime':'2019-09-06 17:23', 'endTime':'2019-09-06 17:36', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'})
-        writer.writerow({'id':'t2', 'startTime':'', 'endTime':'', 'status':'', 'a':'10', 'b':'10', 'c':''})
-        writer.writerow({'id':'t3', 'startTime':'', 'endTime':'', 'status':'', 'a':'10', 'b':'-10', 'c':''})
-    
-    return Delimited_file(file_name, delimiter=delimiter)
 
 '''
 def parse():
