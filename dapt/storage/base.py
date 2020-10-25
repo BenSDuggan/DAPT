@@ -9,8 +9,10 @@ To attempt to make paths easier to navigate, the download and upload methods inc
 
 """
 
-import shutil
+import shutil, logging, mimetypes
 from pathlib import Path
+
+_log = logging.getLogger(__name__)
 
 class Storage(object):
     """
@@ -44,12 +46,12 @@ class Storage(object):
         """
         pass
 
-    def download_folder(self, folder_id, folder='.', name=None, overwrite=True):
+    def download_folder(self, file_id, folder='.', name=None, overwrite=True):
         """
         Download the folder at the given file_id to the given path.
 
         Args:
-            folder_id (str): The folder identification to be downloaded
+            file_id (str): The folder identification to be downloaded
             folder (str): The directory where the file should be saved
             name (str): The name that the file should be saved as.  If None is given (default), then the name of the file on the resource will be used.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
@@ -71,12 +73,12 @@ class Storage(object):
         """
         pass
 
-    def delete_folder(self, folder_id):
+    def delete_folder(self, file_id):
         """
         Delete the given folder.
 
         Args:
-            folder_id (str): The folder identification to be downloaded
+            file_id (str): The folder identification to be downloaded
 
         Returns:
             True if successful and False otherwise
@@ -96,12 +98,12 @@ class Storage(object):
         """
         pass
 
-    def rename_folder(self, folder_id, name):
+    def rename_folder(self, file_id, name):
         """
         Rename the given folder.
 
         Args:
-            folder_id (str): The folder identification to be downloaded
+            file_id (str): The folder identification to be downloaded
             name (str): The new name of the file or folder
 
         Returns:
@@ -109,14 +111,14 @@ class Storage(object):
         """
         pass
 
-    def upload_file(self, folder_id, folder='.', name=None, overwrite=True):
+    def upload_file(self, file_id, name, folder='.', overwrite=True):
         """
         Upload a file to the given folder.
 
         Args:
-            folder_id (str): The folder identification to be downloaded
-            folder (str): The directory where the file should be saved
-            name (str): The name that the file should be saved as.  If None is given (default), then the name of the file on the resource will be used.
+            file_id (str): The folder where the file should be saved.
+            name (str): The name that the file should be uploaded.
+            folder (str): The directory where the file is stored.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:
@@ -124,14 +126,14 @@ class Storage(object):
         """
         pass
 
-    def upload_folder(self, folder_id, folder='.', name=None, overwrite=True):
+    def upload_folder(self, file_id, name, folder='.', overwrite=True):
         """
         Upload a folder to the given folder.
 
         Args:
-            folder_id (str): The folder identification to be downloaded
-            folder (str): The directory where the file should be saved
-            name (str): The name that the file should be saved as.  If None is given (default), then the name of the file on the resource will be used.
+            file_id (str): The folder where the folder should be saved.
+            name (str): The name that the file should be uploaded.
+            folder (str): The directory where the file is stored.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:
@@ -139,7 +141,7 @@ class Storage(object):
         """
         pass
 
-def check_overwrite_file(folder, name, overwrite):
+def check_overwrite_file(folder, name, overwrite, remove_existing):
     """
     This method checks to see if the file at the path specified should be overwritten.
 
@@ -147,6 +149,7 @@ def check_overwrite_file(folder, name, overwrite):
         folder (str): The directory where the file might be.
         name (str): The name of the file
         overwrite (bool): Should the file be overwritten
+        remove_existing: (bool): Should the file be deleted if it already exists
 
     Returns:
         True if the file should be overwritten and False otherwise.
@@ -154,8 +157,14 @@ def check_overwrite_file(folder, name, overwrite):
 
     file_path = Path(folder) / name
 
-    if file_path.exists() and not overwrite:
-        return False
+    if file_path.exists():
+        if overwrite:
+            if remove_existing:
+                file_path.unlink
+                _log.info('Removing file %s' % file_path)
+            return True
+        else:
+            return False
 
     return True
 
@@ -195,3 +204,16 @@ def check_overwrite_folder(folder, name, overwrite, make_folder):
         file_path.mkdir()
 
     return True
+
+def get_mime_type(name):
+    """
+    Get the MIME type of the given file based on it's file extension.
+
+    Args:
+        name (str): the name of the file including the extension
+
+    Returns:
+        The MIME type of the file and None if the MIME type cannot be found.
+    """
+
+    return mimetypes.guess_type(name)[0]
