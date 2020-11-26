@@ -1,6 +1,8 @@
 """
+.. _box:
+
 Box
-=== 
+===
 
 Class that allows for access to the box API and methods to directly upload files.  If you wish to use the Box API you should view the `install </install/box-install.html>`_.
 
@@ -33,10 +35,15 @@ The best way to use Box is with a configuration file.  Box attributes can be add
 """
 
 import os, time, shutil
+import logging as lg
 from pathlib import Path
+
 from boxsdk import *
 from flask import *
+
 from . import base
+
+_log = lg.getLogger(__name__)
 
 class Box(base.Storage):
     """
@@ -101,11 +108,11 @@ class Box(base.Storage):
             return
 
         # If not, then we check to see if the access and refresh token are in the config file.
-        if self.config and self.config.has_value('access-token') and self.config.has_value('refresh-token'):
+        if self.config and self.config.has_value(['box','access-token']) and self.config.has_value(['box','refresh-token']):
             try:
                 print('Trying to get new access and refresh token from ' + self.config.path)
                 self.oauth._refresh_token = self.config.config['refresh-token']
-                self._access_token, self._refresh_token = self.oauth._refresh(self.config.config['access-token'])
+                self._access_token, self._refresh_token = self.oauth._refresh(self.config['box']['access-token'])
                 self.client = Client(self.oauth)
                 self.refresh_time = time.time() + 60*60
 
@@ -197,21 +204,21 @@ class Box(base.Storage):
         if self.config:
 
             if self.config.has_value('performed-by') and self.client is not None:
-                self.config.config['performed-by'] = self.client.user(user_id='me').get()['login']
+                self.config['performed-by'] = self.client.user(user_id='me').get()['login']
             
             if self.config.has_value('box'):
-                box_conf = self.config.config['box']
+                box_conf = self.config['box']
 
                 if 'client-id' in box_conf:
-                    self.config.config['box']['client-id'] = self.client_id
+                    self.config['box']['client-id'] = self.client_id
                 if 'client-secret' in box_conf:
-                    self.config.config['box']['client-secret'] = self.client_secret
+                    self.config['box']['client-secret'] = self.client_secret
                 if 'access-token' in box_conf:
-                    self.config.config['box']['access-token'] = self._access_token
+                    self.config['box']['access-token'] = self._access_token
                 if 'refresh-token' in box_conf:
-                    self.config.config['box']['refresh-token'] = self._refresh_token
+                    self.config['box']['refresh-token'] = self._refresh_token
                 if 'refresh_time' in box_conf:
-                    self.config.config['box']['refresh_time'] = self.refresh_time
+                    self.config['box']['refresh_time'] = self.refresh_time
             
             self.config.update()
 

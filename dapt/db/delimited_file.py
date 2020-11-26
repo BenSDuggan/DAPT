@@ -5,8 +5,10 @@ Delimited file
 Create a CSV database which can be used by param to get and run param sets.  
 """
 
-import csv, os
+import csv, os, logging
 from . import base
+
+_log = logging.getLogger(__name__)
 
 class Delimited_file(base.Database):
     """

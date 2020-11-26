@@ -1,3 +1,8 @@
+"""
+Database Package
+================
+"""
+
 
 from .base import Database
 from .delimited_file import Delimited_file

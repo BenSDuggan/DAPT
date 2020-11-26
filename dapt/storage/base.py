@@ -15,6 +15,10 @@ There are four required methods that all Storage objects must implement.  The re
 
 """
 
+import logging
+
+_log = logging.getLogger(__name__)
+
 class Storage(object):
     """
     An interface to build similar Storage schemes for basic storage operations

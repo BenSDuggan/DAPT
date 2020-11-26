@@ -1,13 +1,13 @@
 """
-.. _config:
 Config
-====== 
+======
 
 The Config class allows user and API settings to be saved and updated using a configuration file.  A config class is not required by DAPT but using one provides several advantages.  First, it makes initializing a class much easier as each class can pull required attributes from a config.  Second, API credentials can be stored in a config, allowing credentials to be kept in one place.  Third, by allowing API tokens to be stored, there is no need to reauthenticate a service (assuming the tokens are still valid).  Finally, it provides a way for users to have their own settings file.
 
 Configuration files `JSON <http://www.json.org>`_ (JavaScript Object Notation) format.  A detailed understanding of JSON is not required, but the basics should be understood.  There are two main components of JSON files: key/value pairs (objects) and arrays/lists.  When using key/value pairs, the pairs must be surrounded by curly braces and seporated with commas.  Objects are seporated by colons (:) and keys must be sourounded by quotes.  Values can be objects, arrays, strings, numbers, booleans, or null.  Bellow is a sample JSON file that could be used by DAPT.
 
 .. _config-example-json:
+
 .. code-block:: JSON
    :caption: Example of a simple JSON file.
    :name: example-json
@@ -26,7 +26,6 @@ Configuration files `JSON <http://www.json.org>`_ (JavaScript Object Notation) f
 The ``user-name`` and ``num-of-runs`` keys are reserved DAPT :ref:`fields <config-fields>`.  These cause DAPT to add additional information during tests, initiate classes automatically, and change the testing behavior.  The list of reserved fields and their behaviors are shown bellow.  The ``testing-variables`` key has and object in it that might be used for a specific testing parameters.  They name of this key does not matter as long as it is not a reserved field.  To see how the Config class is used checkout the :ref:`usage <config-usage>` section or class documentation.
 
 
-.. _config-fields:
 Fields
 ^^^^^^
 
@@ -47,11 +46,7 @@ There are many key-value pairs which can be used in the configuration to make DA
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | ``sheets-worksheet-title`` (str) | The Google Sheets worksheet title.                                                      |
 +----------------------------------+-----------------------------------------------------------------------------------------+
-| ``client-id`` (str)              | Box API client ID.                                                                      |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``client-secret`` (str)          | Box API client secret.                                                                  |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``box-folder-id`` (str)          | The box folder id to use                                                                |
+| ``box`` (str)                    | Values used by the :ref:`Box` storage API.                                              |
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | ``reset-time`` (str)             | The time that the box access-token needs to be refreshed.                               |
 +----------------------------------+-----------------------------------------------------------------------------------------+
@@ -59,14 +54,9 @@ There are many key-value pairs which can be used in the configuration to make DA
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | ``computer-strength`` (int)      | Any comments such as error messages relating to the parameter set.                      |
 +----------------------------------+-----------------------------------------------------------------------------------------+
-| ``access-token`` (str)           | The box access token for the particular session.                                        |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``refresh-token`` (str)          | The box refresh token for the particular session.                                       |
-+----------------------------------+-----------------------------------------------------------------------------------------+
 
 Some of these fields are used by other DAPT classes to store values.  For example, the ``google-sheets`` field has many sub-fields that set parameters in the class automatically.  The ``spreedsheet-id`` sub-field sets the spreedsheet ID that should be used as the database.  These sub-fields are not listed above.  They are notable, however, because you may accidentally find one of these sub-fields if you recursively search a config file.  If you are worried about accidentally using one of these fields, the ``FULL_CONFIG`` variable in the `config <https://github.com/BenSDuggan/DAPT/blob/master/dapt/config.py`_ module contains all of the config fields.
 
-.. _config-usage:
 Usage
 ^^^^^
 
@@ -118,6 +108,8 @@ Configuration files can contain sensitive API credentials or passwords.  Storing
 """
 
 import json, logging
+
+_log = logging.getLogger(__name__)
 
 FULL_CONFIG = {}
 DEFAULT_CONFIG = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
@@ -344,5 +336,5 @@ class Config:
     def __iter__(self):
         return iter(self.config)
 
-    def __contains(self, item):
+    def __contains__(self, item):
         return item in self.config

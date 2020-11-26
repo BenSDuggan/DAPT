@@ -15,6 +15,10 @@ The database should use indexing starting from 0.
 
 """
 
+import logging
+
+_log = logging.getLogger(__name__)
+
 class Database(object):
 	"""
 	An interface for accessing and setting parameter set data.  

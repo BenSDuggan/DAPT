@@ -36,7 +36,11 @@ A field is the key (or identifier) used to get the value when a parameter set is
 | ``comments`` (str)        | Any comments such as error messages relating to the parameter set.                      |
 +---------------------------+-----------------------------------------------------------------------------------------+
 
-The ``id`` field is a unique identifier for that test.  This attribute is used to identify the parameter set and must be given to most of the methods in the ``Param`` class.  The ``status`` filed gives the current status of the test.  There are five main status values: empty, "successful", "failed", "in progress", and other text.  When a test has an empty status it indicates that the test has not been ran yet.  A status of "successful" indicates that the test has finished successfully, and a "failed" status shows that the test failed.  When you request another parameter set by running ``next_parameters()``, the status will automatically be set to "in progress".  If the status is not empty, then DAPT will not offer it when the ``next_parameters()`` method is called.  You can update the status to something you want by calling the ``update_status()`` method.
+The ``id`` field is a unique identifier for that test.  This attribute is used to identify the parameter set and must be given to most of the methods in the ``Param`` class.  The ``status`` field gives the current status of the test.  
+
+There are five main status values: empty, "successful", "failed", "in progress", and other text.  When a test has an empty status it indicates that the test has not been ran yet.  A status of "successful" indicates that the test has finished successfully, and a "failed" status shows that the test failed.  
+
+When you request another parameter set by running ``next_parameters()``, the status will automatically be set to "in progress".  If the status is not empty, then DAPT will not offer it when the ``next_parameters()`` method is called.  You can update the status to something you want by calling the ``update_status()`` method.
 
 .. _param-usage:
 Usage
