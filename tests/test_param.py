@@ -13,7 +13,7 @@ def create_simple_test_file():
 	with open('test.csv', 'w') as f:
 		writer = csv.DictWriter(f, fieldnames=['id', 'status', 'a', 'b', 'c'])
 		writer.writeheader()
-		writer.writerow({'id':'t1', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'})
+		writer.writerow({'id':'t1', 'status':'successful', 'a':'2', 'b':'4', 'c':'6'})
 		writer.writerow({'id':'t2', 'status':'', 'a':'10', 'b':'10', 'c':''})
 		writer.writerow({'id':'t3', 'status':'', 'a':'10', 'b':'-10', 'c':''})
 
@@ -22,7 +22,7 @@ def create_complex_test_file():
 	with open('test.csv', 'w') as f:
 		writer = csv.DictWriter(f, fieldnames=['id', 'start-time', 'end-time', 'status', 'comment','performed-by', 'a', 'b', 'c'])
 		writer.writeheader()
-		writer.writerow({'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'comment':'2+4=6','performed-by':'ben', 'a':'2', 'b':'4', 'c':'6'})
+		writer.writerow({'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'successful', 'comment':'2+4=6','performed-by':'ben', 'a':'2', 'b':'4', 'c':'6'})
 		writer.writerow({'id':'t2', 'start-time':'', 'end-time':'', 'status':'', 'comment':'','performed-by':'', 'a':'10', 'b':'10', 'c':''})
 		writer.writerow({'id':'t3', 'start-time':'', 'end-time':'', 'status':'', 'comment':'','performed-by':'', 'a':'10', 'b':'-10', 'c':''})
 
@@ -64,7 +64,7 @@ def test_Param_successful():
     actual = param.next_parameters()
     actual = param.successful(actual['id'])
 
-    expected = OrderedDict({'id':'t2', 'status':'finished', 'a':'10', 'b':'10', 'c':''})
+    expected = OrderedDict({'id':'t2', 'status':'successful', 'a':'10', 'b':'10', 'c':''})
 
     assert actual == expected, "Cannot update the status of the paramater set."
 
@@ -79,7 +79,7 @@ def test_Param_successful_fields():
     expected = actual
     actual = param.successful(actual['id'])
     
-    expected = OrderedDict({'id':'t2', 'start-time':'', 'end-time':'', 'status':'finished', 'comment':'','performed-by':'', 'a':'10', 'b':'10', 'c':''})
+    expected = OrderedDict({'id':'t2', 'start-time':'', 'end-time':'', 'status':'successful', 'comment':'','performed-by':'', 'a':'10', 'b':'10', 'c':''})
 
     # Check to see if the time in the database are within 15 seconds of ours.
     if (datetime.datetime.strptime(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '%Y-%m-%d %H:%M:%S') - datetime.datetime.strptime(actual['start-time'], '%Y-%m-%d %H:%M:%S')).seconds < 15:

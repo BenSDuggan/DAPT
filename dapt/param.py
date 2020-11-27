@@ -1,19 +1,20 @@
 """
-.. _param:
-Parameters
-==========
+Parameter
+=========
 
 This is the main class which interact with the database to get and manage parameter sets.  The ``Param`` class links all the other classes together enabling a paramater set to be run.
 
 .. _param-database:
+
 Database
 --------
 
-In order to get the paramaters, the ``Param`` class needs to be given a ``Database`` instance (e.g. ``Sheets``, ``Delimited_file``).  The database is where the parameters to be tested live.  The database has a couple required fields (attributes) and many optional fields.  The param-fields_ section provides more information on how the database should be configured.
+In order to get the paramaters, the ``Param`` class needs to be given a ``Database`` instance (e.g. ``Sheets``, ``Delimited_file``).  The database is where the parameters to be tested live.  The database has a couple required fields (attributes) and many optional fields.  The param-database-fields section provides more information on how the database should be configured.
 
 Each time a new parameter set is requested, the database will be downloaded again.  This means that the database can be changed as DAPT is running to add or remove the number of tests.  An important note regarding database is that they can be ran local or on the internet.  This means that multiple people can work on the parameter set at the same time, thus distributing the computational work load.
 
 .. _param-database-fields:
+
 Fields
 ^^^^^^
 
@@ -43,6 +44,7 @@ There are five main status values: empty, "successful", "failed", "in progress",
 When you request another parameter set by running ``next_parameters()``, the status will automatically be set to "in progress".  If the status is not empty, then DAPT will not offer it when the ``next_parameters()`` method is called.  You can update the status to something you want by calling the ``update_status()`` method.
 
 .. _param-usage:
+
 Usage
 -----
 

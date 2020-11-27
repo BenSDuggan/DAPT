@@ -7,6 +7,10 @@
 * Adding logging to DAPT using Python's [logging](https://docs.python.org/3.8/library/logging.html) module
 * Adding TravisCI testing for Python 3.9
 
+### Documentation
+
+* Improved the organization of documentation
+
 ## 0.9.1.4
 
 ### General updates

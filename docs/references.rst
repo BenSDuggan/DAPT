@@ -6,6 +6,10 @@ DAPT Reference Guide
 This is the DAPT reference guide that shows how the APIs work.
 
 .. toctree::
-   :glob:
+   :maxdepth: 4
 
-   modules/*
+   dapt-api/config
+   dapt-api/db/index
+   dapt-api/param
+   dapt-api/storage/index
+   dapt-api/tools

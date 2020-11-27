@@ -1,4 +1,6 @@
 """
+.. _config:
+
 Config
 ======
 
@@ -25,6 +27,7 @@ Configuration files `JSON <http://www.json.org>`_ (JavaScript Object Notation) f
 
 The ``user-name`` and ``num-of-runs`` keys are reserved DAPT :ref:`fields <config-fields>`.  These cause DAPT to add additional information during tests, initiate classes automatically, and change the testing behavior.  The list of reserved fields and their behaviors are shown bellow.  The ``testing-variables`` key has and object in it that might be used for a specific testing parameters.  They name of this key does not matter as long as it is not a reserved field.  To see how the Config class is used checkout the :ref:`usage <config-usage>` section or class documentation.
 
+.. _config-fields:
 
 Fields
 ^^^^^^
@@ -46,7 +49,7 @@ There are many key-value pairs which can be used in the configuration to make DA
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | ``sheets-worksheet-title`` (str) | The Google Sheets worksheet title.                                                      |
 +----------------------------------+-----------------------------------------------------------------------------------------+
-| ``box`` (str)                    | Values used by the :ref:`Box` storage API.                                              |
+| ``box`` (str)                    | Values used by the :ref:`box` storage API.                                              |
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | ``reset-time`` (str)             | The time that the box access-token needs to be refreshed.                               |
 +----------------------------------+-----------------------------------------------------------------------------------------+
@@ -55,7 +58,9 @@ There are many key-value pairs which can be used in the configuration to make DA
 | ``computer-strength`` (int)      | Any comments such as error messages relating to the parameter set.                      |
 +----------------------------------+-----------------------------------------------------------------------------------------+
 
-Some of these fields are used by other DAPT classes to store values.  For example, the ``google-sheets`` field has many sub-fields that set parameters in the class automatically.  The ``spreedsheet-id`` sub-field sets the spreedsheet ID that should be used as the database.  These sub-fields are not listed above.  They are notable, however, because you may accidentally find one of these sub-fields if you recursively search a config file.  If you are worried about accidentally using one of these fields, the ``FULL_CONFIG`` variable in the `config <https://github.com/BenSDuggan/DAPT/blob/master/dapt/config.py`_ module contains all of the config fields.
+Some of these fields are used by other DAPT classes to store values.  For example, the ``google-sheets`` field has many sub-fields that set parameters in the class automatically.  The ``spreedsheet-id`` sub-field sets the spreedsheet ID that should be used as the database.  These sub-fields are not listed above.  They are notable, however, because you may accidentally find one of these sub-fields if you recursively search a config file.  If you are worried about accidentally using one of these fields, the ``FULL_CONFIG`` variable in the `config <https://github.com/BenSDuggan/DAPT/blob/master/dapt/config.py>`__ module contains all of the config fields.
+
+.. _config-usage:
 
 Usage
 ^^^^^

@@ -2,7 +2,7 @@
 .. _box:
 
 Box
-===
+=== 
 
 Class that allows for access to the box API and methods to directly upload files.  If you wish to use the Box API you should view the `install </install/box-install.html>`_.
 
@@ -14,6 +14,8 @@ In order for the Box API to work, it needs to get a user specific access and ref
 The tokens can be provided in three  ways.  First, you can run ``Box(...).connect()`` which will start a flask webserver.  You can then proceed to `<127.0.0.1:5000>`_ and log in with your Box username and password.  This is done securely through Box and you username and password cannot be extracted.  Second, you can insert the access and refresh token in the config file.  Then the Box class will use these tokens.  The final way to provide the tokens is by directly passign them to ``Box(...).connect(access_token=<your access token>, refresh_token=<your refresh token>)``.
 
 On a server, where you have no access to a web browser, you will need to get the tokens using a computer which has a web browser.  You can then place those tokens in the config file or directly pass them to the ``connect()`` method.
+
+.. _box-config:
 
 Config
 ------
