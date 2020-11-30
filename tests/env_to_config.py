@@ -13,8 +13,7 @@ with open('test_config.json', 'w') as f:
 
 ### Add Google Sheets API
 # Get the escaped credentials and unescape them
-creds_str = str(os.environ['GS_creds'])
-creds_str = creds_str.replace('""', '')
+creds_str = str(os.environ['GS_creds'])[1:-1]
 google_creds = str(json.loads(creds_str))
 
 with open('test_credentials.json', 'w') as f:
