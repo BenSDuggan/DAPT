@@ -12,6 +12,7 @@ with open('test_config.json', 'w') as f:
     json.dump(config, f)
 
 ### Add Google Sheets API
+"""
 google_creds = {
     "type":"service_account",
     "project_id":os.environ['GS_project_id'],
@@ -24,6 +25,8 @@ google_creds = {
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_x509_cert_url":os.environ['GS_client_x509_cert_url']
 }
+"""
+google_creds = os.environ['GS_creds']
 
 with open('test_credentials.json', 'w') as f:
     json.dump(google_creds, f)
