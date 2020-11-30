@@ -18,3 +18,6 @@ Tests
 
 Tests are located in the `tests <https://github.com/BenSDuggan/DAPT/tests>`_ folder and written using `pytest <https://docs.pytest.org/en/latest/>`_.  You can run the tests locally by running ``python3 -m pytest`` in the root DAPT directory.  This assumes that you have a configuration file named ``test_config.json`` in the root directory.  The convention used is to name all files and functions in the test directory ``test_x``, where x is the name/description of the test.
 
+To run tests on the tests for TravisCI, the API keys need to be stored in environment variables so they can be kept private.  These values must be escpaed in the same way Bash shells must have escaped values.  A simple way to do this is python is by using the ``json.dump(SECRET_KEY)`` method which will automatically escape the values for you.
+
+
