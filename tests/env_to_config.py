@@ -15,7 +15,8 @@ with open('test_config.json', 'w') as f:
 # Get the escaped credentials and unescape them
 creds_str = '"%s"' % str(os.environ['GS_creds'])
 print(creds_str)
-google_creds = str(json.loads(creds_str))
+#google_creds = str(json.loads(creds_str))
+google_creds = creds_str
 
 with open('test_credentials.json', 'w') as f:
     json.dump(google_creds, f)
