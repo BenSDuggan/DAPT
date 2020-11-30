@@ -12,21 +12,8 @@ with open('test_config.json', 'w') as f:
     json.dump(config, f)
 
 ### Add Google Sheets API
-"""
-google_creds = {
-    "type":"service_account",
-    "project_id":os.environ['GS_project_id'],
-    "private_key_id":os.environ['GS_private_key_id'],
-    "private_key":'\n'.join(os.environ['GS_private_key'].split('\\n')),
-    "client_email":os.environ['GS_client_email'],
-    "client_id":os.environ['GS_client_id'],
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url":os.environ['GS_client_x509_cert_url']
-}
-"""
-google_creds = os.environ['GS_creds']
+# Get the escaped credentials and unescape them
+google_creds = str(json.loads(os.environ['GS_creds']))
 
 with open('test_credentials.json', 'w') as f:
     json.dump(google_creds, f)

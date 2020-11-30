@@ -10,7 +10,7 @@ conf_path = 'test_config.json'
 
 def create_database_entries(config):
 	scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-	creds = ServiceAccountCredentials.from_json_keyfile_name(config.config['sheets-creds-path'], scope)
+	creds = ServiceAccountCredentials.from_json_keyfile_name(config['sheets-creds-path'], scope)
 
 	client = gspread.authorize(creds)
 	sheet = client.open_by_key(config.config['sheets-spreedsheet-id'])
