@@ -1,4 +1,5 @@
-# Finds variables from the environment and creates a config file to use.  This is useful when using Travis CI as it allows API keys to be passed.
+# Finds variables from the environment and creates a config file to use.  
+# This is useful when using Travis CI as it allows API keys to be passed.
 
 import os, json
 
@@ -14,8 +15,6 @@ with open('test_config.json', 'w') as f:
 ### Add Google Sheets API
 # Get the escaped credentials -> descape & make dict -> export as JSON
 google_creds = json.loads(str(os.environ['GS_creds']))
-print(type(google_creds))
-print(google_creds)
 
 with open('test_credentials.json', 'w') as f:
     json.dump(google_creds, f)
