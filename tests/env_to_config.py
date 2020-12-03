@@ -12,11 +12,10 @@ with open('test_config.json', 'w') as f:
     json.dump(config, f)
 
 ### Add Google Sheets API
-# Get the escaped credentials and unescape them
-creds_str = '"%s"' % str(os.environ['GS_creds'])
-print(creds_str)
-#google_creds = str(json.loads(creds_str))
-google_creds = creds_str
+# Get the escaped credentials -> descape -> make dict -> export as JSON
+google_creds_str = json.loads(str(os.environ['GS_creds']))
+print(google_creds_str)
+google_creds = json.loads(google_creds_str)
 
 with open('test_credentials.json', 'w') as f:
     json.dump(google_creds, f)
