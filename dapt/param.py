@@ -75,18 +75,20 @@ something you want by calling the ``update_status()`` method.  This method
 Config
 ------
 
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| Fields                           | Description                                                                             |
-+==================================+=========================================================================================+
-| ``num-of-runs`` (int)            | The number of paramater sets to run.                                                    |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``performed-by`` (str)           | The username of the person that ran the parameter set.                                  |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``last-test`` (str)              | The last test id that was run.  If a test exits before completeing, it will be re-ran.  |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``computer-strength`` (int)      | Only run tests on computers with sufficient power.  The parameter set will only be run  |
-|                                  | if this value is greater than or equal that of the parameter sets ``computer-strength`` |
-+----------------------------------+-----------------------------------------------------------------------------------------+
++---------------------------+----------------------------------------------------------------+
+| Fields                    | Description                                                    |
++===========================+================================================================+
+| ``num-of-runs`` (int)     | The number of paramater sets to run.                           |
++---------------------------+----------------------------------------------------------------+
+| ``performed-by`` (str)    | The username of the person that ran the parameter set.         |
++---------------------------+----------------------------------------------------------------+
+| ``last-test`` (str)       | The last test id that was run.  If a test exits before         |
+|                           | completeing, it will be re-ran.                                |
++---------------------------+----------------------------------------------------------------+
+| ``computer-strength``     | Only run tests on computers with sufficient power.  The        |
+| (int)                     | parameter set will only be run if this value is greater than   |
+|                           |  or equal that of the parameter sets ``computer-strength``.    |
++---------------------------+----------------------------------------------------------------+
 
 .. _param-usage:
 
