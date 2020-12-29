@@ -37,10 +37,7 @@ There are many key-value pairs which can be used in the configuration to make DA
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | Fields                           | Description                                                                             |
 +==================================+=========================================================================================+
-| ``last-test`` (str)              | The last test id that was run.                                                          |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``user-name`` (str)              | The box username of the user.                                                           |
-+----------------------------------+-----------------------------------------------------------------------------------------+
+
 | ``sheets-spreedsheet-id`` (str)  | The Google spreedsheet ID being used.                                                   |
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | ``sheets-creds-path`` (str)      | The Google Sheets credentials file path.                                                |
@@ -52,10 +49,6 @@ There are many key-value pairs which can be used in the configuration to make DA
 | ``box`` (str)                    | Values used by the :ref:`box` storage API.                                              |
 +----------------------------------+-----------------------------------------------------------------------------------------+
 | ``reset-time`` (str)             | The time that the box access-token needs to be refreshed.                               |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``num-of-runs`` (int)            | The number of paramater sets to run.                                                    |
-+----------------------------------+-----------------------------------------------------------------------------------------+
-| ``computer-strength`` (int)      | Any comments such as error messages relating to the parameter set.                      |
 +----------------------------------+-----------------------------------------------------------------------------------------+
 
 Some of these fields are used by other DAPT classes to store values.  For example, the ``google-sheets`` field has many sub-fields that set parameters in the class automatically.  The ``spreedsheet-id`` sub-field sets the spreedsheet ID that should be used as the database.  These sub-fields are not listed above.  They are notable, however, because you may accidentally find one of these sub-fields if you recursively search a config file.  If you are worried about accidentally using one of these fields, the ``FULL_CONFIG`` variable in the `config <https://github.com/BenSDuggan/DAPT/blob/master/dapt/config.py>`__ module contains all of the config fields.
