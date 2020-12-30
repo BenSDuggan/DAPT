@@ -6,7 +6,7 @@ Parameter
 =========
 
 The parameter module contans the Param class that interact with the database to get and manage
-parameter spaces.  This is the main module that you should interact with.
+the parameter spaces.  This is the main module that you should interact with.
 
 .. _param-database:
 
@@ -14,12 +14,13 @@ Database
 --------
 
 In order to get the paramaters, the ``Param`` class needs to be given a ``Database`` instance
-(e.g. ``Sheets``, ``Delimited_file``).  The database is where the parameters to be tested live.
-The database has a couple required fields (attributes) and many optional fields.  The
-param-database-fields section provides more information on how the database should be configured.
+(e.g. :ref:`sheets`, :ref:`delimited-file`).  The database is where the parameters to be tested
+live.  The database has a couple required fields (attributes) and many optional fields.  The
+:ref:`param-database-fields` section provides more information on how the database should be
+configured.
 
 Each time a new parameter set is requested, the database will be downloaded again.  This means
-that the database can be changed as DAPT is running to add or remove the number of tests.
+that the database can be changed as DAPT is running to add or remove the number of tests.  k
 An important note regarding database is that they can be ran local or on the internet.  This
 means that multiple people can work on the parameter set at the same time, thus distributing
 the computational work load.
@@ -55,6 +56,10 @@ Required parameters are marked with an astrict(*).
 | ``comments`` (str)        | Any comments such as error messages relating to the parameter  |
 |                           | set.                                                           |
 +---------------------------+----------------------------------------------------------------+
+| ``computer-strength``     | The minimum strength that the computer running the test should |
+| (int)                     | have. The ``computer-strength`` in the Config must be greather |
+|                           | than or equal to this value for the test to be ran             |
++---------------------------+----------------------------------------------------------------+
 
 The ``id`` field is a unique identifier for that test.  This attribute is used to identify the
 parameter set and must be given to most of the methods in the ``Param`` class.  The ``status``
@@ -68,26 +73,29 @@ the test failed.
 When you request another parameter set by running ``next_parameters()``, the status will
 automatically be set to "in progress".  If the status is not empty, then DAPT will not
 offer it when the ``next_parameters()`` method is called.  You can update the status to
-something you want by calling the ``update_status()`` method.  This method 
+something you want by calling the ``update_status()`` method.
 
 .. _param-database-config:
 
 Config
 ------
 
+The :ref:`config` fields will only be used if they are included in the ``Config``.  If the fields
+are excluded, then the the fields will not be added.
+
 +---------------------------+----------------------------------------------------------------+
 | Fields                    | Description                                                    |
 +===========================+================================================================+
 | ``num-of-runs`` (int)     | The number of paramater sets to run.                           |
 +---------------------------+----------------------------------------------------------------+
-| ``performed-by`` (str)    | The username of the person that ran the parameter set.         |
+| ``performed-by`` (str)    | The name of the person that ran the parameter set.             |
 +---------------------------+----------------------------------------------------------------+
 | ``last-test`` (str)       | The last test id that was run.  If a test exits before         |
 |                           | completeing, it will be re-ran.                                |
 +---------------------------+----------------------------------------------------------------+
 | ``computer-strength``     | Only run tests on computers with sufficient power.  The        |
 | (int)                     | parameter set will only be run if this value is greater than   |
-|                           |  or equal that of the parameter sets ``computer-strength``.    |
+|                           | or equal that of the parameter sets ``computer-strength``.     |
 +---------------------------+----------------------------------------------------------------+
 
 .. _param-usage:
@@ -95,13 +103,14 @@ Config
 Usage
 -----
 
-To initiate the ``Param`` class, you must provide a ``database`` object.  A ``config`` object
-can additionally be provided to enable advanced control.
+To initiate the ``Param`` class, you must provide a ``database`` object.  The database used in
+this example is the :meth:`dapt.tools.sample_db`.  A ``config`` object can additionally be
+provided to enable advanced control.
 
    >>> param = dapt.Param(db, config=conf)
 
 The ``param`` object is used to interact with parameter sets in the parameter space.  To get the
-next parameter set, you use the ``next_parameters`` method.  This will return a JSON object with
+next parameter set, you use the ``next_parameters()`` method.  This will return a JSON object
 containing the parameter set.
 
    >>> p = param.next_parameters()
@@ -139,7 +148,7 @@ class Param:
     Create a Param instance with a database and optional config file.
 
     Args:
-        database (Database): a Database instance (such as Sheets or Delimited_file)
+        database (Database): a Database instance (such as :ref:`sheets`, :ref:`delimited-file`)
         config (Config): a config object which allows for more features.  This is optional.
     """
     

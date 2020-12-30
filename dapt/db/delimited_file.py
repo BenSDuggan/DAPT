@@ -1,4 +1,7 @@
 """
+
+.. _delimited-file:
+
 Delimited file
 ==============
 

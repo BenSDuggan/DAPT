@@ -12,12 +12,12 @@ Third, by allowing API tokens to be stored, there is no need to reauthenticate a
 the tokens are still valid).  Finally, it provides a way for users to have their own settings
 file.
 
-Configuration files `JSON <http://www.json.org>`_ (JavaScript Object Notation) format.  A detailed
-understanding of JSON is not required, but the basics should be understood.  There are two main
-components of JSON files: key/value pairs (objects) and arrays/lists.  When using key/value pairs,
-the pairs must be surrounded by curly braces and seporated with commas.  Objects are seporated
-by colons (:) and keys must be sourounded by quotes.  Values can be objects, arrays, strings,
-numbers, booleans, or null.  Bellow is a sample JSON file that could be used by DAPT.
+Configuration files use `JSON <http://www.json.org>`_ (JavaScript Object Notation) format.  A
+detailed understanding of JSON is not required, but the basics should be understood.  There are
+two main components of JSON files: key/value pairs (objects) and arrays/lists.  When using
+key/value pairs, the pairs must be surrounded by curly braces and seporated with commas.  Objects
+are seporated by colons (:) and keys must be sourounded by quotes.  Values can be objects, arrays,
+strings, numbers, booleans, or null.  Bellow is a sample JSON file that could be used by DAPT.
 
 .. _config-example-json:
 
@@ -26,7 +26,7 @@ numbers, booleans, or null.  Bellow is a sample JSON file that could be used by 
    :name: example-json
 
    {
-       "user-name":"Ben",
+       "performed-by":"Ben",
        "num-of-runs":-1,
        "testing-variables":
        {
@@ -36,7 +36,7 @@ numbers, booleans, or null.  Bellow is a sample JSON file that could be used by 
    }
 
 
-The ``user-name`` and ``num-of-runs`` keys are reserved DAPT :ref:`fields <config-fields>`.
+The ``performed-by`` and ``num-of-runs`` keys are reserved DAPT :ref:`fields <config-fields>`.
 These cause DAPT to add additional information during tests, initiate classes automatically,
 and change the testing behavior.  The list of reserved fields and their behaviors are shown
 bellow.  The ``testing-variables`` key has and object in it that might be used for a specific
@@ -110,10 +110,12 @@ the value of the associated key.  Keys can be provided as a string or a list whe
 the path to the value.  The ``num-or-runs`` attribute can be accessed as shown bellow.
 
     >>> config.get_value("num-of-runs")
+    -1
 
 If you wanted to find the value of ``output-path`` then you specify the path to it.
 
     >>> config.get_value(["testing-variables", "output-path"])
+    'output/'
 
 Alternatively, the ``output-path`` key can be accessed by using the ``recursive`` flag.  This
 flag makes the ``get_value()`` method recursively search the JSON tree for the first occupance
@@ -126,19 +128,22 @@ is not found.
 The configuration dictionary can be accessed indirectly by treating the `Config` object as a dictionary.
 
     >>> config["num-of-runs"]
+    -1
     >>> config["testing-variables"]["output-path"]
+    'output/'
 
 Using this approach, the length of the dictionary can be accessed using Pythons internal `len()`
 function or any other `dict` method.  The keys of the dictionary can be accessed using the
-``Config``s ``keys()`` method.
+``keys()`` method.
 
 Before accessing a value in the config, it is good to check that it exists.  This can be done
-using the `has_value()` method.  This method returns ``True`` if there is a non-none value in
+using the ``has_value()`` method.  This method returns ``True`` if there is a non-none value in
 the config for the given key.  The key and recursive attributes behave the same as with the
 ``get_value()`` method.  For example, to check that the ``output-path`` key exists you could
 run the following and expect a return value of ``True``.::
 
     >>> config.has_value(["testing-variables", "output-path"])
+    True
 
 If you checked for the key ``foo``, then ``has_value()`` would return ``False``.
 
@@ -152,13 +157,19 @@ can be ran without parameters to save the config.  The second and last methods a
 access nested key-value pairs.  All of these methods work to add new data or change values in
 the configuration.
 
-    >>> config.update(key="user-name", value="John", recursive=False)
+    >>> config.update(key="performed-by", value="John", recursive=False)
+    {'performed-by': 'John', 'num-of-runs': -1, 'testing-variables': {'executable-path': './main',
+     'output-path': 'output/'}}
     >>> config.update(key=["testing-variables", "executable-path"], value="main.exe",
                       recursive=False)
+    {'performed-by': 'John', 'num-of-runs': -1, 'testing-variables': {
+     'executable-path': 'main.exe', 'output-path': 'output/'}}
     >>> config.update(key="output-path", value="save/", recursive=True)
+    {'performed-by': 'John', 'num-of-runs': -1, 'testing-variables': {'executable-path': 'main.exe', 'output-path': 'save/'}}
 
     >>> config["num-of-runs"] = 3
     >>> config.update()
+    {'performed-by': 'John', 'num-of-runs': 3, 'testing-variables': {'executable-path': 'main.exe', 'output-path': 'save/'}}
 
 When creating a new configuration file, the ``create()`` method can be used.  This static method
 will create a default configuration file at the path provided.  This file contains all of the
@@ -182,11 +193,12 @@ import json, logging
 _log = logging.getLogger(__name__)
 
 FULL_CONFIG = {}
-DEFAULT_CONFIG = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None,
+DEFAULT_CONFIG = {"last-test":None, "performed-by":None, "num-of-runs":None, 
+                  "computer-strength":None, "sheets-spreedsheet-id":None,
                   "sheets-creds-path":None, "sheets-worksheet-id":None, 
-                  "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None,
+                  "sheets-worksheet-title":None, 
                   "box" : {"client_id" : None, "client_secret" : None, "access_token" : None,
-                  "refresh_token" : None, "refresh_time" : None}}
+                           "refresh_token" : None, "refresh_time" : None}}
 
 class Config:
     """
@@ -357,7 +369,7 @@ class Config:
     def keys(self):
         """
         Get the keys from the configuration.  This method only returns the keys at the top of
-         the dictionary.  It will not return any nested keys.
+        the dictionary.  It will not return any nested keys.
 
         Returns:
             A list containing the keys in the dictionary.
