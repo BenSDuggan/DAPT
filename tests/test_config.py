@@ -5,18 +5,18 @@
 import dapt
 import os
 
-SAMPLE_CONFIG = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
+SAMPLE_CONFIG = {"last-test":None, "performed-by":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
 
 # Test creation of new config file
 def test_config_create():
 	dapt.Config.create('config.json')
 
 	conf = dapt.Config('config.json')
-	expected = {"last-test":None, "user-name":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
+	expected = {"last-test":None, "performed-by":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
 
 	os.remove('config.json')
 
-	assert conf.config == expected, "The Config.create() method that creates a new and empty config file returned wrong."
+	assert conf.config == dapt.config.DEFAULT_CONFIG, "The Config.create() method that creates a new and empty config file returned wrong."
 
 # Test changing a value in Config
 def test_config_file_change():
@@ -25,9 +25,9 @@ def test_config_file_change():
 	conf = dapt.Config('config.json')
 
 	expected = conf.config
-	expected["user-name"] = 'Clifford'
+	expected["performed-by"] = 'Clifford'
 
-	conf.config["user-name"] = 'Clifford'
+	conf.config["performed-by"] = 'Clifford'
 	conf.update()
 
 	os.remove('config.json')

@@ -192,13 +192,13 @@ import json, logging
 
 _log = logging.getLogger(__name__)
 
-FULL_CONFIG = {}
 DEFAULT_CONFIG = {"last-test":None, "performed-by":None, "num-of-runs":None, 
                   "computer-strength":None, "sheets-spreedsheet-id":None,
                   "sheets-creds-path":None, "sheets-worksheet-id":None, 
                   "sheets-worksheet-title":None, 
                   "box" : {"client_id" : None, "client_secret" : None, "access_token" : None,
                            "refresh_token" : None, "refresh_time" : None}}
+FULL_CONFIG = DEFAULT_CONFIG
 
 class Config:
     """
@@ -380,7 +380,8 @@ class Config:
     @staticmethod
     def create(path='config.json'):
         """
-        Creates a config file with the reserved keys inserted.
+        Creates a config file with the reserved keys inserted.  The ``DEFAULT_CONFIG`` will
+        be used.
 
         Args:
             path (string): path where config file will be written
