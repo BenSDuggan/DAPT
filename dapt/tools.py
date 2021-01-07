@@ -15,6 +15,8 @@ from .db.delimited_file import Delimited_file
 
 def sample_db(file_name='sample_db.csv', delimiter=','):
     """
+    .. _sample-db:
+    
     Create a sample `Delimited_file` database.  The sample table is shown below.  This method will create a file specified in the `file_name` attribute using the delimiter specified by `delimiter`.
 
     +----+------------------+------------------+----------+----+-----+---+

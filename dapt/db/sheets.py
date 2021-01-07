@@ -1,9 +1,9 @@
 """
 
-.. _sheets:
+.. _google-sheets:
 
-Sheets
-====== 
+Google Sheets
+=============
 
 Class which allows for Google Sheets to be used as paramater set database.
 

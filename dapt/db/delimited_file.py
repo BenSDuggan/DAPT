@@ -28,6 +28,17 @@ class Delimited_file(base.Database):
         self.path = path
         self.delimiter = delimiter
 
+    def connect(self):
+        """
+        This method isn't required for Delimeted files as there is nothing to connect to.
+        It will return True regardless.
+
+        Returns:
+            True if the database connected successfully and False otherwise.
+        """
+
+        return True
+
     def get_table(self):
         """
         Get the table from the database.
