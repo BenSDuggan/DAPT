@@ -17,6 +17,7 @@ docs/_build
 docs/modules
 ignore.py
 test.py
+make.bat
 
 # Stuff you probably don't want for security reasons
 config.json
