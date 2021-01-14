@@ -1,4 +1,7 @@
 
+Storage
+=======
+
 .. automodule:: dapt.storage
    :members:
    :show-inheritance:

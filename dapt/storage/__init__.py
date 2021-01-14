@@ -1,3 +1,10 @@
+"""
+
+.. _storage:
+
+"""
+
+
 
 from .base import Storage
 from .box import Box

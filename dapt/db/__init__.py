@@ -2,9 +2,6 @@
 
 .. _database:
 
-Databases
-=========
-
 Databases are the places where parameter spaces live.  You must use a database in DAPT and the
 :ref:`Param class <param>` requires one to be provided.  DAPT views databases similarly to a
 spreedsheet.  Databases can be local or remote.  If a database is local
