@@ -125,7 +125,8 @@ expect if multiple keys with that name are present.
 The advantage of using the ``get_value()`` method is that ``None`` will be returned if the value
 is not found.
 
-The configuration dictionary can be accessed indirectly by treating the `Config` object as a dictionary.
+The configuration dictionary can be accessed indirectly by treating the `Config` object as a
+dictionary.
 
     >>> config["num-of-runs"]
     -1
@@ -158,18 +159,20 @@ access nested key-value pairs.  All of these methods work to add new data or cha
 the configuration.
 
     >>> config.update(key="performed-by", value="John", recursive=False)
-    {'performed-by': 'John', 'num-of-runs': -1, 'testing-variables': {'executable-path': './main',
-     'output-path': 'output/'}}
+    {'performed-by': 'John', 'num-of-runs': -1, 
+     'testing-variables': {'executable-path': './main', 'output-path': 'output/'}}
     >>> config.update(key=["testing-variables", "executable-path"], value="main.exe",
                       recursive=False)
-    {'performed-by': 'John', 'num-of-runs': -1, 'testing-variables': {
-     'executable-path': 'main.exe', 'output-path': 'output/'}}
+    {'performed-by': 'John', 'num-of-runs': -1,
+     'testing-variables': {'executable-path': 'main.exe', 'output-path': 'output/'}}
     >>> config.update(key="output-path", value="save/", recursive=True)
-    {'performed-by': 'John', 'num-of-runs': -1, 'testing-variables': {'executable-path': 'main.exe', 'output-path': 'save/'}}
+    {'performed-by': 'John', 'num-of-runs': -1,
+     'testing-variables':{'executable-path': 'main.exe', 'output-path': 'save/'}}
 
     >>> config["num-of-runs"] = 3
     >>> config.update()
-    {'performed-by': 'John', 'num-of-runs': 3, 'testing-variables': {'executable-path': 'main.exe', 'output-path': 'save/'}}
+    {'performed-by': 'John', 'num-of-runs': 3,
+     'testing-variables':{'executable-path': 'main.exe', 'output-path': 'save/'}}
 
 When creating a new configuration file, the ``create()`` method can be used.  This static method
 will create a default configuration file at the path provided.  This file contains all of the
@@ -218,7 +221,8 @@ class Config:
         Get the first value of the given key or return ``None`` if one doesn't exist.
 
         Args:
-            key (str or list): the key (given as a string) or List containing the path to the value
+            key (str or list): the key (given as a string) or List containing the path to the
+             value
             recursive (bool): recursively look through the config for the given key.  False by
              default.  If recursive is set to True then key must be a string.
 
@@ -278,7 +282,8 @@ class Config:
             key (str): the key to search for
 
         Returns:
-            An `arr` containing the path to the key in the dic or None if the path could not be found
+            An `arr` containing the path to the key in the dic or None if the path could not be
+             found
         """
 
         if key in dic:
