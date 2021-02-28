@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="dapt",
     packages=["dapt", "dapt.db", "dapt.storage"],
-    version="0.9.1.4",
+    version="0.9.2",
     license='BSD 3-clause "New" or "Revised" license',
     author="Ben S. Duggan",
     author_email="dugganbens@gmail.com",
@@ -14,7 +14,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/BenSDuggan/DAPT",
-    keywords=['paramater', 'testing', 'distributed'],
+    keywords=['paramater', 'testing', 'distributed', 'crowdsorcing'],
     install_requires=[
         'boxsdk>=2.0.0',
         'flask>=1.0.2',

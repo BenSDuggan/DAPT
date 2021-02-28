@@ -15,7 +15,10 @@ Usage
 
 """
 
-import logging, json, io, os
+import io
+import json
+import logging
+import os
 from pathlib import Path
 
 from googleapiclient.discovery import build
@@ -33,7 +36,8 @@ class Google_Drive(base.Storage):
     Download, upload, move, and delete files or folders from Google Drive.
 
     Args:
-        creds_path (str): the path to the file containing the Google API credentials.  Default is ``credentials.json``.
+        creds_path (str): the path to the file containing the Google API credentials. 
+        Default is ``credentials.json``.
         config (Config): a Config object with the associated config file to be used
     """
 
@@ -60,7 +64,8 @@ class Google_Drive(base.Storage):
 
     def connect(self):
         """
-        Allows you to sign into your Google account through the internet browser.  This should automatically open the browser up.
+        Allows you to sign into your Google account through the internet browser.  This should
+        automatically open the browser up.
 
         Returns:
             True if the connection was successful and False otherwise.
@@ -86,7 +91,8 @@ class Google_Drive(base.Storage):
 
     def _update_config(self):
         """
-        Update the Config object to reflect the current state of the code.  If there is no config object, do nothing.
+        Update the Config object to reflect the current state of the code.  If there is no config
+        object, do nothing.
         """
 
         if self.config:
@@ -122,12 +128,15 @@ class Google_Drive(base.Storage):
 
     def download_file(self, file_id, folder='.', name=None, overwrite=True):
         """
-        Download the file at the given file_id to the given path.  This will only download binary files such as Microsoft Docs, PDFs, PNGs, MP4, etc.  This method is not capable of downloading Google products such as Google Docs and Google Sheets.
+        Download the file at the given file_id to the given path.  This will only download binary
+        files such as Microsoft Docs, PDFs, PNGs, MP4, etc.  This method is not capable of
+        downloading Google products such as Google Docs and Google Sheets.
 
         Args:
             ile_id (str): The file identification to be downloaded
             folder (str): The directory where the file should be saved
-            name (str): The name that the file should be saved as.  If None is given (default), then the name of the file on the resource will be used.
+            name (str): The name that the file should be saved as.  If None is given (default),
+            then the name of the file on the resource will be used.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:
@@ -143,7 +152,7 @@ class Google_Drive(base.Storage):
         path = Path(folder) / name
 
         if not base.check_overwrite_file(folder, name, overwrite, True):
-            _log.warn('Could not download the file %s(%s) because a file with that name exists.  Mark "overwrite" as true to overwrite the existing file.' % (file_id, name))
+            _log.warn('Could not download the file %s(%s) because a file with that name exists. Mark "overwrite" as true to overwrite the existing file.' % (file_id, name))
             return False
 
         if "application/vnd.google-apps" in metadata["mimeType"]:
@@ -166,7 +175,8 @@ class Google_Drive(base.Storage):
         Args:
             ile_id (str): The file identification to be downloaded
             folder (str): The directory where the file should be saved
-            name (str): The name that the file should be saved as.  If None is given (default), then the name of the file on the resource will be used.
+            name (str): The name that the file should be saved as.  If None is given (default),
+            then the name of the file on the resource will be used.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:
