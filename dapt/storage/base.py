@@ -14,6 +14,10 @@ from pathlib import Path
 
 _log = logging.getLogger(__name__)
 
+import logging
+
+_log = logging.getLogger(__name__)
+
 class Storage(object):
     """
     .. _storage-class:

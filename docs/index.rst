@@ -25,12 +25,12 @@ Future versions of the project will work to improve documentation, add examples,
 
 
 .. toctree::
-   :maxdepth: 2
    :caption: Contents:
+   :maxdepth: 2
 
    install
    usage
-   references
+   reference/index
    services/index
    examples
    dev/index

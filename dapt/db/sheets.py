@@ -1,6 +1,9 @@
 """
-Sheets
-====== 
+
+.. _google-sheets:
+
+Google Sheets
+=============
 
 Class which allows for Google Sheets to be used as paramater set database.
 
@@ -8,9 +11,11 @@ Class which allows for Google Sheets to be used as paramater set database.
 Note: if you have data in the first row, you must have entries in some other row.
 """
 
-import gspread
+import gspread, logging
 from oauth2client.service_account import ServiceAccountCredentials
 from . import base
+
+_log = logging.getLogger(__name__)
 
 class Sheet(base.Database):
     """

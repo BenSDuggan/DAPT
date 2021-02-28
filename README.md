@@ -5,9 +5,9 @@
 
 A library to assist with running parameter sets across multiple systems.  The goal of this library is to provide a tool set and pipeline that make organizing, running and analyzing a large amount of parameter easier.  Some of the highlights include: 
 
-* Provide an easy way to run paramater sets.
+* Provide an easy way to run parameter sets.
 * Protocol for allowing teams to run parameter sets concurrently.
-* Use Google Sheets as a database to host and manage paramater sets.
+* Use Google Sheets as a database to host and manage parameter sets.
 * Access to the Box API which allows files to be uploaded to box.
 
 ## Overview
@@ -30,16 +30,15 @@ Alternatively, you can dowload the project.  It is recommended to download a [re
 
 You can then test to make sure everything installed by starting a python session and then running:
 ```
-import dapt
-dapt.__version__
+>>> import dapt
+>>> dapt.__version__
+0.9.2
 ```
-
-You should see ***0.9.0.3*** (or ***0.9.1.3*** if installed from pip).
 
 ### Dependencies
 **Python:** >=3.6
 
-All dependences are located in [requirements.txt](requirements.txt).
+All dependence are located in [requirements.txt](requirements.txt).
 
 
 ## Documentation
@@ -62,7 +61,6 @@ If you would like to contribute please fork the repo and make a pull request exp
 ├── docs             				# Documentation for project
 ├── examples          				# Python scripts showing examples of how to use the program
 ├── misc              				# Folder containing miscellaneous code
-├── paper             				# Folder containing manuscript of DAPT
 ├── requirements.txt   				# List of Python requirements for DAPT
 ├── setup.py          				# Script to generate pyip package
 └── tests           				# Unit tests for DAPT

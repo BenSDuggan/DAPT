@@ -1,6 +1,6 @@
 # Changes starting from 
 
-## New version (0.9.3)
+## New version (0.9.2)
 
 ### General updates
 
@@ -10,6 +10,9 @@
 ### Storage
 
 * Added `check_overwrite_file()` and `check_overwrite_folder()` functions to standardize the overwriting function of files and folders.
+### Documentation
+
+* Improved the organization of documentation
 
 ## 0.9.1.4
 
