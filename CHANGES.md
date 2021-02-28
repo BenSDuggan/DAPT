@@ -1,12 +1,15 @@
 # Changes starting from 
 
-## New version
+## New version (0.9.2)
 
 ### General updates
 
 * Adding logging to DAPT using Python's [logging](https://docs.python.org/3.8/library/logging.html) module
 * Adding TravisCI testing for Python 3.9
 
+### Storage
+
+* Added `check_overwrite_file()` and `check_overwrite_folder()` functions to standardize the overwriting function of files and folders.
 ### Documentation
 
 * Improved the organization of documentation
