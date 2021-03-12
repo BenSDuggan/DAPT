@@ -10,7 +10,7 @@ install:
 # command to run tests
 script:
   - python tests/env_to_config.py
-  - pytest tests/
+  - pytest --test_creds tests/
 
 branches:
   only:

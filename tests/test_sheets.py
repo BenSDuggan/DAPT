@@ -2,9 +2,13 @@
 Test if dapt.db.sheets.py is working correctly
 """
 
+import csv
+import os
+
 import dapt
-import os, csv, gspread
+import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import pytest
 
 conf_path = 'test_config.json'
 
@@ -34,6 +38,7 @@ def create_database_entries(config):
 	return 
 
 # Test that we can read a delimited file
+@pytest.mark.test_creds
 def test_Sheet_read():
 	config = dapt.Config(path=conf_path)
 	create_database_entries(config)
@@ -48,6 +53,7 @@ def test_Sheet_read():
 	assert actual == expected, "Cannot read the Google Sheet correctly.  Nothing else should work."
 
 # Test if the keys from a Sheet can be retrieved
+@pytest.mark.test_creds
 def test_Sheet_get_keys():
 	config = dapt.Config(path=conf_path)
 	db = dapt.db.Sheet(config=config)
@@ -59,6 +65,7 @@ def test_Sheet_get_keys():
 	assert actual == expected, "Cannot get update a row in the Sheet."
 
 # Test if a row in the Sheet can be updated
+@pytest.mark.test_creds
 def test_Sheet_update_row():
 	config = dapt.Config(path=conf_path)
 	db = dapt.db.Sheet(config=config)
@@ -72,6 +79,7 @@ def test_Sheet_update_row():
 	assert db.get_table() == expected, "Cannot update a row in the Sheet."
 
 # Test if the row of a Sheet can be updated
+@pytest.mark.test_creds
 def test_Sheet_update_cell():
 	config = dapt.Config(path=conf_path)
 	db = dapt.db.Sheet(config=config)
@@ -84,6 +92,7 @@ def test_Sheet_update_cell():
 	assert db.get_table() == expected, "Cannot update a cell in the Sheet."
 
 # Test if the key index function for Sheets works
+@pytest.mark.test_creds
 def test_Sheet_get_key_index():
 	config = dapt.Config(path=conf_path)
 	create_database_entries(config)
@@ -92,6 +101,7 @@ def test_Sheet_get_key_index():
 	assert db.get_key_index('a') == 4, "Cannot get the key index."
 
 # Test if the row index function for Sheets works
+@pytest.mark.test_creds
 def test_Sheet_get_row_index():
 	config = dapt.Config(path=conf_path)
 	create_database_entries(config)

@@ -1,6 +1,12 @@
-# Changes starting from 
+# Change log 
 
-## New version (0.9.2)
+## New version (0.9.3)
+
+### Tests
+
+* Added `--test_creds`, `--test_login`, and `--all` that let you exclude tests requiring API credentials or logging in.
+
+## 0.9.2
 
 ### General updates
 

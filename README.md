@@ -2,6 +2,8 @@
 
 ![Travis-CI](https://travis-ci.com/BenSDuggan/DAPT.svg?token=aV2WxyvqLfShpTx4gD3a&branch=master)
 [![Documentation Status](https://readthedocs.org/projects/dapt/badge/?version=latest)](https://dapt.readthedocs.io/en/latest/?badge=latest)
+[![Version](https://img.shields.io/badge/version-0.9.2-brightgreen)](https://github.com/BenSDuggan/DAPT/releases)
+[![DOI](https://zenodo.org/badge/doi/10.20944/preprints202103.0116.v1.svg)](https://www.preprints.org/manuscript/202103.0116/v1)
 
 A library to assist with running parameter sets across multiple systems.  The goal of this library is to provide a tool set and pipeline that make organizing, running and analyzing a large amount of parameter easier.  Some of the highlights include: 
 
