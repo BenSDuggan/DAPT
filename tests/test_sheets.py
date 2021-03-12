@@ -10,7 +10,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import pytest
 
-conf_path = 'test_config.json'
+conf_path = os.environ['DAPT_config_path']
 
 def create_database_entries(config):
 	scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -20,7 +20,7 @@ def create_database_entries(config):
 	sheet = client.open_by_key(config.config['sheets-spreedsheet-id'])
 	worksheet = sheet.get_worksheet(0)
 
-	config = dapt.Config(path='test_config.json')
+	config = dapt.Config(path=conf_path)
 	sheet = dapt.db.Sheet(config=config)
 
 	data = [['id','start-time','end-time','status','a','b','c'],

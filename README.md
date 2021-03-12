@@ -69,5 +69,5 @@ If you would like to contribute please fork the repo and make a pull request exp
 ```
 
 ### Unit tests
-Unit tests are ran using [Pytest](pytest.org).  You can install Pytest by running `pip install -U pytest`.  The tests are located in the [tests](tests/) folder inside the root directory.  The tests can be run `pytest` in the terminal.  [Travis CI]() is used for continuous integration.  For more information on the tests go to the [tests](tests) folder.
+Unit tests are ran using [Pytest](pytest.org).  You can install Pytest by running `pip install pytest`.  The tests are located in the [tests](tests/) folder inside the root directory.  The tests can be run `pytest` in the terminal.  [Travis CI](https://travis-ci.com/) is used for continuous integration.  For more information on the tests go to the [tests](tests) folder.
 
