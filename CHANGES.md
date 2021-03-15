@@ -5,6 +5,7 @@
 ### Tests
 
 * Added `--test_creds`, `--test_login`, and `--all` that let you exclude tests requiring API credentials or logging in.
+* Added testing classes for DB and storage to make it easier to add tests for APIs.
 
 ### Database
 

@@ -1,5 +1,5 @@
 """
-Test the Box class in `dapt.storage.box`
+Test the Box class in `dapt.storage.google_drive`
 """
 
 import pytest
@@ -7,7 +7,7 @@ import pytest
 from .base import Storage_test_base
 
 @pytest.mark.test_login
-class TestBox(Storage_test_base):
+class TestGoogleDrive(Storage_test_base):
     
     def preflight(self):
         """

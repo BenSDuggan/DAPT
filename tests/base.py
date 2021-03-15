@@ -6,6 +6,7 @@ This method sets up the testing environment and resets it from past tests.  The
 """
 
 class Database_test_base:
+
     INITIAL_TABLE = [['id','start-time','end-time','status','a','b','c'],
                     ['t1','2019-09-06 17:23','2019-09-06 17:36','finished','2','4','6'],
                     ['t2','','','','10','10',''],
@@ -119,3 +120,92 @@ class Database_test_base:
         assert db.get_row_index('status', 'finished') == 0, "Cannot get the row index."
 
         self.postflight()
+
+
+class Storage_test_base:
+
+    def preflight(self):
+        """
+        Testing items that should be ran before tests are ran.  This method returns a new
+        class method for the test.
+
+        Returns:
+            The class instance which will be used for the unit test.
+        """
+
+        pass
+
+    def postflight(self):
+        """
+        Clean up after tests are ran.
+        """
+
+        pass
+
+    def test_upload_file(self):
+        """
+        Test if a file can be uploaded
+        """
+
+        self.preflight()
+
+
+
+        self.postflight()
+
+    def test_upload_folder(self):
+        """
+        Test if a folder can be uploaded
+        """
+
+        self.preflight()
+
+            
+
+        self.postflight()
+
+    def test_download_file(self):
+        """
+        Test if the uploaded file can be dowloaded and is the same as the original
+        """
+
+        self.preflight()
+
+            
+
+        self.postflight()
+
+    def test_download_folder(self):
+        """
+        Test if the uploaded folder can be dowloaded and is the same as the original
+        """
+
+        self.preflight()
+
+            
+
+        self.postflight()
+
+    def test_delete_file(self):
+        """
+        Test if the file can be deleted
+        """
+
+        self.preflight()
+
+            
+
+        self.postflight()
+
+    def test_delete_folder(self):
+        """
+        Test if the folder can be deleted
+        """
+
+        self.preflight()
+
+            
+
+        self.postflight()
+
+
