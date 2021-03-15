@@ -4,7 +4,7 @@ Test the Box class in `dapt.storage.box`
 
 import pytest
 
-from base import Storage_test_base
+from tests.base import Storage_test_base
 
 @pytest.mark.test_login
 class TestBox(Storage_test_base):

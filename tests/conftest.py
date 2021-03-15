@@ -4,7 +4,7 @@ Settings for pytest
 
 import pytest
 
-import preflight
+from tests import preflight
 
 def pytest_addoption(parser):
     parser.addoption(

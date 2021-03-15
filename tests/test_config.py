@@ -2,8 +2,9 @@
     Test if config.py is working correctly
 """
 
-import dapt
 import os
+
+import dapt
 
 SAMPLE_CONFIG = {"last-test":None, "performed-by":None, "sheets-spreedsheet-id":None, "sheets-creds-path":None, "sheets-worksheet-id":None, "sheets-worksheet-title":None, "num-of-runs":None, "computer-strength":None, "box" : {"client_id" : None, "client_secret" : None, "access_token" : None, "refresh_token" : None, "refresh_time" : None}}
 

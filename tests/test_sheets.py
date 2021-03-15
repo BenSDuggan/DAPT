@@ -9,7 +9,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import pytest
 
-from base import Database_test_base
+from tests.base import Database_test_base
 
 conf_path = os.environ['DAPT_config_path']
 
