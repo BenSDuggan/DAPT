@@ -12,7 +12,7 @@ config['sheets-creds-path'] = 'test_credentials.json'
 config['sheets-worksheet-title'] = 'daptTest'
 config['sheets-spreedsheet-id'] = '1gIhv8Vfm01Hsjcqhukl6t8pX-wRJ1PVzwmwY4bezieg'
 
-with open(os.environ['config_path'], 'w') as f:
+with open(os.environ['DAPT_config_path'], 'w') as f:
     json.dump(config, f)
 
 ### Add Google Sheets API
