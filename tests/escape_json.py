@@ -4,8 +4,8 @@
 #   1) You can provide the paths directly by modifying the json_path and escape_path variables
 #   2) You can provide the values as sys args json_path then escape_path
 
-import sys
 import json
+import sys
 
 json_path = ''
 escaped_path = ''

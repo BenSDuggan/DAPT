@@ -2,7 +2,7 @@
 Settings for pytest
 """
 
-from . import preflight
+from tests import preflight
 import pytest
 
 def pytest_addoption(parser):
