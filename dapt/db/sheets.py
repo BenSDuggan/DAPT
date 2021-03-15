@@ -11,8 +11,11 @@ Class which allows for Google Sheets to be used as paramater set database.
 Note: if you have data in the first row, you must have entries in some other row.
 """
 
-import gspread, logging
+import logging
+
+import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+
 from . import base
 
 _log = logging.getLogger(__name__)
@@ -112,12 +115,12 @@ class Sheet(base.Database):
 
         return self.worksheet().get_all_records()
 
-    def get_keys(self):
+    def fields(self):
         """
-        Get the keys of the paramater set
+        Get the fields(attributes) of the parameter set
         
         Returns:
-            Array of strings with each element being a key (order is preserved if possible)
+            Array of strings with each element being a field (order is preserved if possible)
         """
 
         self._update_creds()

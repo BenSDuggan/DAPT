@@ -51,20 +51,37 @@ class Database(object):
         Get the table from the database.
 
         Returns:
-            An array with each element being a dictionary of the key-value pairs for the row in the database.
+            An array with each element being a dictionary of the key-value pairs for the row
+            in the database.
+        """
+
+        pass
+
+    
+    def fields(self):
+        """
+        Get the fields(attributes) of the parameter set
+        
+        Returns:
+            Array of strings with each element being a field (order is preserved if possible)
         """
 
         pass
 
     def get_keys(self):
         """
+        .. deprecated:: 0.9.3
+
+        This method is being deprecated in favor of the `fields` method.  It will be removed
+        in version 0.9.5.
+
         Get the keys of the parameter set
         
         Returns:
             Array of strings with each element being a key (order is preserved if possible)
         """
 
-        pass
+        return self.fields()
 
     def update_row(self, row_index, values):
         """

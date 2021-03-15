@@ -6,6 +6,11 @@
 
 * Added `--test_creds`, `--test_login`, and `--all` that let you exclude tests requiring API credentials or logging in.
 
+### Database
+
+* Added `fields` method and deprecated the `get_keys()` method.  Will remove `get_keys()` in version 0.9.5.
+* No longer returning `OrderedDict` as it doesn't really matter if dictionary is ordered.
+
 ## 0.9.2
 
 ### General updates

@@ -8,7 +8,10 @@ Delimited file
 Create a CSV database which can be used by param to get and run param sets.  
 """
 
-import csv, os, logging
+import csv
+import logging
+import os
+
 from . import base
 
 _log = logging.getLogger(__name__)
@@ -54,12 +57,12 @@ class Delimited_file(base.Database):
                 sheet.append(row)
         return sheet
 
-    def get_keys(self):
+    def fields(self):
         """
-        Get the keys of the paramater set
+        Get the fields(attributes) of the parameter set
         
         Returns:
-            Array of strings with each element being a key (order is preserved if possible)
+            Array of strings with each element being a field (order is preserved if possible)
         """
 
         with open(self.path, 'r') as csvfile:
