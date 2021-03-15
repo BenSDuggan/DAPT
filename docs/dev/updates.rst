@@ -13,19 +13,18 @@ Guide for pushing updates
 4. Run ``twine upload dist/*``.
 
 
-New way:
+New way (test):
 
 1. ``python3 -m pip install --upgrade build``
 2. ``python3 -m build``
 3. ``python3 -m pip install --upgrade twine``
-4a. ``python3 -m twine upload --repository testpypi dist/*`` uploads to test
-4b. ``twine upload dist/*`` uploads to production
-5a. ``python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps example-pkg-YOUR-USERNAME-HERE`` to install from test
-5b. ``python3 -m pip install dapt`` to install from production
+4. ``python3 -m twine upload --repository testpypi dist/*`` uploads to test
+5. ``python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps example-pkg-YOUR-USERNAME-HERE`` to install from test
 
+New way (production):
 
-To clean up after a release:
-
-1. Navigate to the misc folder ``cd misc``
-2. Make the ``clean_after_release.sh`` script runnable (``chmod + clean_after_release.sh``)
-3. Run the script (``./clean_after_release.sh``)
+1. ``python3 -m pip install --upgrade build``
+2. ``python3 -m build``
+3. ``python3 -m pip install --upgrade twine``
+4. ``twine upload dist/*`` uploads to production
+5. ``python3 -m pip install dapt`` to install from production

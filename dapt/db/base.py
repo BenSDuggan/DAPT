@@ -15,11 +15,6 @@ Databases should give key-value pairs, where the keys are the "ids" of the table
 are the values in that given row.  When getting the table, the result should be an array of
 dictionaries that contain the contents of the row.
 
-Indexing
---------
-
-The database should use indexing starting from 0.  
-
 """
 
 import logging
@@ -85,7 +80,7 @@ class Database(object):
 
     def update_row(self, row_index, values):
         """
-        Get the keys of the parameter set
+        Update the row at the ``row-index`` with the values given.
 
         Args:
             row_index (int): the index of the row to replace
@@ -97,13 +92,13 @@ class Database(object):
 
         pass
 
-    def update_cell(self, row_id, key, value):
+    def update_cell(self, row_id, field, value):
         """
-        Get the keys of the parameter set
+        Update the cell specified by the ``row_id`` and ``field``.
 
         Args:
             row_id (int): the row id to replace
-            key (str): the key of the value to replace
+            field (str): the field of the value to replace
             value (object): the value to insert into the cell
         
         Returns:

@@ -71,7 +71,7 @@ class Delimited_file(base.Database):
 
     def update_row(self, row_index, values):
         """
-        Get the keys of the paramater set
+        Update the row at the ``row-index`` with the values given.
 
         Args:
             row_index (int): the index of the row to replace
@@ -81,7 +81,7 @@ class Delimited_file(base.Database):
             A boolean that is True if successfully inserted and False otherwise.
         """
 
-        header = self.get_keys()
+        header = self.fields()
         table = self.get_table()
 
         with open(self.path, 'w') as csvfile:
@@ -95,27 +95,27 @@ class Delimited_file(base.Database):
 
             return True
 
-    def update_cell(self, row_index, key, value):
+    def update_cell(self, row_index, field, value):
         """
-        Get the keys of the paramater set
+        Update the cell specified by the ``row_id`` and ``field``.
 
         Args:
-            row_index (int): the row id to replace
-            key (str): the key of the value to replace
-            value (str): the value to insert into the cell
+            row_id (int): the row id to replace
+            field (str): the field of the value to replace
+            value (object): the value to insert into the cell
         
         Returns:
             A boolean that is True if successfully inserted and False otherwise.
         """
 
-        header = self.get_keys()
+        header = self.fields()
         table = self.get_table()
 
         with open(self.path, 'w') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=header)
             writer.writeheader()
 
-            table[row_index][key] = value
+            table[row_index][field] = value
 
             for row in table:
                 writer.writerow(row)

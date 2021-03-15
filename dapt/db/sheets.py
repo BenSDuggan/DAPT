@@ -129,7 +129,7 @@ class Sheet(base.Database):
 
     def update_row(self, row_index, values):
         """
-        Get the row of the paramater set
+        Get the row of the paramater set.
 
         Args:
             row_index (int): the index of the row to replace (starting from 1).  Indices less than 1 will return False.  Indices greater than the table length will be appended.
@@ -158,21 +158,21 @@ class Sheet(base.Database):
             return False
         return True
 
-    def update_cell(self, row_id, key, value):
+    def update_cell(self, row_id, field, value):
         """
-        Get the keys of the paramater set
-        
+        Update the cell specified by the ``row_id`` and ``field``.
+
         Args:
             row_id (int): the row id to replace
-            key (str): the key of the value to replace
-            value (str): the value to insert into the cell
+            field (str): the field of the value to replace
+            value (object): the value to insert into the cell
         
         Returns:
             A boolean that is True if successfully inserted and False otherwise.
         """
         try:
             self._update_creds()
-            self.worksheet().update_cell(row_id+2, self.get_key_index(key)+1, str(value))
+            self.worksheet().update_cell(row_id+2, self.get_key_index(field)+1, str(value))
         except Exception as e:
             raise e
         return True

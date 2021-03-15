@@ -4,34 +4,7 @@
 Storage base
 ============
 
-This module contans classes and functions that assist with the storage APIs.  It includes the
-``Storage`` class and methods to deal with overwriting files/folders.
-
-Because the APIs of services are all different, DAPT calls the resource identification a
-``file_id``.  Even if the resource is not a file, it is called a ``file_id``.  This is similar
-to everything is a file in Linux.
-
-To attempt to make paths easier to navigate, the download and upload methods include a ``folder``
-and ``name`` attribute.  So if you wanted to upload a file in ``foo/bar/file.py``, you would set
-``folder`` to ``foo/bar`` and ``name`` to ``file.py``.  You can omit the ``folder`` attribute
-and the current directory will be used.  The motivation for this is to 1) make the file name and
-save location explicit, and 2) standardize these variables accross the download and upload
-functions.  When downloading a resource, you may want to keep the file name from the service,
-or rename it.  By setting the ``name`` attribute to ``None``, the name of the resource will be
-used.
-
-"""
-
-import logging
-import mimetypes
-from pathlib import Path
-import shutil
-
-_log = logging.getLogger(__name__)
-
-class Storage(object):
-    """
-    .. _storage-class:
+.. _storage-class:
 
     The Storage class is designed to provide a standard interface for adding APIs that enable
     storage.  This class defines the basic required functions that must be implimented for two
@@ -46,12 +19,26 @@ class Storage(object):
     DAPT.  Different implimentations might use different protocols for files and folders, so the
     Storage methods should take care of this.
 
+    .. _base-storage-required:
+
     Required methods
     ----------------
 
     There are four required methods that all Storage objects must implement.  The required
     methods are download, delete, rename, and upload.  These methods are based off REST APIs,
     although the underlying implimentation do not need to use REST.
+
+"""
+
+import logging
+import mimetypes
+from pathlib import Path
+import shutil
+
+_log = logging.getLogger(__name__)
+
+class Storage(object):
+    """
     """
 
     def download_file(self, file_id, folder='.', name=None, overwrite=True):
