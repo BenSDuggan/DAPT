@@ -4,7 +4,7 @@ Test the Box class in `dapt.storage.google_drive`
 
 import pytest
 
-from tests.base import Storage_test_base
+from base import Storage_test_base
 
 @pytest.mark.test_login
 class TestGoogleDrive(Storage_test_base):

@@ -8,7 +8,7 @@ import os
 
 import dapt
 
-from .base import Database_test_base
+from base import Database_test_base
 
 class TestDelimitedFile(Database_test_base):
 
