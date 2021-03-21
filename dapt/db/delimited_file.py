@@ -49,7 +49,7 @@ Config
 
 Delimited file can accept a :ref:`config` class.  The values listed in the table below are
 the same attributes used to instantiate the class.  These values should be placed inside
-a JSON object named ``delimited-file.`` 
+a JSON object named ``delimited-file``. 
 
 +---------------------------+----------------------------------------------------------------+
 | Fields                    | Description                                                    |

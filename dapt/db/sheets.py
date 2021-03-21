@@ -8,7 +8,57 @@ Google Sheets
 Class which allows for Google Sheets to be used as paramater set database.
 
 
-Note: if you have data in the first row, you must have entries in some other row.
+.. note::
+
+    If you have data in the first row, you must have entries in some other row.
+
+Authentication
+--------------
+
+Config
+------
+
+The Google Sheets class can be instantiated using a :ref:`config` class.  There are several
+options in the config which are redundant (e.g. worksheet-id and worksheet-title).  They are
+marked with flags in the table below.  These values should be placed inside a JSON object
+named ``google-sheets``. 
+
++---------------------------+----------------------------------------------------------------+
+| Fields                    | Description                                                    |
++===========================+================================================================+
+| ``spreedsheet-id`` (str)  | The Google spreedsheet ID being used.  Found in the URL.       |
++---------------------------+----------------------------------------------------------------+
+| ``*creds-path`` (str)     | Path to the Google Sheets credentials JSON file.               |
++---------------------------+----------------------------------------------------------------+
+| ``*creds`` (dict)         | The Google credentials provided from the developer console.    |
++---------------------------+----------------------------------------------------------------+
+| ``#worksheet-id`` (int)   | The Google Sheets worksheet id.  Sheets are indexed at 0.      |
++---------------------------+----------------------------------------------------------------+
+| ``#worksheet-title``      |  The Google Sheets worksheet title.                            |
+| (str)                     |                                                                |
++---------------------------+----------------------------------------------------------------+
+
+``*`` fields should not be used together.  If you use them together, ``creds`` will be used 
+over ``creds-path``.  ``#`` fields should also not be used together and ``worksheet-id`` will
+be used.
+
+The default configuration looks like this:
+
+.. code-block:: JSON
+    :caption: Sample JSON configuration for ``Sheets``
+    :name: example-google-sheets-config
+
+    {
+        "google-sheets" : {
+            "spreedsheet-id" : "",
+            "creds-path" : "",
+            "creds" : {},
+            "worksheet-id" : "",
+            "worksheet-title" : ""
+        }
+    }
+
+
 """
 
 import logging
@@ -48,7 +98,7 @@ class Sheet(base.Database):
         self.sheet = None
 
         if len(kwargs) == 0:
-            raise ValueError("You must provide a Config object or spreedsheetID and credentials file.")
+            raise ValueError("Must provide a Config or spreedsheetID and credentials file.")
         if 'config' in kwargs:
             self.config=kwargs['config']
 
@@ -67,7 +117,7 @@ class Sheet(base.Database):
             if 'spreedsheet_id' in kwargs:
                 self.spreedsheetID = kwargs['spreedsheet_id']
             else:
-                raise ValueError("You must specify the spreedsheet id in the arguments or config.")
+                raise ValueError("Must specify the spreedsheet id in the arguments or config.")
         if not self._creds:
             if 'creds' in kwargs:
                 self._creds = Credentials.from_service_account_file(
@@ -94,7 +144,7 @@ class Sheet(base.Database):
         need to use the connect method, but it should be called regardless to prevent problems.
 
         Returns:
-            Gspread client if the database connected successfully and False otherwise.
+            gspread client if the database connected successfully and False otherwise.
         """
 
         # Check the current creds and try to update them

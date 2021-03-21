@@ -68,23 +68,11 @@ below.
 | (int)                     | parameter set will only be run if this value is greater than   |
 |                           | or equal that of the parameter sets ``computer-strength``.     |
 +---------------------------+----------------------------------------------------------------+
-| ``sheets-spreedsheet-id`` | The Google spreedsheet ID being used.                          |
-| (str)                     |                                                                |
-+---------------------------+----------------------------------------------------------------+
-| ``sheets-creds-path``     | The Google Sheets credentials file path.                       |
-| (str)                     |                                                                |
-+---------------------------+----------------------------------------------------------------+
-| ``sheets-worksheet-id``   | The Google Sheets worksheet id.  Sheets are indexed at 0.      |
-| (str)                     |                                                                |
-+---------------------------+----------------------------------------------------------------+
-| ``sheets-worksheet-title``| The Google Sheets worksheet title.                             |
-| (str)                     |                                                                |
-+---------------------------+----------------------------------------------------------------+
-| ``box`` (str)             | Values used by the :ref:`box` storage API.                     |
+| ``google-sheets`` (str)   | Values used by the :ref:`google-sheets` storage API.           |
 +---------------------------+----------------------------------------------------------------+
 | ``delimited-file`` (str)  | Values used by the :ref:`delimited-file` database class.       |
 +---------------------------+----------------------------------------------------------------+
-| ``reset-time`` (str)      | The time that the box access-token needs to be refreshed.      |
+| ``box`` (str)             | Values used by the :ref:`box` storage API.                     |
 +---------------------------+----------------------------------------------------------------+
 
 Some of these fields are used by other DAPT classes to store values.  For example, the
@@ -198,9 +186,9 @@ import json, logging
 _log = logging.getLogger(__name__)
 
 DEFAULT_CONFIG = {"last-test":None, "performed-by":None, "num-of-runs":None, 
-                  "computer-strength":None, "sheets-spreedsheet-id":None,
-                  "sheets-creds-path":None, "sheets-worksheet-id":None, 
-                  "sheets-worksheet-title":None, 
+                  "computer-strength":None,
+                  "google-sheets":{"spreedsheet-id":None, "creds-path":None, "creds":None,
+                  "worksheet-id":None, "worksheet-title":None}, 
                   "delimited-file" : {"path":"parameters.csv", "delimiter":","},
                   "box" : {"client_id" : None, "client_secret" : None, "access_token" : None,
                            "refresh_token" : None, "refresh_time" : None}}
