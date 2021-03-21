@@ -11,7 +11,9 @@ class Database_test_base:
                     ['t1','2019-09-06 17:23','2019-09-06 17:36','finished','2','4','6'],
                     ['t2','','','','10','10',''],
                     ['t3','','','','10','-10','']]
-    INITIAL_DICT = [{'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'},
+    INITIAL_DICT = [
+                {'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36',
+                 'status':'finished', 'a':'2', 'b':'4', 'c':'6'},
 				{'id':'t2', 'start-time':'', 'end-time':'', 'status':'', 'a':'10', 'b':'10', 'c':''},
 				{'id':'t3', 'start-time':'', 'end-time':'', 'status':'', 'a':'10', 'b':'-10', 'c':''}]
 
@@ -32,6 +34,29 @@ class Database_test_base:
         """
 
         pass
+
+    def test_connect(self):
+        """
+        Test that API can connect to service
+        """
+
+        db = self.preflight()
+
+        actual = db.connect()
+
+        assert (actual is not False and actual is not None), "API could not connected to server"
+
+    def test_connected(self):
+        """
+        Test that the API is connected
+        """
+
+        db = self.preflight()
+
+        db.connect()
+
+        assert db.connected() == True, "API is not connected to server"
+
 
     def test_read_table(self):
         """
@@ -73,11 +98,16 @@ class Database_test_base:
         
         db = self.preflight()
 
-        db.update_row(1, {'id':'t2', 'start-time':'2019-09-06 17:37', 'end-time':'2019-09-06 17:55', 'status':'finished', 'a':'10', 'b':'10', 'c':'20'})
+        db.update_row(1,
+                     {'id':'t2', 'start-time':'2019-09-06 17:37','end-time':'2019-09-06 17:55',
+                      'status':'finished', 'a':'10', 'b':'10', 'c':'20'})
         
-        expected = [{'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'},
-				{'id':'t2', 'start-time':'2019-09-06 17:37', 'end-time':'2019-09-06 17:55', 'status':'finished', 'a':'10', 'b':'10', 'c':'20'},
-				{'id':'t3', 'start-time':'', 'end-time':'', 'status':'', 'a':'10', 'b':'-10', 'c':''}]
+        expected = [{'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36',
+                     'status':'finished', 'a':'2', 'b':'4', 'c':'6'},
+				{'id':'t2', 'start-time':'2019-09-06 17:37', 'end-time':'2019-09-06 17:55',
+                 'status':'finished', 'a':'10', 'b':'10', 'c':'20'},
+				{'id':'t3', 'start-time':'', 'end-time':'', 'status':'', 'a':'10', 'b':'-10',
+                 'c':''}]
             
         actual = db.get_table()
 
@@ -97,7 +127,9 @@ class Database_test_base:
         
         db.update_cell(1, 'status', 'adding')
         
-        expected = [{'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36', 'status':'finished', 'a':'2', 'b':'4', 'c':'6'},
+        expected = [
+                {'id':'t1', 'start-time':'2019-09-06 17:23', 'end-time':'2019-09-06 17:36',
+                 'status':'finished', 'a':'2', 'b':'4', 'c':'6'},
 				{'id':'t2', 'start-time':'', 'end-time':'', 'status':'adding', 'a':'10', 'b':'10', 'c':''},
 				{'id':'t3', 'start-time':'', 'end-time':'', 'status':'', 'a':'10', 'b':'-10', 'c':''}]
         

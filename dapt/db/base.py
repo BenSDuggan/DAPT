@@ -41,6 +41,16 @@ class Database(object):
 
         pass
 
+    def connected(self):
+        """
+        Check to see if the API is connected to the server and working.
+
+        Returns:
+            True if the API is connected to the server and False otherwise.
+        """
+
+        pass
+
     def get_table(self):
         """
         Get the table from the database.

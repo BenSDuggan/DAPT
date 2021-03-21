@@ -35,7 +35,7 @@ class Google_Drive(base.Storage):
     """
     Download, upload, move, and delete files or folders from Google Drive.
 
-    Args:
+    Keyword args:
         creds_path (str): the path to the file containing the Google API credentials. 
         Default is ``credentials.json``.
         config (Config): a Config object with the associated config file to be used

@@ -14,7 +14,7 @@ Note: if you have data in the first row, you must have entries in some other row
 import logging
 
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 
 from . import base
 
@@ -36,11 +36,16 @@ class Sheet(base.Database):
         super().__init__()
         
         self.spreedsheetID = None
-        self.scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-        self.creds = None
+        #self.SCOPE = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+        self.SCOPE = ['https://www.googleapis.com/auth/spreadsheets',
+                      'https://www.googleapis.com/auth/drive']
+        self._creds = None
         self.sheet_id = -1
         self.sheet_title = None
         self.config = None
+
+        self.client = None
+        self.sheet = None
 
         if len(kwargs) == 0:
             raise ValueError("You must provide a Config object or spreedsheetID and credentials file.")
@@ -50,7 +55,10 @@ class Sheet(base.Database):
             if self.config.has_value('sheets-spreedsheet-id'):
                 self.spreedsheetID = self.config.config['sheets-spreedsheet-id']
             if self.config.has_value('sheets-creds-path'):
-                self.creds = ServiceAccountCredentials.from_json_keyfile_name(self.config.config['sheets-creds-path'], self.scope)
+                self._creds = Credentials.from_service_account_file(
+                    self.config.config['sheets-creds-path'],
+                    scopes=self.SCOPE
+                )
             if self.config.has_value('sheets-worksheet-id'):
                 self.sheet_id = self.config.config['sheets-worksheet-id']
             if self.config.has_value('sheets-worksheet-title'):
@@ -60,11 +68,17 @@ class Sheet(base.Database):
                 self.spreedsheetID = kwargs['spreedsheet_id']
             else:
                 raise ValueError("You must specify the spreedsheet id in the arguments or config.")
-        if not self.creds:
+        if not self._creds:
             if 'creds' in kwargs:
-                self.creds = ServiceAccountCredentials.from_json_keyfile_name(kwargs['creds'], self.scope)
+                self._creds = Credentials.from_service_account_file(
+                    kwargs['creds'],
+                    scopes=self.SCOPE
+                )
             else:
-                self.creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', self.scope)
+                self._creds = Credentials.from_service_account_file(
+                    self.config.config['sheets-creds-path'],
+                    scopes=self.SCOPE
+                )
         if not self.sheet_title and self.sheet_id == -1:
             if 'sheet_title' in kwargs:
                 self.sheet_title = kwargs['sheet_title']
@@ -74,16 +88,42 @@ class Sheet(base.Database):
             else:
                 self.sheet_id = 0
 
-        self.client = gspread.authorize(self.creds)
+    def connect(self):
+        """
+        The method used to connect to the database and log the user in.  Some databases won't
+        need to use the connect method, but it should be called regardless to prevent problems.
+
+        Returns:
+            Gspread client if the database connected successfully and False otherwise.
+        """
+
+        # Check the current creds and try to update them
+        if self._creds and not self._creds.valid:
+            _log.debug('Attempting to update the internal creds')
+            self.client = gspread.authorize(self._creds)
+
         self.sheet = self.client.open_by_key(self.spreedsheetID)
 
-    def _update_creds(self):
+        if not self.connected():
+            return False
+        
+        return self.client
+
+    def connected(self):
         """
-        Update the credentials if they are expired
+        Check to see if the API is connected to the server and working.
+
+        Returns:
+            True if the API is connected to the server and False otherwise.
         """
 
-        if self.creds.access_token_expired:
-            self.client.login()
+        try:
+            # True to get the first value of the first sheet
+            c = self.sheet.sheet1.get('A1')
+            return True
+        except Exception as e:
+            _log.warning('Cannot connect to Google Sheets: %s' % str(e))
+            return False
 
     def worksheet(self, *args, **kwargs):
         """
@@ -93,10 +133,9 @@ class Sheet(base.Database):
             A Google Sheet worksheet
         """
 
-        self._update_creds()
+        self.connect()
 
         if self.sheet_title:
-            print('sup dogg')
             return self.sheet.worksheet(self.sheet_title)
         elif self.sheet_id >= 0:
             return self.sheet.get_worksheet(self.sheet_id)
@@ -111,7 +150,7 @@ class Sheet(base.Database):
             An array with each element being a dictionary of the key-value pairs for the row in the database.
         """
 
-        self._update_creds()
+        self.connect()
 
         return self.worksheet().get_all_records()
 
@@ -123,7 +162,7 @@ class Sheet(base.Database):
             Array of strings with each element being a field (order is preserved if possible)
         """
 
-        self._update_creds()
+        self.connect()
 
         return self.worksheet().row_values(1)
 
@@ -139,6 +178,8 @@ class Sheet(base.Database):
             A boolean that is Trues if successfully inserted and False otherwise.
         """
 
+        self.connect()
+
         if row_index < 0:
             return False
 
@@ -146,7 +187,7 @@ class Sheet(base.Database):
         for i in values:
             row[0].append(values[i])
         
-        self._update_creds()
+        self.connect()
 
         start = gspread.utils.rowcol_to_a1(row_index+2, 1)
         end = gspread.utils.rowcol_to_a1(row_index+2, len(values))
@@ -171,7 +212,7 @@ class Sheet(base.Database):
             A boolean that is True if successfully inserted and False otherwise.
         """
         try:
-            self._update_creds()
+            self.connect()
             self.worksheet().update_cell(row_id+2, self.get_key_index(field)+1, str(value))
         except Exception as e:
             raise e
@@ -188,7 +229,7 @@ class Sheet(base.Database):
             The index or -1 if it could not be determined.
         """
 
-        self._update_creds()
+        self.connect()
 
         key_map = {}
         key_row = self.worksheet().row_values(1)
@@ -209,7 +250,7 @@ class Sheet(base.Database):
             The index or -1 if it could not be determined.
         """
 
-        self._update_creds()
+        self.connect()
 
         col = self.worksheet().col_values(self.get_key_index(column_key)+1)
         for i in range(len(col)):

@@ -41,6 +41,27 @@ class Storage(object):
     """
     """
 
+    def connect(self):
+        """
+        The method used to connect to the database and log the user in.  Some databases won't
+        need to use the connect method, but it should be called regardless to prevent problems.
+
+        Returns:
+            True if the database connected successfully and False otherwise.
+        """
+
+        pass
+
+    def connected(self):
+        """
+        Check to see if the API is connected to the server and working.
+
+        Returns:
+            True if the API is connected to the server and False otherwise.
+        """
+
+        pass
+
     def download_file(self, file_id, folder='.', name=None, overwrite=True):
         """
         Download the file at the given file_id to the given path.

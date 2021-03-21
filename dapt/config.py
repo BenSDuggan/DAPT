@@ -82,6 +82,8 @@ below.
 +---------------------------+----------------------------------------------------------------+
 | ``box`` (str)             | Values used by the :ref:`box` storage API.                     |
 +---------------------------+----------------------------------------------------------------+
+| ``delimited-file`` (str)  | Values used by the :ref:`delimited-file` database class.       |
++---------------------------+----------------------------------------------------------------+
 | ``reset-time`` (str)      | The time that the box access-token needs to be refreshed.      |
 +---------------------------+----------------------------------------------------------------+
 
@@ -199,6 +201,7 @@ DEFAULT_CONFIG = {"last-test":None, "performed-by":None, "num-of-runs":None,
                   "computer-strength":None, "sheets-spreedsheet-id":None,
                   "sheets-creds-path":None, "sheets-worksheet-id":None, 
                   "sheets-worksheet-title":None, 
+                  "delimited-file" : {"path":"parameters.csv", "delimiter":","},
                   "box" : {"client_id" : None, "client_secret" : None, "access_token" : None,
                            "refresh_token" : None, "refresh_time" : None}}
 FULL_CONFIG = DEFAULT_CONFIG

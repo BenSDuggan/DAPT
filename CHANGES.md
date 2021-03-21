@@ -11,6 +11,17 @@
 
 * Added `fields` method and deprecated the `get_keys()` method.  Will remove `get_keys()` in version 0.9.5.
 * No longer returning `OrderedDict` as it doesn't really matter if dictionary is ordered.
+* Ensuring `Delimited_file` and `Sheets` have working `connect()` and `connected()` methods.
+
+### db.Sheets
+
+* Change authentication model to use `google.oauth2.service_account` from `oauth2client.service_account`
+
+### db.Delimited_file
+
+* Updating documentation
+* Using key-word arguments now
+* Added support for config
 
 ## 0.9.2
 
