@@ -86,7 +86,6 @@ class Sheet(base.Database):
         super().__init__()
         
         self.spreedsheetID = None
-        #self.SCOPE = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         self.SCOPE = ['https://www.googleapis.com/auth/spreadsheets',
                       'https://www.googleapis.com/auth/drive']
         self._creds = None

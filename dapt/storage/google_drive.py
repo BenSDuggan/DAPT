@@ -42,7 +42,6 @@ class Google_Drive(base.Storage):
     """
 
     def __init__(self, **kwargs):
-        #self.SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly']
         self.SCOPES = ['https://www.googleapis.com/auth/drive']
         self._creds = None
         self.creds_path = None

@@ -181,7 +181,8 @@ with the correct password.
 
 """
 
-import json, logging
+import json
+import logging
 
 _log = logging.getLogger(__name__)
 
