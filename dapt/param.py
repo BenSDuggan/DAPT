@@ -14,9 +14,9 @@ Database
 --------
 
 In order to get the paramaters, the ``Param`` class needs to be given a ``Database`` instance
-(e.g. :ref:`sheets`, :ref:`delimited-file`).  The database is where the parameters to be tested
-live.  The database has a couple required fields (attributes) and many optional fields.  The
-:ref:`param-database-fields` section provides more information on how the database should be
+(e.g. :ref:`google-sheets`, :ref:`delimited-file`).  The database is where the parameters to be
+tested live.  The database has a couple required fields (attributes) and many optional fields.
+The :ref:`param-database-fields` section provides more information on how the database should be
 configured.
 
 Each time a new parameter set is requested, the database will be downloaded again.  This means
@@ -39,9 +39,9 @@ Required parameters are marked with an astrict(*).
 +---------------------------+----------------------------------------------------------------+
 | Fields                    | Description                                                    |
 +===========================+================================================================+
-| ``id``\* (str)            | Unique parameter set installed                                 |
+| ``id`` * (str)            | Unique parameter set installed                                 |
 +---------------------------+----------------------------------------------------------------+
-| ``status``\* (str)        | The current status of the parameter set. Blank values(default) |
+| ``status`` * (str)        | The current status of the parameter set. Blank values(default) |
 |                           | have not been ran, ``successful`` have finished and ``failed`` |
 |                           | have failed.                                                   |
 +---------------------------+----------------------------------------------------------------+
@@ -148,7 +148,8 @@ class Param:
     Create a Param instance with a database and optional config file.
 
     Args:
-        database (Database): a Database instance (such as :ref:`sheets`, :ref:`delimited-file`)
+        database (Database): a Database instance (such as :ref:`google-sheets`,
+        :ref:`delimited-file`)
         config (Config): a config object which allows for more features.  This is optional.
     """
     
@@ -190,12 +191,17 @@ class Param:
 
         # Do we have a last-test in the config file
         if self.config and "last-test" in self.config and self.config["last-test"]:
-            _log.info('Using `last-test` with id="%s" from config.txt' % str(self.config["last-test"]))
+            _log.info('Using `last-test` with id="%s" from config.txt' %
+                      str(self.config["last-test"]))
             for i in range(0, len(records)):
-                if str(self.config.config["last-test"]) == str(records[i]["id"]) and records[i]["status"] != "successful":
+                if (
+                        str(self.config.config["last-test"]) == str(records[i]["id"]) and
+                        records[i]["status"] != "successful"
+                   ):
                     records[i]["status"] = "in progress"
                     if "start-time" in records[i]:
-                        records[i]["start-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                        records[i]["start-time"] = \
+                        datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     if "performed-by" in records[i]:
                         records[i]["performed-by"] = self.performed_by
 
@@ -205,12 +211,16 @@ class Param:
 
         for i in range(0, len(records)):
             if not len(records[i]["status"]):
-                if 'computer-strength' in records[i] and self.computer_strength < int(records[i]["computer-strength"]):
+                if (
+                        'computer-strength' in records[i] and 
+                        self.computer_strength < int(records[i]["computer-strength"])
+                ):
                     continue
                 
                 records[i]["status"] = "in progress"
                 if "start-time" in records[i]:
-                    records[i]["start-time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    records[i]["start-time"] = \
+                    datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 if "performed-by" in records[i]:
                     records[i]["performed-by"] = self.performed_by
                 self.db.update_row(i, records[i])

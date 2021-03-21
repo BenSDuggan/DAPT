@@ -72,13 +72,16 @@ _log = logging.getLogger(__name__)
 
 class Sheet(base.Database):
     """
-    An interface for accessing and setting paramater set data.  You must either provide a Config object or client_id and client_secret.
+    An interface for accessing and setting paramater set data.  You must either provide a Config
+    object or client_id and client_secret.
 
     Keyword Args:
         config (Config): A Config object which contains the client_id and client_secret. 
         spreedsheet_id (str): the Google Sheets ID
-        creds (str): the path to the file containing the Google API credentials.  Default is ``credentials.json``.
-        sheet_id (int): the the sheet id to use.  0 is used if no value is givin for sheet_title, sheet_id or in the Config
+        creds (str): the path to the file containing the Google API credentials.  Default is
+        ``credentials.json``.
+        sheet_id (int): the the sheet id to use.  0 is used if no value is givin for sheet_title,
+        sheet_id or in the Config
         sheet_title (str): the title of the sheet to use
     """
     
@@ -176,7 +179,8 @@ class Sheet(base.Database):
 
     def worksheet(self, *args, **kwargs):
         """
-        Get a Google Sheet object.  The worksheet id or title are obtained from the Config file or initialization.
+        Get a Google Sheet object.  The worksheet id or title are obtained from the Config
+        file or initialization.
 
         Returns:
             A Google Sheet worksheet
@@ -196,7 +200,8 @@ class Sheet(base.Database):
         Get the table from the database.
 
         Returns:
-            An array with each element being a dictionary of the key-value pairs for the row in the database.
+            An array with each element being a dictionary of the key-value pairs for the
+            row in the database.
         """
 
         self.connect()
@@ -220,8 +225,10 @@ class Sheet(base.Database):
         Get the row of the paramater set.
 
         Args:
-            row_index (int): the index of the row to replace (starting from 1).  Indices less than 1 will return False.  Indices greater than the table length will be appended.
-            values (Dict): the key-value pairs that should be inserted.  If the dictionary contains more values then number of columns, the table will be extended.
+            row_index (int): the index of the row to replace (starting from 1).  Indices less
+            than 1 will return False.  Indices greater than the table length will be appended.
+            values (Dict): the key-value pairs that should be inserted.  If the dictionary
+            contains more values then number of columns, the table will be extended.
         
         Returns:
             A boolean that is Trues if successfully inserted and False otherwise.
@@ -243,7 +250,9 @@ class Sheet(base.Database):
         range_label = '%s!%s:%s' % (self.worksheet().title, start, end)
         
         try:
-            return self.sheet.values_update(range_label, params={'valueInputOption': 'RAW'}, body={'values': row})
+            return self.sheet.values_update(range_label,
+                                            params={'valueInputOption': 'RAW'},
+                                            body={'values': row})
         except:
             return False
         return True
