@@ -4,23 +4,37 @@
 Box
 === 
 
-Class that allows for access to the box API and methods to directly upload files.  If you wish to use the Box API you should view the `install </install/box-install.html>`_.
+Class that allows for access to the box API and methods to directly upload files.  If you wish
+to use the Box API you should view the `install </install/box-install.html>`_.
 
 Authentication
 --------------
 
-In order for the Box API to work, it needs to get a user specific access and refresh token.  Box provides access tokens to users which are a session key.  They remain active for one hour at which time they must be refreshed using the refresh token.  Once a new access and refresh token has been given, the old one will no longer work.
+In order for the Box API to work, it needs to get a user specific access and refresh token. 
+Box provides access tokens to users which are a session key.  They remain active for one hour
+at which time they must be refreshed using the refresh token.  Once a new access and refresh
+token has been given, the old one will no longer work.
 
-The tokens can be provided in three  ways.  First, you can run ``Box(...).connect()`` which will start a flask webserver.  You can then proceed to `<127.0.0.1:5000>`_ and log in with your Box username and password.  This is done securely through Box and you username and password cannot be extracted.  Second, you can insert the access and refresh token in the config file.  Then the Box class will use these tokens.  The final way to provide the tokens is by directly passign them to ``Box(...).connect(access_token=<your access token>, refresh_token=<your refresh token>)``.
+The tokens can be provided in three  ways.  First, you can run ``Box(...).connect()`` which
+will start a flask webserver.  You can then proceed to `<127.0.0.1:5000>`_ and log in with
+your Box username and password.  This is done securely through Box and you username and
+password cannot be extracted.  Second, you can insert the access and refresh token in the
+config file.  Then the Box class will use these tokens.  The final way to provide the tokens
+is by directly passign them to
+``Box(...).connect(access_token=<your access token>, refresh_token=<your refresh token>)``.
 
-On a server, where you have no access to a web browser, you will need to get the tokens using a computer which has a web browser.  You can then place those tokens in the config file or directly pass them to the ``connect()`` method.
+On a server, where you have no access to a web browser, you will need to get the tokens using
+a computer which has a web browser.  You can then place those tokens in the config file or
+directly pass them to the ``connect()`` method.
 
 .. _box-config:
 
 Config
 ------
 
-The best way to use Box is with a configuration file.  Box attributes can be added to the config file as a JSON object which is the value for the key ``box``.  An sample config file for box is shown bellow.
+The best way to use Box is with a configuration file.  Box attributes can be added to the
+config file as a JSON object which is the value for the key ``box``.  An sample config
+file for box is shown bellow.
 
 .. code-block:: json
     
@@ -49,7 +63,8 @@ _log = lg.getLogger(__name__)
 
 class Box(base.Storage):
     """
-    Class which allows for connection to box API.  You must either provide a Config object or client_id and client_secret.
+    Class which allows for connection to box API.  You must either provide a Config object
+    or client_id and client_secret.
 
     Keyword Args:
         config (Config): A Config object which contains the client_id and client_secret. 
@@ -82,17 +97,21 @@ class Box(base.Storage):
             self.client_secret = kwargs['client-secret']
         
         if self.client_id is None or self.client_secret is None:
-            raise AttributeError('The client-id and client-secret must be provided.  They can be provided directly or using a Config.')
+            raise AttributeError('The client-id and client-secret must be provided.  They can \
+            be provided directly or using a Config.')
 
         self.oauth = OAuth2(client_id=self.client_id, client_secret=self.client_secret)
 
     def connect(self, access_token = None, refresh_token = None):
         """
-        Tries to connect to box using arguments provided in Config and starts server for authorization if not.
+        Tries to connect to box using arguments provided in Config and starts server for
+        authorization if not.
 
         Args:
-            access_token (str): Optional argument that allows DAPT to connect to box without going through web authentication (assuming refresh_token is given and not expired).
-            refresh_token (str): Optional argument that allows DAPT to connect to box without going through web authentication (assuming access_token is given and not expired).
+            access_token (str): Optional argument that allows DAPT to connect to box without
+             going through web authentication (assuming refresh_token is given and not expired).
+            refresh_token (str): Optional argument that allows DAPT to connect to box without
+             going through web authentication (assuming access_token is given and not expired).
         
         Returns:
             Box client if successful
@@ -109,12 +128,14 @@ class Box(base.Storage):
 
             return
 
-        # If not, then we check to see if the access and refresh token are in the config file.
-        if self.config and self.config.has_value(['box','access-token']) and self.config.has_value(['box','refresh-token']):
+        # If not, then we check to see if the access and refresh token are in the config file
+        if (self.config and self.config.has_value(['box','access-token']) and 
+            self.config.has_value(['box','refresh-token'])):
             try:
                 print('Trying to get new access and refresh token from ' + self.config.path)
                 self.oauth._refresh_token = self.config.config['refresh-token']
-                self._access_token, self._refresh_token = self.oauth._refresh(self.config['box']['access-token'])
+                self._access_token, self._refresh_token = \
+                    self.oauth._refresh(self.config['box']['access-token'])
                 self.client = Client(self.oauth)
                 self.refresh_time = time.time() + 60*60
 
@@ -125,7 +146,9 @@ class Box(base.Storage):
                 print(e)
 
         self.app = Flask(__name__)
-        print('Starting server.  Go to the URL below to activate box functionality.  If you are on a server you will need to run this code on your computer, get the access and refresh token and then add them to the config file.')
+        print('Starting server.  Go to the URL below to activate box functionality.  If you \
+               are on a server you will need to run this code on your computer, get the access \
+               and refresh token and then add them to the config file.')
         return self._start_server()
 
     def _start_server(self):
@@ -136,7 +159,8 @@ class Box(base.Storage):
             Box client which can be used to access authorized user data
         """
 
-        print("Starting server.  Go to 127.0.0.1:5000 to authenticate box.  It can only be ended by completing authentication or going to 127.0.0.1:5000/end")
+        print("Starting server.  Go to 127.0.0.1:5000 to authenticate box.  It can only be \
+               ended by completing authentication or going to 127.0.0.1:5000/end")
         self.app.add_url_rule('/', 'index', self._index)
         self.app.add_url_rule('/return', 'return', self._capture)
         self.app.add_url_rule('/end', 'end', self._end)
@@ -151,13 +175,17 @@ class Box(base.Storage):
         Returns:
             String containing HTML to be displayed
         """
-        self.auth_url, self._csrf_token = self.oauth.get_authorization_url("http://127.0.0.1:5000/return")
+        self.auth_url, self._csrf_token = \
+            self.oauth.get_authorization_url("http://127.0.0.1:5000/return")
 
-        return '<h1>Welcome to box auth</h1> This web server is used to interface with the box API.  Click the link below to securely login on box.' + '<a href="'+self.auth_url+'">Click here to authenticate your box account </a>'
+        return '<h1>Welcome to box auth</h1> This web server is used to interface with the \
+                box API.  Click the link below to securely login on box.' + '<a href="' + \
+                self.auth_url + '">Click here to authenticate your box account </a>'
     
     def _capture(self):
         """
-        Flask page: box redirect url which contains the code and state used to get access and refresh token
+        Flask page: box redirect url which contains the code and state used to get access
+        and refresh token
 
         Returns:
             String containing HTML to be displayed with box login credentials
@@ -182,7 +210,11 @@ class Box(base.Storage):
 
         self._update_config()
         
-        return 'You are now logged in as: ' + self.client.user(user_id='me').get()['login'] + '<br><strong>The server has been shutdown and the normal script is resuming.</strong><br>access token: '+self._access_token+'<br>refresh token: '+self._refresh_token+'<br><a href="http://127.0.0.1:5000">Click to go to index (assuming server restarted)</a>'
+        return 'You are now logged in as: ' + self.client.user(user_id='me').get()['login'] \
+                + '<br><strong>The server has been shutdown and the normal script is resuming.\
+                </strong><br>access token: '+self._access_token+'<br>refresh token: ' + \
+                self._refresh_token+'<br><a href="http://127.0.0.1:5000">Click to go to index \
+                (assuming server restarted)</a>'
 
     def _end(self):
         """
@@ -200,7 +232,8 @@ class Box(base.Storage):
 
     def _update_config(self):
         """
-        Update the Config object to reflect the current state of the code.  If there is no config object, do nothing.
+        Update the Config object to reflect the current state of the code.  If there is no
+        config object, do nothing.
         """
 
         if self.config:
@@ -400,7 +433,8 @@ class Box(base.Storage):
         Args:
             folder_id (str): The folder identification to be downloaded
             path (str): The path to the file or folder to be uploaded
-            name (str): The name the file or folder should be saved with.  If None then the leaf of the path is used as the name.
+            name (str): The name the file or folder should be saved with.  If None then the
+             leaf of the path is used as the name.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:
@@ -426,7 +460,8 @@ class Box(base.Storage):
                 raise FileExistsError
         elif len(exists) > 1:
             # This is just a sanity check
-            raise Exception('More than one file with the upload name were found.  Not sure what to do so crashing.')
+            raise Exception('More than one file with the upload name were found.  \
+                             Not sure what to do so crashing.')
 
         new_file = parent_folder.upload(path, name)
 
@@ -443,7 +478,8 @@ class Box(base.Storage):
         Args:
             folder_id (str): The folder identification to be downloaded
             path (str): The path to the file or folder to be uploaded
-            name (str): The name the file or folder should be saved with.  If None then the leaf of the path is used as the name.
+            name (str): The name the file or folder should be saved with.  If None then the
+             leaf of the path is used as the name.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:
@@ -466,10 +502,12 @@ class Box(base.Storage):
             if overwrite:
                 self.delete_folder(exists[0].id)
             else:
-                raise Exception('A folder with the upload name, %s, already exists.  Use `overwrite=True` to force an overwrite of this folder.' % str(name))
+                raise Exception('A folder with the upload name, %s, already exists.  Use \
+                    `overwrite=True` to force an overwrite of this folder.' % str(name))
         elif len(exists) > 1:
             # This is just a sanity check
-            raise Exception('More than one folder with the upload name were found.  Not sure what to do so crashing.')
+            raise Exception('More than one folder with the upload name were found.  \
+                Not sure what to do so crashing.')
 
         # Create the new parent folder
         parent_folder = parent_folder.create_subfolder(name)
