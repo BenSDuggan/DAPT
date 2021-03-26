@@ -38,7 +38,7 @@ class Google_Drive(base.Storage):
 
     Keyword args:
         creds_path (str): the path to the file containing the Google API credentials. 
-        Default is ``credentials.json``.
+         Default is ``credentials.json``.
         config (Config): a Config object with the associated config file to be used
     """
 
@@ -136,7 +136,7 @@ class Google_Drive(base.Storage):
             ile_id (str): The file identification to be downloaded
             folder (str): The directory where the file should be saved
             name (str): The name that the file should be saved as.  If None is given (default),
-            then the name of the file on the resource will be used.
+             then the name of the file on the resource will be used.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:
@@ -176,7 +176,7 @@ class Google_Drive(base.Storage):
             ile_id (str): The file identification to be downloaded
             folder (str): The directory where the file should be saved
             name (str): The name that the file should be saved as.  If None is given (default),
-            then the name of the file on the resource will be used.
+             then the name of the file on the resource will be used.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:

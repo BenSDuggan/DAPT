@@ -46,7 +46,7 @@ def sample_db(file_name='sample_db.csv', delimiter=','):
 
     Args:
         file_name (str): the file name of the file to create and use for the database.  The
-        default value is `sample_db.csv`.
+         default value is `sample_db.csv`.
         delimiter (str): the delimiter to use for the file.  The default is a `,`.
 
     Returns:
@@ -77,7 +77,7 @@ def create_settings_file(parameters, pid=None):
     Args:
         parameters (dict): the paramaters to be saved in the file
         pid (str): the parameter id of the current parameter run.  If you don't give an id then
-        the id in ``parameters`` will be used.
+         the id in ``parameters`` will be used.
     """
 
     data = ""
@@ -106,7 +106,7 @@ def create_XML(parameters,
 
     Args:
         paramaters (dict): A dictionary of paramaters where the key is the path to the xml
-        variable and the value is the desired value in the XML file.
+         variable and the value is the desired value in the XML file.
         default_settings (str): the path to the default xml file
         save_settings (str): the path to the output xml file
         off_limits (list): a list of keys that should not be inserted into the XML file.

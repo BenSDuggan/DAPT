@@ -97,8 +97,8 @@ class Box(base.Storage):
             self.client_secret = kwargs['client-secret']
         
         if self.client_id is None or self.client_secret is None:
-            raise AttributeError('The client-id and client-secret must be provided.  They can \
-            be provided directly or using a Config.')
+            raise AttributeError('The client-id and client-secret must be provided.  They can ' \
+            'be provided directly or using a Config.')
 
         self.oauth = OAuth2(client_id=self.client_id, client_secret=self.client_secret)
 
@@ -146,9 +146,9 @@ class Box(base.Storage):
                 print(e)
 
         self.app = Flask(__name__)
-        print('Starting server.  Go to the URL below to activate box functionality.  If you \
-               are on a server you will need to run this code on your computer, get the access \
-               and refresh token and then add them to the config file.')
+        print('Starting server.  Go to the URL below to activate box functionality.  If you ' \
+              'are on a server you will need to run this code on your computer, get the access ' \
+              'and refresh token and then add them to the config file.')
         return self._start_server()
 
     def _start_server(self):
@@ -159,8 +159,8 @@ class Box(base.Storage):
             Box client which can be used to access authorized user data
         """
 
-        print("Starting server.  Go to 127.0.0.1:5000 to authenticate box.  It can only be \
-               ended by completing authentication or going to 127.0.0.1:5000/end")
+        print("Starting server.  Go to 127.0.0.1:5000 to authenticate box.  It can only be " \
+              "ended by completing authentication or going to 127.0.0.1:5000/end")
         self.app.add_url_rule('/', 'index', self._index)
         self.app.add_url_rule('/return', 'return', self._capture)
         self.app.add_url_rule('/end', 'end', self._end)
@@ -178,8 +178,8 @@ class Box(base.Storage):
         self.auth_url, self._csrf_token = \
             self.oauth.get_authorization_url("http://127.0.0.1:5000/return")
 
-        return '<h1>Welcome to box auth</h1> This web server is used to interface with the \
-                box API.  Click the link below to securely login on box.' + '<a href="' + \
+        return '<h1>Welcome to box auth</h1> This web server is used to interface with the ' \
+                'box API.  Click the link below to securely login on box.' + '<a href="' + \
                 self.auth_url + '">Click here to authenticate your box account </a>'
     
     def _capture(self):
@@ -211,10 +211,10 @@ class Box(base.Storage):
         self._update_config()
         
         return 'You are now logged in as: ' + self.client.user(user_id='me').get()['login'] \
-                + '<br><strong>The server has been shutdown and the normal script is resuming.\
-                </strong><br>access token: '+self._access_token+'<br>refresh token: ' + \
-                self._refresh_token+'<br><a href="http://127.0.0.1:5000">Click to go to index \
-                (assuming server restarted)</a>'
+                + '<br><strong>The server has been shutdown and the normal script is resuming.' \
+                '</strong><br>access token: '+self._access_token+'<br>refresh token: ' + \
+                self._refresh_token+'<br><a href="http://127.0.0.1:5000">Click to go to index' \
+                '(assuming server restarted)</a>'
 
     def _end(self):
         """
@@ -502,12 +502,12 @@ class Box(base.Storage):
             if overwrite:
                 self.delete_folder(exists[0].id)
             else:
-                raise Exception('A folder with the upload name, %s, already exists.  Use \
-                    `overwrite=True` to force an overwrite of this folder.' % str(name))
+                raise Exception('A folder with the upload name, %s, already exists.  Use ' \
+                    '`overwrite=True` to force an overwrite of this folder.' % str(name))
         elif len(exists) > 1:
             # This is just a sanity check
-            raise Exception('More than one folder with the upload name were found.  \
-                Not sure what to do so crashing.')
+            raise Exception('More than one folder with the upload name were found. ' \
+                'Not sure what to do so crashing.')
 
         # Create the new parent folder
         parent_folder = parent_folder.create_subfolder(name)

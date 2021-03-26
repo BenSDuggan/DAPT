@@ -85,10 +85,10 @@ class Sheet(base.Database):
     Keyword Args:
         config (Config): A Config object which contains the client_id and client_secret. 
         spreedsheet_id (str): the Google Sheets ID
-        creds (str): the path to the file containing the Google API credentials.  Default is
-        ``credentials.json``.
-        sheet_id (int): the the sheet id to use.  0 is used if no value is givin for sheet_title,
-        sheet_id or in the Config
+         creds (str): the path to the file containing the Google API credentials.  Default is
+         ``credentials.json``.
+        sheet_id (int): the the sheet id to use.  0 is used if no value is givin for
+         sheet_title, sheet_id or in the Config
         sheet_title (str): the title of the sheet to use
     """
     
@@ -283,9 +283,9 @@ class Sheet(base.Database):
 
         Args:
             row_index (int): the index of the row to replace (starting from 1).  Indices less
-            than 1 will return False.  Indices greater than the table length will be appended.
+             than 1 will return False.  Indices greater than the table length will be appended.
             values (Dict): the key-value pairs that should be inserted.  If the dictionary
-            contains more values then number of columns, the table will be extended.
+             contains more values then number of columns, the table will be extended.
         
         Returns:
             A boolean that is Trues if successfully inserted and False otherwise.

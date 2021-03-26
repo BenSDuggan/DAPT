@@ -70,7 +70,7 @@ class Storage(object):
             file_id (str): The file identification to be downloaded
             folder (str): The directory where the file should be saved
             name (str): The name that the file should be saved as.  If None is given (default),
-            then the name of the file on the resource will be used.
+             then the name of the file on the resource will be used.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:
@@ -86,7 +86,7 @@ class Storage(object):
             file_id (str): The folder identification to be downloaded
             folder (str): The directory where the file should be saved
             name (str): The name that the file should be saved as.  If None is given (default),
-            then the name of the file on the resource will be used.
+             then the name of the file on the resource will be used.
             overwrite (bool): Should the data on your machine be overwritten.  True by default.
 
         Returns:
