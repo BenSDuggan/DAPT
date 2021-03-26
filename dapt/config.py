@@ -208,7 +208,7 @@ class Config:
         self.path = path
         self.config = self.read()
 
-    def get_value(self, key, recursive=False):
+    def get_value(self, key, recursive=False, default=None):
         """
         Get the first value of the given key or return ``None`` if one doesn't exist.
 
@@ -217,6 +217,8 @@ class Config:
              value
             recursive (bool): recursively look through the config for the given key.  False by
              default.  If recursive is set to True then key must be a string.
+            default (obj): A default value to use if no value can be found.  This is ``None``
+             by default.
 
         Returns:
             The value associated to the given key or None if the key is not in the dictionary.
@@ -224,9 +226,12 @@ class Config:
 
         # If we we want to do it recursively
         if recursive:
-            return self._find_value(self.config, key)
+            value = self._find_value(self.config, key)
+            if value is None:
+                return default 
+            return value
         
-        value = None
+        value = default
 
         # Convert key to list if it is not already one
         if not isinstance(key, list):
@@ -239,7 +244,7 @@ class Config:
                 if key[i] in value:
                     value = value[key[i]]
                 else:
-                    return None
+                    return default
         
         return value
 

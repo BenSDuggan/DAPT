@@ -12,8 +12,14 @@ Class which allows for Google Sheets to be used as paramater set database.
 
     If you have data in the first row, you must have entries in some other row.
 
+.. _google-sheets-authentication:
+
 Authentication
 --------------
+
+TODO
+
+.. _google-sheets-config:
 
 Config
 ------
@@ -21,7 +27,8 @@ Config
 The Google Sheets class can be instantiated using a :ref:`config` class.  There are several
 options in the config which are redundant (e.g. worksheet-id and worksheet-title).  They are
 marked with flags in the table below.  These values should be placed inside a JSON object
-named ``google-sheets``. 
+named ``google`` or ``google-sheets``.  If the keys are placed inside the ``google`` key,
+the values will be shared with other Google APIs (e.g. :ref:`google-drive` ).
 
 +---------------------------+----------------------------------------------------------------+
 | Fields                    | Description                                                    |
@@ -92,7 +99,7 @@ class Sheet(base.Database):
         self.SCOPE = ['https://www.googleapis.com/auth/spreadsheets',
                       'https://www.googleapis.com/auth/drive']
         self._creds = None
-        self.sheet_id = -1
+        self.sheet_id = 0
         self.sheet_title = None
         self.config = None
 
@@ -104,41 +111,91 @@ class Sheet(base.Database):
         if 'config' in kwargs:
             self.config=kwargs['config']
 
-            if self.config.has_value('sheets-spreedsheet-id'):
-                self.spreedsheetID = self.config.config['sheets-spreedsheet-id']
-            if self.config.has_value('sheets-creds-path'):
+            self._check_old_config()
+
+            self.spreedsheetID = self.config.get_value(
+                                    ['google', 'spreedsheet-id'],
+                                    recursive=False,
+                                    default=self.spreedsheetID)
+            self.spreedsheetID = self.config.get_value(
+                                    ['google-sheets', 'spreedsheet-id'],
+                                    recursive=False,
+                                    default=self.spreedsheetID)
+            self.sheet_id = self.config.get_value(
+                                    ['google', 'worksheet-id'],
+                                    recursive=False,
+                                    default=self.sheet_id)
+            self.sheet_id = self.config.get_value(
+                                    ['google-sheets', 'worksheet-id'],
+                                    recursive=False,
+                                    default=self.sheet_id)
+            self.sheet_title = self.config.get_value(
+                                    ['google', 'worksheet-title'],
+                                    recursive=False,
+                                    default=self.sheet_title)
+            self.sheet_title = self.config.get_value(
+                                    ['google-sheets', 'worksheet-title'],
+                                    recursive=False,
+                                    default=self.sheet_title)
+            if self.config.has_value(['google-sheets','creds-path']):
                 self._creds = Credentials.from_service_account_file(
-                    self.config.config['sheets-creds-path'],
+                    self.config['google-sheets']['creds-path'],
                     scopes=self.SCOPE
                 )
-            if self.config.has_value('sheets-worksheet-id'):
-                self.sheet_id = self.config.config['sheets-worksheet-id']
-            if self.config.has_value('sheets-worksheet-title'):
-                self.sheet_title = self.config.config['sheets-worksheet-title']
+            # TODO add creds here
+
+        if 'spreedsheet_id' in kwargs:
+            self.spreedsheetID = kwargs['spreedsheet_id']
+        if 'creds' in kwargs:
+            self._creds = Credentials.from_service_account_file(
+                kwargs['creds'],
+                scopes=self.SCOPE
+            )
+        if 'sheet_title' in kwargs:
+            self.sheet_title = kwargs['sheet_title']
+        if 'sheet_id' in kwargs:
+            self.sheet_id = kwargs['sheet_id']
+        
         if not self.spreedsheetID:
-            if 'spreedsheet_id' in kwargs:
-                self.spreedsheetID = kwargs['spreedsheet_id']
-            else:
-                raise ValueError("Must specify the spreedsheet id in the arguments or config.")
-        if not self._creds:
-            if 'creds' in kwargs:
-                self._creds = Credentials.from_service_account_file(
-                    kwargs['creds'],
-                    scopes=self.SCOPE
-                )
-            else:
-                self._creds = Credentials.from_service_account_file(
-                    self.config.config['sheets-creds-path'],
-                    scopes=self.SCOPE
-                )
-        if not self.sheet_title and self.sheet_id == -1:
-            if 'sheet_title' in kwargs:
-                self.sheet_title = kwargs['sheet_title']
-        if self.sheet_id == -1 and not self.sheet_title:
-            if 'sheet_id' in kwargs:
-                self.sheet_id = kwargs['sheet_id']
-            else:
-                self.sheet_id = 0
+            raise ValueError("Must specify the spreedsheet id in the arguments or config.")
+
+    def _check_old_config(self):
+        """
+        Checks the config file to see if Google Sheets is defined using the old method.  If so
+        this method will initialize GS using the old mehtod.  The config should already be
+        defined and this method will exit if ``self.config`` doesn't have a config set.
+
+        .. deprecated:: 0.9.3
+            This method only exists to help phase out the old Google Sheets config.  This
+            method will be removed in 0.9.5 when the old config style is removed.
+        """
+
+        if self.config is None:
+            return
+        
+        old_method_flag = False
+
+        if self.config.has_value('sheets-spreedsheet-id'):
+            old_method_flag = True
+            self.spreedsheetID = self.config.config['sheets-spreedsheet-id']
+        if self.config.has_value('sheets-creds-path'):
+            old_method_flag = True
+            self._creds = Credentials.from_service_account_file(
+                self.config.config['sheets-creds-path'],
+                scopes=self.SCOPE
+            )
+        if self.config.has_value('sheets-worksheet-id'):
+            old_method_flag = True
+            self.sheet_id = self.config.config['sheets-worksheet-id']
+        if self.config.has_value('sheets-worksheet-title'):
+            old_method_flag = True
+            self.sheet_title = self.config.config['sheets-worksheet-title']
+
+        if old_method_flag:
+            _log.warning('Google Sheet config should be done inside a key named "google" ' \
+            'or "google-sheets".  \nSee ' \
+            'https://dapt.readthedocs.io/en/latest/reference/db/google_sheets.html#config ' \
+            'for more information.')
 
     def connect(self):
         """
@@ -153,7 +210,7 @@ class Sheet(base.Database):
         if self._creds and not self._creds.valid:
             _log.debug('Attempting to update the internal creds')
             self.client = gspread.authorize(self._creds)
-
+        
         self.sheet = self.client.open_by_key(self.spreedsheetID)
 
         if not self.connected():

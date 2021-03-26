@@ -16,12 +16,18 @@
 ### db.Sheets
 
 * Change authentication model to use `google.oauth2.service_account` from `oauth2client.service_account`
+* Changing config structure to nest Google Sheet options inside `google` or `google-sheets` key.
+* Adding `_check_old_config()` method that checks for old GS config settings, warns user if they are using them, and initializes GS with config values.  Will be removed in 0.9.5.
 
 ### db.Delimited_file
 
 * Updating documentation
 * Using key-word arguments now
 * Added support for config
+
+### Config
+
+* Adding `default` attribute to `get_value()` method that allows a default value to be returned, if no other value can be found.
 
 ## 0.9.2
 
