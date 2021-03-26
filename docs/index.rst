@@ -30,7 +30,7 @@ Future versions of the project will work to improve documentation, add examples,
 
    install
    usage
-   reference/index
+   api/index
    services/index
    examples
    dev/index

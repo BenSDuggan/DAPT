@@ -1,5 +1,6 @@
 """
-.. _google_drive:
+
+.. _google-drive:
 
 Google Drive
 ============

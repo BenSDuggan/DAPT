@@ -6,27 +6,27 @@ Storage base
 
 .. _storage-class:
 
-    The Storage class is designed to provide a standard interface for adding APIs that enable
-    storage.  This class defines the basic required functions that must be implimented for two
-    classes inheriting this class to work in the same workflow, assuming the correct API keys
-    are used.  Switching storage objects should work seemlessly, if a Config object is used to
-    initialize the Storage object.  If the API credentials are folderectly provided, this cannot
-    be guarantied because different services had different methods of initialization.
+The Storage class is designed to provide a standard interface for adding APIs that enable
+storage.  This class defines the basic required functions that must be implimented for two
+classes inheriting this class to work in the same workflow, assuming the correct API keys
+are used.  Switching storage objects should work seemlessly, if a Config object is used to
+initialize the Storage object.  If the API credentials are folderectly provided, this cannot
+be guarantied because different services had different methods of initialization.
 
-    Different APIs might have different methods for identifying files.  For example, Box uses IDs
-    for files and folders, but another service might use a path from the root directory.  The
-    method of identifying files or folders is called a ``fid`` (file/folder identification) in
-    DAPT.  Different implimentations might use different protocols for files and folders, so the
-    Storage methods should take care of this.
+Different APIs might have different methods for identifying files.  For example, Box uses IDs
+for files and folders, but another service might use a path from the root directory.  The
+method of identifying files or folders is called a ``fid`` (file/folder identification) in
+DAPT.  Different implimentations might use different protocols for files and folders, so the
+Storage methods should take care of this.
 
-    .. _base-storage-required:
+.. _base-storage-required:
 
-    Required methods
-    ----------------
+Required methods
+----------------
 
-    There are four required methods that all Storage objects must implement.  The required
-    methods are download, delete, rename, and upload.  These methods are based off REST APIs,
-    although the underlying implimentation do not need to use REST.
+There are four required methods that all Storage objects must implement.  The required
+methods are download, delete, rename, and upload.  These methods are based off REST APIs,
+although the underlying implimentation do not need to use REST.
 
 """
 

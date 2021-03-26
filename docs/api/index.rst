@@ -1,7 +1,7 @@
-.. _references:
+.. _api:
 
-DAPT Reference Guide
-====================
+DAPT API Documentation
+======================
 
 This is the DAPT reference guide that shows how the APIs work.
 

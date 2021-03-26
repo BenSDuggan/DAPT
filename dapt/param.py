@@ -149,7 +149,7 @@ class Param:
 
     Args:
         database (Database): a Database instance (such as :ref:`google-sheets`,
-        :ref:`delimited-file`)
+         :ref:`delimited-file`)
         config (Config): a config object which allows for more features.  This is optional.
     """
     
