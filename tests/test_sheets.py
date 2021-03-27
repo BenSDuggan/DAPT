@@ -6,7 +6,7 @@ import os
 
 import dapt
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 import pytest
 
 from tests.base import Database_test_base
@@ -26,8 +26,11 @@ class TestGoogleSheets(Database_test_base):
 
 		config = dapt.Config(path=conf_path)
 		
-		scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-		creds = ServiceAccountCredentials.from_json_keyfile_name(config['sheets-creds-path'], scope)
+		scope = [
+				  	'https://www.googleapis.com/auth/spreadsheets',
+					'https://www.googleapis.com/auth/drive'
+				]
+		creds = Credentials.from_service_account_file(config['sheets-creds-path'], scopes=scope)
 
 		client = gspread.authorize(creds)
 		sheet = client.open_by_key(config.config['sheets-spreedsheet-id'])
