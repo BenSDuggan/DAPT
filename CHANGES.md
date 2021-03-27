@@ -28,6 +28,7 @@
 ### Config
 
 * Adding `default` attribute to `get_value()` method that allows a default value to be returned, if no other value can be found.
+* Adding `pretty-save` option that formats the JSON file by indenting nested items with 4 spaces.  `True` by default.
 
 ## 0.9.2
 

@@ -74,6 +74,8 @@ below.
 +---------------------------+----------------------------------------------------------------+
 | ``box`` (str)             | Values used by the :ref:`box` storage API.                     |
 +---------------------------+----------------------------------------------------------------+
+| ``pretty-save`` (bool)    | Output the config in a ~pretty~ way. True by default.          |
++---------------------------+----------------------------------------------------------------+
 
 Some of these fields are used by other DAPT classes to store values.  For example, the
 ``google-sheets`` field has many sub-fields that set parameters in the class automatically.
@@ -207,6 +209,7 @@ class Config:
     def __init__(self, path='config.json'):
         self.path = path
         self.config = self.read()
+        self.pretty_save = True
 
     def get_value(self, key, recursive=False, default=None):
         """
@@ -346,7 +349,12 @@ class Config:
                     dic = dic[k]
         
         with open(self.path, 'w') as f:
-            json.dump(self.config, f)
+            print(self.get_value('pretty-save'))
+            print(self.get_value('pretty-save', recursive=False, default=self.pretty_save))
+            if self.get_value('pretty-save', recursive=False, default=self.pretty_save):
+                json.dump(self.config, f, indent=4)
+            else:
+                json.dump(self.config, f)
 
         return self.config
 
