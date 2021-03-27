@@ -3,6 +3,7 @@ Test if dapt.db.sheets.py is working correctly
 """
 
 import os
+import time
 
 import dapt
 import gspread
@@ -12,9 +13,14 @@ import pytest
 from tests.base import Database_test_base
 
 conf_path = os.environ['DAPT_config_path']
+# Delay in seconds
+TEST_DELAY_INTERVAL = 10
+
+last_test_time = 1
 
 @pytest.mark.test_creds
 class TestGoogleSheets(Database_test_base):
+
 	def preflight(self):
 		"""
         Testing items that should be ran before tests are ran.  This method returns a new
@@ -23,6 +29,12 @@ class TestGoogleSheets(Database_test_base):
         Returns:
             The class instance which will be used for the unit test.
         """
+
+		global last_test_time
+		diff = time.time() - last_test_time
+		if diff < TEST_DELAY_INTERVAL:
+			time.sleep(diff)
+		last_test_time = time.time()
 
 		config = dapt.Config(path=conf_path)
 		
@@ -45,7 +57,10 @@ class TestGoogleSheets(Database_test_base):
 
 		sheet.values_update(range_label, params={'valueInputOption': 'RAW'}, body={'values': data})
 
-		return dapt.db.Sheet(config=config)
+		db = dapt.db.Sheet(config=config)
+		db.connect()
+
+		return db
 
 	def test_Sheet_get_key_index(self):
 		"""
