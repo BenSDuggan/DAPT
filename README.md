@@ -34,7 +34,7 @@ You can then test to make sure everything installed by starting a python session
 ```
 >>> import dapt
 >>> dapt.__version__
-0.9.2
+0.9.3
 ```
 
 ### Dependencies

@@ -137,12 +137,28 @@ class Sheet(base.Database):
                                     ['google-sheets', 'worksheet-title'],
                                     recursive=False,
                                     default=self.sheet_title)
+            if self.config.has_value(['google','creds-path']):
+                self._creds = Credentials.from_service_account_file(
+                    self.config['google']['creds-path'],
+                    scopes=self.SCOPE
+                )
             if self.config.has_value(['google-sheets','creds-path']):
                 self._creds = Credentials.from_service_account_file(
                     self.config['google-sheets']['creds-path'],
                     scopes=self.SCOPE
                 )
-            # TODO add creds here
+            if self.config.has_value(['google', 'creds']):
+                self._creds = Credentials.from_service_account_info(
+                    self.config['google']['creds'],
+                    self.SCOPE
+                )
+                _log.info('Loaded credentials from Config')
+            if self.config.has_value(['google-sheet', 'creds']):
+                self._creds = Credentials.from_service_account_info(
+                    self.config['google-sheet']['creds'],
+                    self.SCOPE
+                )
+                _log.info('Loaded credentials from Config')
 
         if 'spreedsheet_id' in kwargs:
             self.spreedsheetID = kwargs['spreedsheet_id']
@@ -213,7 +229,7 @@ class Sheet(base.Database):
         
         self.sheet = self.client.open_by_key(self.spreedsheetID)
 
-        if not self.connected():
+        if self.client is None:
             return False
         
         return self.client
@@ -243,8 +259,6 @@ class Sheet(base.Database):
             A Google Sheet worksheet
         """
 
-        self.connect()
-
         if self.sheet_title:
             return self.sheet.worksheet(self.sheet_title)
         elif self.sheet_id >= 0:
@@ -261,8 +275,6 @@ class Sheet(base.Database):
             row in the database.
         """
 
-        self.connect()
-
         return self.worksheet().get_all_records()
 
     def fields(self):
@@ -272,8 +284,6 @@ class Sheet(base.Database):
         Returns:
             Array of strings with each element being a field (order is preserved if possible)
         """
-
-        self.connect()
 
         return self.worksheet().row_values(1)
 
@@ -291,8 +301,6 @@ class Sheet(base.Database):
             A boolean that is Trues if successfully inserted and False otherwise.
         """
 
-        self.connect()
-
         if row_index < 0:
             return False
 
@@ -306,13 +314,10 @@ class Sheet(base.Database):
         end = gspread.utils.rowcol_to_a1(row_index+2, len(values))
         range_label = '%s!%s:%s' % (self.worksheet().title, start, end)
         
-        try:
-            return self.sheet.values_update(range_label,
-                                            params={'valueInputOption': 'RAW'},
-                                            body={'values': row})
-        except:
-            return False
-        return True
+        return self.sheet.values_update(range_label,
+                                        params={'valueInputOption': 'RAW'},
+                                        body={'values': row})
+        
 
     def update_cell(self, row_id, field, value):
         """
@@ -326,11 +331,9 @@ class Sheet(base.Database):
         Returns:
             A boolean that is True if successfully inserted and False otherwise.
         """
-        try:
-            self.connect()
-            self.worksheet().update_cell(row_id+2, self.get_key_index(field)+1, str(value))
-        except Exception as e:
-            raise e
+
+        self.worksheet().update_cell(row_id+2, self.get_key_index(field)+1, str(value))
+
         return True
 
     def get_key_index(self, column_key):
@@ -343,8 +346,6 @@ class Sheet(base.Database):
         Returns:
             The index or -1 if it could not be determined.
         """
-
-        self.connect()
 
         key_map = {}
         key_row = self.worksheet().row_values(1)
@@ -364,8 +365,6 @@ class Sheet(base.Database):
         Returns:
             The index or -1 if it could not be determined.
         """
-
-        self.connect()
 
         col = self.worksheet().col_values(self.get_key_index(column_key)+1)
         for i in range(len(col)):
